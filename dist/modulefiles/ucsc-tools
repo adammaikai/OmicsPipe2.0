@@ -1,0 +1,5 @@
+#%Module
+
+set root /apps/fusioncatcher/tools/blat_v0.35
+
+prepend-path	PATH	$root

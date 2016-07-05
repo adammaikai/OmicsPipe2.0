@@ -1,0 +1,5 @@
+#%Module
+
+set root /root/.local/easybuild/software/mutect/1.1.4/
+
+prepend-path	PATH	$root

@@ -1,0 +1,3 @@
+[console_scripts]
+omics_pipe = omics_pipe.main:main
+

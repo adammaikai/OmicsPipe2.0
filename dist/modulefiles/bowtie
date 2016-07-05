@@ -1,0 +1,5 @@
+#%Module
+
+set root /apps/fusioncatcher/tools/bowtie
+
+prepend-path	PATH	$root

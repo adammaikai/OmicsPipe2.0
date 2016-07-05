@@ -1,0 +1,128 @@
+Oncogenomics DNAseq Report for patient ID `r patientID`
+========================================================
+
+<!-- dataTables -->
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.js"></script>
+<link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css"/>
+<script src="http://next.datatables.net/release-datatables/examples/resources/bootstrap/3/dataTables.bootstrap.js"></script>
+<link rel="stylesheet" href="http://next.datatables.net/release-datatables/examples/resources/bootstrap/3/dataTables.bootstrap.css"/>
+
+<!-- TableTools -->
+<script src="http://cdn.aldu.net/jquery.datatables/extras/tabletools/2.0.3/js/TableTools.js"></script>
+<link rel="stylesheet" href="http://cdn.aldu.net/jquery.datatables/extras/tabletools/2.0.3/css/TableTools.css"/>
+
+<!-- ZeroClipboard -->
+<script src="http://cdn.aldu.net/jquery.datatables/extras/tabletools/2.0.3/js/ZeroClipboard.js"></script>
+
+<!-- ColVis -->
+<script src="http://cdn.eventcore.com/js/plugins/dataTables.ColVis-1.07.js"></script>
+
+<!-- Scientific notation sorting -->
+<script src="../media/src/scientific.js"></script>
+
+<!-- read in external core code -->
+```{r external_code, echo=FALSE}
+  read_chunk(paste(config$R_SOURCE_PATH, '/src/core/setup.R', sep=''))
+
+```
+
+<!-- read in all optional modules from the module folder -->
+```{r module_code, echo=FALSE}
+  read_chunk(paste(config$R_SOURCE_PATH, '/src/modules/qual_ctrl_DNA.R', sep=''))
+  read_chunk(paste(config$R_SOURCE_PATH, '/src/modules/spia.R', sep=''))
+  read_chunk(paste(config$R_SOURCE_PATH, '/src/modules/PW_tables_and_viz.R', sep=''))
+  read_chunk(paste(config$R_SOURCE_PATH, '/src/modules/intogen.R', sep=''))
+  read_chunk(paste(config$R_SOURCE_PATH, '/src/modules/dog.R', sep=''))
+  read_chunk(paste(config$R_SOURCE_PATH, '/src/modules/snpAnnotation_DNA.R', sep=''))
+```
+
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
+```
+
+# Quality Control & Preprocessing
+
+## Raw data QC
+
+The quality of the DNA-seq reads was assessed using FASTQC `r citep("http://www.bioinformatics.babraham.ac.uk/projects/fastqc")`. The table below lists basic QC statistics. Click on the provided links to open up the full FastQC report.
+
+
+```{r fastQC, echo=FALSE, warning=FALSE, results='asis'}
+```
+
+******
+
+
+## SNPs
+
+* **CHROM** The mutation’s chromosome.
+* **POS** The mutation’s start position.
+* **rsID**
+* **Gene** The HUGO symbol of the gene.
+* **Intogen_Driver**
+* **Intogen_Info**
+* **CADD_Score**
+* **SnpEff_Effect**
+* **ClinVar_Rating**
+* **ClinVar_ClinicalSignificance**
+* **COSMIC_histology**
+* **COSMIC_reference**
+* **PharmGbk_Reaction**
+* **PharmGbk_Drugs**
+* **DrugBank_drug**
+* **DrugBank_reaction**
+* **DrugBank_reference**
+
+```{r snpAnnotation_DNA, echo=TRUE, warning=FALSE, results='asis'}
+```
+
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+    var dogtable = $('#SNPs_table').dataTable({
+        "sDom": 'T<"clear">lfrtip',
+        "oTableTools": {
+            "sSwfPath": "../media/swf/copy_csv_xls_pdf.swf",
+            "aButtons": [
+                "copy",
+                "csDNAv"
+            ]
+        },
+        "aoColumns": [ 
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+       ]         
+      })
+      });
+</script>
+
+******
+
+
+# References 
+
+```{r references, echo=FALSE, results='asis', warning=FALSE}
+bibliography()
+
+```
+
+
+# Session Info
+
+```{r, echo=FALSE}
+sessionInfo()
+date()
+```

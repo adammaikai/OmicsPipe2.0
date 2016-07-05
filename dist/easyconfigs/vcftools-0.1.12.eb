@@ -1,0 +1,26 @@
+easyblock = 'MakeCp'
+
+name = 'VCFtools'
+version = '0.1.12'
+
+homepage = "http://vcftools.sourceforge.net/"
+description = """The aim of VCFtools is to provide 
+ methods for working with VCF files: validating, 
+ merging, comparing and calculate some basic population
+ genetic statistics. """
+
+toolchain = {'name': 'dummy', 'version': 'dummy'}
+
+source_urls = [SOURCEFORGE_SOURCE]
+sources = ['%(namelower)s_%(version)s.tar.gz']
+
+files_to_copy = ["bin", "lib", "examples", (["bin/man1"], 'man')]
+
+modextrapaths = {'PERL5LIB': 'lib/perl5/site_perl'}
+
+sanity_check_paths = {
+    'files': ['bin/%s' % x for x in ['vcftools', 'vcf-sort', 'vcf-stats']],
+    'dirs': [],
+}
+
+moduleclass = 'bio'

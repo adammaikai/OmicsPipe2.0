@@ -1,0 +1,227 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>About Omics Pipe &mdash; Omics Pipe v1.1.3 Documentation</title>
+    
+    <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.js"></script>
+    <link rel="author" title="About these documents" href="#" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Omics Pipe v1.1.3 Documentation" href="contents.html" />
+    <link rel="next" title="Using Omics Pipe" href="installation.html" />
+    <link rel="prev" title="Omics Pipe: An Automated Framework for Next Generation Sequencing Analysis" href="index.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body role="document">
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="contents.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="installation.html" title="Using Omics Pipe"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="index.html" title="Omics Pipe: An Automated Framework for Next Generation Sequencing Analysis"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="contents.html">Omics Pipe 1.1.3 Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="about-omics-pipe">
+<span id="index-0"></span><h1>About Omics Pipe<a class="headerlink" href="#about-omics-pipe" title="Permalink to this headline">¶</a></h1>
+<p>Omics pipe is an open-source, modular computational platform that automates
+‘best practice’ multi-omics data analysis pipelines published in <a class="reference external" href="http://www.nature.com/nprot/index.html">Nature Protocols</a> and other
+commonly used pipelines, such as <a class="reference external" href="https://www.broadinstitute.org/gatk/">GATK</a>.  It currently automates and provides summary
+reports for two RNA-seq pipelines, two miRNA-seq pipelines, variant calling from whole exome sequencing (WES),
+variant calling and copy  number variation analysis from whole genome sequencing (WGS),
+two ChIP-seq pipelines and a custom RNA-seq pipeline for personalized genomic medicine
+reporting.  It also provides automated support for interacting with the The Cancer Genome
+Atlas (<a class="reference external" href="https://tcga-data.nci.nih.gov/tcga/">TCGA</a>) datasets, including automatic download and processing of the samples in this database.</p>
+<img alt="_images/overview.png" src="_images/overview.png" />
+<p>Omics pipe is a Python package that can be installed on a compute cluster, a local installation or in the
+cloud.  It can be downloaded directly from the Omics pipe website for local and cluster
+installation, or can be used on <a class="reference external" href="http://aws.amazon.com/">AWS</a> in Amazon EC2.  The modular
+nature of Omics pipe allows researchers to easily and efficiently add new analysis tools
+with Bash scripts in the form of modules that can then be used to assemble a new analysis
+pipeline.  Omics pipe uses <a class="reference external" href="https://code.google.com/p/ruffus/">Ruffus</a> to pipeline the various analysis modules together
+into a parallel, automated pipeline.  The dependence of Omics pipe on Ruffus also allows for
+the restarting of only the steps in the pipeline that need updating in the event of an error.
+In addition, <a class="reference external" href="https://pypi.python.org/pypi/Sumatra">Sumatra</a> is built into Omics pipe, which provides version control for each run of
+the pipeline, increasing the reproducibility and documentation of your analyses.  Omics pipe
+interacts with the Distributed Resource Management Application API (<a class="reference external" href="http://drmaa-python.github.io/">DRMAA</a>), which
+automatically submits, controls and monitors jobs to a Distributed Resource Management
+system, such as a compute cluster or Grid computing infrastructure.  This allows
+you to run samples and steps in the pipeline in parallel in a computationally efficient distributed
+fashion, without the need to individually schedule and monitor individual jobs.  For each
+supported pipeline in Omics pipe, results files from each step in the pipeline are generated,
+and an analysis summary report is generated as an HTML report using the R package
+<a class="reference external" href="http://yihui.name/knitr/">knitr</a>.  The summary report provides quality control metrics and
+visualizations of the results for each sample to enable researchers to quickly and easily interpret
+the results of the pipeline.</p>
+<div class="section" id="available-pipelines">
+<h2>Available Pipelines<a class="headerlink" href="#available-pipelines" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><a class="reference internal" href="pipelines.html"><em>Omics Pipe Available Pipelines</em></a></dt>
+<dd>Pipelines supported by this version of omics pipe.</dd>
+</dl>
+<img alt="_images/pipelines.png" src="_images/pipelines.png" />
+</div>
+<div class="section" id="users">
+<h2>Users<a class="headerlink" href="#users" title="Permalink to this headline">¶</a></h2>
+<p>Projects that have used Omics Pipe for solving biological problems. Please submit your story if you
+would like to share how you use the pipeline for your own research.</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.scripps.edu/lotz">The Scripps Research Institute, Lotz Lab</a>: The Lotz Lab in the Department of Molecular and Experimental Medicine at TSRI uses Omics Pipe to perform RNA-seq and miRNA-seq analyses on human articular cartilage samples to elucidate molecular pathways dysregulated in Osteoarthritis.</li>
+</ul>
+<ul class="simple">
+<li><a class="reference external" href="http://www.avera.org/">Avera Health</a>: Researchers working in collaboration with Avera Health use Omics Pipe to analyze sequence data from multiple platforms to provide personalized medicine to breast cancer patients.</li>
+</ul>
+<ul class="simple">
+<li><a class="reference external" href="http://www.scripps.edu/yang/">Scripps Laboratories for tRNA Synthetase Research</a>: Researchers working in collaboration with Scripps Laboratories for tRNA Synthetase Research use Omics Pipe to analyze ChIP-seq data to explore transcription factor binding sites under experimental conditions.</li>
+</ul>
+<ul class="simple">
+<li><a class="reference external" href="http://www.scripps.edu/maximov/index.html">Dorris Neuroscience Center</a>: Researchers working in collaboration with The Maximov Lab in the Department of Molecular and Cellular Neuroscience at The Scripps Research Institute use Omics Pipe to analyze RNA-seq data to determine how extensive activity-dependent alternative mRNA splicing occurs in the transcriptome of a mouse model that is born and develops to adulthood without synaptic transmission in the forebrain.</li>
+</ul>
+<ul class="simple">
+<li><a class="reference external" href="http://www.sanfordburnham.org/talent/Pages/ScottPeterson.aspx">Sanford Burnham Medical Research Institute</a>: Researchers working in collaboration with The Peterson Lab in the Bioinformatics and Structural Biology Program at Sanford Burnham Medical Research Institute are using Omics Pipe to perform RNA-seq based global gene expression analysis of dental plaque microbiota derived from twin pairs to identify functional networks of the dental microbiome in relation to dental health and disease.</li>
+</ul>
+</div>
+<div class="section" id="developers">
+<h2>Developers<a class="headerlink" href="#developers" title="Permalink to this headline">¶</a></h2>
+<p>Omics Pipe is developed by <a class="reference external" href="http://sulab.org/the-team/katie-fisch/">Kathleen Fisch</a>, <a class="reference external" href="http://sulab.org/the-team/tobias-meissner/">Tobias Meissner</a> and <a class="reference external" href="http://sulab.org/the-team/louis-gioia/">Louis Gioia</a> at <a class="reference external" href="http://sulab.org/">The Su Lab</a> in the
+<a class="reference external" href="http://www.scripps.edu/research/mem/">Department of Molecular and Experimental Medicine</a> at <a class="reference external" href="http://www.scripps.edu/">The Scripps Research Institute</a> in beautiful La Jolla, CA.</p>
+</div>
+<div class="section" id="contact">
+<h2>Contact<a class="headerlink" href="#contact" title="Permalink to this headline">¶</a></h2>
+<p>Feedback, questions, bug reports, contributions, collaborations, etc. welcome!</p>
+<p><a class="reference external" href="http://sulab.org/the-team/katie-fisch/">Katie Fisch, Ph.D.</a></p>
+<p>Email: <a class="reference external" href="mailto:kfisch&#37;&#52;&#48;scripps&#46;edu">kfisch<span>&#64;</span>scripps<span>&#46;</span>edu</a></p>
+<p>Twitter: <a class="reference external" href="https://twitter.com/kathleenfisch">&#64;kathleenfisch</a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="contents.html" title="contents">
+          <img class="logo" src="_static/logo.jpg" alt="Logo"/>
+        </a></p><div class="sphinxlocaltoc">
+    <h3><a href="contents.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">About Omics Pipe</a><ul>
+<li><a class="reference internal" href="#available-pipelines">Available Pipelines</a></li>
+<li><a class="reference internal" href="#users">Users</a></li>
+<li><a class="reference internal" href="#developers">Developers</a></li>
+<li><a class="reference internal" href="#contact">Contact</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="index.html"
+                          title="Previous page">&larr; Omics Pipe: An Automated Framework for Next Generation Sequencing Analysis</a></p>
+  </div>
+  <div class="sphinxnext">
+    <h4>Next page</h4>
+    <p class="topless"><a href="installation.html"
+                          title="Next page">&rarr; Using Omics Pipe</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/about.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="contents.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="installation.html" title="Using Omics Pipe"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="index.html" title="Omics Pipe: An Automated Framework for Next Generation Sequencing Analysis"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="contents.html">Omics Pipe 1.1.3 Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &copy; <a href="copyright.html">Copyright</a> 2014-2015 Kathleen Fisch, Ph.D..
+      Last updated on Sep 21, 2015.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

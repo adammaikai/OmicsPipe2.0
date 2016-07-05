@@ -1,0 +1,42 @@
+SAMPLE_LIST: [test1, test2]
+STEP: last_function
+STEPS: [fastqc, tophat, rseqc, cufflinks]
+STEPS_DE: [cuffmerge, cuffmergetocompare, cuffdiff, RNAseq_report_tuxedo, last_function]
+ENDS: SE
+RESULTS_EMAIL: kfisch@scripps.edu
+TEMP_DIR: /scratch/kfisch
+QUEUE: workq
+USERNAME: kfisch 
+RAW_DATA_DIR: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests
+FLAG_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+LOG_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+QC_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+RESULTS_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+WORKING_DIR: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts
+TOPHAT_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/alignments
+CUFFLINKS_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/assemblies
+CUFFMERGE_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/cuffmerge
+CUFFDIFF_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/cuffdiff
+CUFFDIFF_INPUT_LIST_COND1: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/alignments/test1/accepted_hits.bam
+CUFFDIFF_INPUT_LIST_COND2: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/alignments/test2/accepted_hits.bam
+TOPHAT_OPTIONS: -p 8 -a 5 --microexon-search --library-type fr-secondstrand
+CUFFLINKS_OPTIONS: -u -N  
+CUFFMERGE_OPTIONS: -p 8
+CUFFMERGETOCOMPARE_OPTIONS: -CG
+CUFFDIFF_OPTIONS: -p 8 -FDR 0.01 -L Group1,Group2 -N --compatible-hits-norm
+FASTQC_VERSION: 0.10.1
+TOPHAT_VERSION: 2.0.9
+CUFFLINKS_VERSION: 2.1.1 
+FASTQC_VERSION: '0.10.1'
+PIPE_MULTIPROCESS: 100
+PIPE_REBUILD: 'True'
+PIPE_VERBOSE: 5
+REF_GENES: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Annotation/Genes/genes.gtf
+GENOME: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/WholeGenomeFasta/genome.fa
+BOWTIE_INDEX: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/Bowtie2Index/genome
+CHROM: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/Chromosomes
+DRMAA_PATH: /opt/applications/pbs-drmaa/current/gnu/lib/libdrmaa.so
+R_VERSION: 3.0.1
+REPORT_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests
+DPS_VERSION: 1.3.1111
+PARAMS_FILE: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/parameters/RNAseq_tuxedo_params.yaml

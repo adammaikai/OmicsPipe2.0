@@ -1,0 +1,570 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Third Party Software Dependencies &mdash; Omics Pipe v1.1.3 Documentation</title>
+    
+    <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Omics Pipe v1.1.3 Documentation" href="contents.html" />
+    <link rel="next" title="System Requirements" href="resources.html" />
+    <link rel="prev" title="Reference Databases Needed" href="databases.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body role="document">
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="contents.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="resources.html" title="System Requirements"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="databases.html" title="Reference Databases Needed"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="contents.html">Omics Pipe 1.1.3 Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="third-party-software-dependencies">
+<h1>Third Party Software Dependencies<a class="headerlink" href="#third-party-software-dependencies" title="Permalink to this headline">¶</a></h1>
+<p>Omics Pipe is dependent upon several third-party software packages.  Before running Omics Pipe, please install all of the
+required tools for the pipeline you will be running (see below) as <a class="reference external" href="http://modules.sourceforge.net/">Modules</a> on your local cluster.  If you are running the AWS
+distribution, all third party software is already installed.</p>
+<div class="html-toggle section" id="r-packages-needed">
+<h2>R Packages Needed<a class="headerlink" href="#r-packages-needed" title="Permalink to this headline">¶</a></h2>
+<p>In R, you can cut and copy this to install all required packages:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">install</span><span class="o">.</span><span class="n">packages</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="s">&quot;bibtex&quot;</span><span class="p">,</span>    <span class="s">&quot;AnnotationDbi&quot;</span><span class="p">,</span> <span class="s">&quot;cluster&quot;</span><span class="p">,</span> <span class="s">&quot;cummeRbund&quot;</span><span class="p">,</span> <span class="s">&quot;data.table&quot;</span><span class="p">,</span> <span class="s">&quot;DBI&quot;</span><span class="p">,</span> <span class="s">&quot;DESeq2&quot;</span><span class="p">,</span> <span class="s">&quot;devtools&quot;</span><span class="p">,</span>    <span class="s">&quot;dplyr&quot;</span><span class="p">,</span>        <span class="s">&quot;gdata&quot;</span><span class="p">,</span>
+<span class="s">&quot;ggplot2&quot;</span><span class="p">,</span> <span class="s">&quot;graphite&quot;</span><span class="p">,</span> <span class="s">&quot;igraph&quot;</span><span class="p">,</span> <span class="s">&quot;KEGGREST&quot;</span><span class="p">,</span><span class="s">&quot;knitr&quot;</span><span class="p">,</span> <span class="s">&quot;knitrBootstrap&quot;</span><span class="p">,</span>  <span class="s">&quot;lattice&quot;</span><span class="p">,</span> <span class="s">&quot;locfit&quot;</span><span class="p">,</span>    <span class="s">&quot;pamr&quot;</span><span class="p">,</span> <span class="s">&quot;pander&quot;</span><span class="p">,</span>       <span class="s">&quot;pathview&quot;</span><span class="p">,</span>
+<span class="s">&quot;plyr&quot;</span><span class="p">,</span><span class="s">&quot;RColorBrewer&quot;</span><span class="p">,</span><span class="s">&quot;Rcpp&quot;</span><span class="p">,</span>   <span class="s">&quot;RcppArmadillo&quot;</span><span class="p">,</span> <span class="s">&quot;RCurl&quot;</span><span class="p">,</span> <span class="s">&quot;ReactomePA&quot;</span><span class="p">,</span> <span class="s">&quot;RefManageR&quot;</span><span class="p">,</span><span class="s">&quot;RJSONIO&quot;</span><span class="p">,</span><span class="s">&quot;RSQLite&quot;</span><span class="p">,</span>
+<span class="s">&quot;stringr&quot;</span><span class="p">,</span><span class="s">&quot;survival&quot;</span><span class="p">,</span> <span class="s">&quot;XML&quot;</span><span class="p">,</span> <span class="s">&quot;xtable&quot;</span><span class="p">,</span>  <span class="s">&quot;yaml&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="html-toggle section" id="rna-seq-tuxedo">
+<h2>RNA-seq (Tuxedo)<a class="headerlink" href="#rna-seq-tuxedo" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><table border="1" class="html-plain-table docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>FASTQC:</td>
+<td><a class="reference external" href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">http://www.bioinformatics.babraham.ac.uk/projects/fastqc/</a></td>
+</tr>
+<tr class="row-even"><td>TOPHAT:</td>
+<td><a class="reference external" href="http://tophat.cbcb.umd.edu/">http://tophat.cbcb.umd.edu/</a></td>
+</tr>
+<tr class="row-odd"><td>CUFFLINKS:</td>
+<td><a class="reference external" href="http://cufflinks.cbcb.umd.edu/">http://cufflinks.cbcb.umd.edu/</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="html-toggle section" id="rna-seq-anders-2013">
+<h2>RNA-seq (Anders 2013)<a class="headerlink" href="#rna-seq-anders-2013" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><table border="1" class="html-plain-table docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>FASTQC:</td>
+<td><a class="reference external" href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">http://www.bioinformatics.babraham.ac.uk/projects/fastqc/</a></td>
+</tr>
+<tr class="row-even"><td>STAR:</td>
+<td><a class="reference external" href="http://code.google.com/p/rna-star/">http://code.google.com/p/rna-star/</a></td>
+</tr>
+<tr class="row-odd"><td>SAMTOOLS:</td>
+<td><a class="reference external" href="http://samtools.sourceforge.net/">http://samtools.sourceforge.net/</a></td>
+</tr>
+<tr class="row-even"><td>HTSEQ:</td>
+<td><a class="reference external" href="http://www-huber.embl.de/users/anders/HTSeq/doc/index.html">http://www-huber.embl.de/users/anders/HTSeq/doc/index.html</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="html-toggle section" id="whole-exome-sequencing-gatk">
+<h2>Whole Exome Sequencing (GATK)<a class="headerlink" href="#whole-exome-sequencing-gatk" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><table border="1" class="html-plain-table docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>FASTQC:</td>
+<td><a class="reference external" href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">http://www.bioinformatics.babraham.ac.uk/projects/fastqc/</a></td>
+</tr>
+<tr class="row-even"><td>BWA:</td>
+<td><a class="reference external" href="http://bio-bwa.sourceforge.net/">http://bio-bwa.sourceforge.net/</a></td>
+</tr>
+<tr class="row-odd"><td>PICARD:</td>
+<td><a class="reference external" href="http://picard.sourceforge.net/">http://picard.sourceforge.net/</a></td>
+</tr>
+<tr class="row-even"><td>GATK:</td>
+<td><a class="reference external" href="https://www.broadinstitute.org/gatk/download">https://www.broadinstitute.org/gatk/download</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="html-toggle section" id="whole-genome-sequencing-gatk">
+<h2>Whole Genome Sequencing (GATK)<a class="headerlink" href="#whole-genome-sequencing-gatk" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><table border="1" class="html-plain-table docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>FASTQC:</td>
+<td><a class="reference external" href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">http://www.bioinformatics.babraham.ac.uk/projects/fastqc/</a></td>
+</tr>
+<tr class="row-even"><td>BWA:</td>
+<td><a class="reference external" href="http://bio-bwa.sourceforge.net/">http://bio-bwa.sourceforge.net/</a></td>
+</tr>
+<tr class="row-odd"><td>PICARD:</td>
+<td><a class="reference external" href="http://picard.sourceforge.net/">http://picard.sourceforge.net/</a></td>
+</tr>
+<tr class="row-even"><td>GATK:</td>
+<td><a class="reference external" href="https://www.broadinstitute.org/gatk/download">https://www.broadinstitute.org/gatk/download</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="html-toggle section" id="whole-genome-sequencing-mutect">
+<h2>Whole Genome Sequencing (MUTECT)<a class="headerlink" href="#whole-genome-sequencing-mutect" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><table border="1" class="html-plain-table docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>FASTQC:</td>
+<td><a class="reference external" href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">http://www.bioinformatics.babraham.ac.uk/projects/fastqc/</a></td>
+</tr>
+<tr class="row-even"><td>BWA:</td>
+<td><a class="reference external" href="http://bio-bwa.sourceforge.net/">http://bio-bwa.sourceforge.net/</a></td>
+</tr>
+<tr class="row-odd"><td>MUTECT:</td>
+<td><a class="reference external" href="http://www.broadinstitute.org/cancer/cga/mutect">http://www.broadinstitute.org/cancer/cga/mutect</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="html-toggle section" id="chip-seq-macs">
+<h2>ChIP-seq (MACS)<a class="headerlink" href="#chip-seq-macs" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><table border="1" class="html-plain-table docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>FASTQC:</td>
+<td><a class="reference external" href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">http://www.bioinformatics.babraham.ac.uk/projects/fastqc/</a></td>
+</tr>
+<tr class="row-even"><td>HOMER:</td>
+<td><a class="reference external" href="http://homer.salk.edu/homer/ngs/index.html">http://homer.salk.edu/homer/ngs/index.html</a></td>
+</tr>
+<tr class="row-odd"><td>BOWTIE:</td>
+<td><a class="reference external" href="http://bowtie-bio.sourceforge.net/index.shtml">http://bowtie-bio.sourceforge.net/index.shtml</a></td>
+</tr>
+<tr class="row-even"><td>MACS:</td>
+<td><a class="reference external" href="http://liulab.dfci.harvard.edu/MACS/">http://liulab.dfci.harvard.edu/MACS/</a></td>
+</tr>
+<tr class="row-odd"><td>BEDTOOLS:</td>
+<td><a class="reference external" href="https://github.com/arq5x/bedtools2">https://github.com/arq5x/bedtools2</a></td>
+</tr>
+<tr class="row-even"><td>SAMTOOLS:</td>
+<td><a class="reference external" href="http://samtools.sourceforge.net/">http://samtools.sourceforge.net/</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="html-toggle section" id="chip-seq-homer">
+<h2>ChIP-seq (HOMER)<a class="headerlink" href="#chip-seq-homer" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><table border="1" class="html-plain-table docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>FASTQC:</td>
+<td><a class="reference external" href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">http://www.bioinformatics.babraham.ac.uk/projects/fastqc/</a></td>
+</tr>
+<tr class="row-even"><td>HOMER:</td>
+<td><a class="reference external" href="http://homer.salk.edu/homer/ngs/index.html">http://homer.salk.edu/homer/ngs/index.html</a></td>
+</tr>
+<tr class="row-odd"><td>BOWTIE:</td>
+<td><a class="reference external" href="http://bowtie-bio.sourceforge.net/index.shtml">http://bowtie-bio.sourceforge.net/index.shtml</a></td>
+</tr>
+<tr class="row-even"><td>BEDTOOLS:</td>
+<td><a class="reference external" href="https://github.com/arq5x/bedtools2">https://github.com/arq5x/bedtools2</a></td>
+</tr>
+<tr class="row-odd"><td>SAMTOOLS:</td>
+<td><a class="reference external" href="http://samtools.sourceforge.net/">http://samtools.sourceforge.net/</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="html-toggle section" id="breast-cancer-personalized-genomics-report-rnaseq">
+<h2>Breast Cancer Personalized Genomics Report- RNAseq<a class="headerlink" href="#breast-cancer-personalized-genomics-report-rnaseq" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><table border="1" class="html-plain-table docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>FASTQC:</td>
+<td><a class="reference external" href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">http://www.bioinformatics.babraham.ac.uk/projects/fastqc/</a></td>
+</tr>
+<tr class="row-even"><td>STAR:</td>
+<td><a class="reference external" href="http://code.google.com/p/rna-star/">http://code.google.com/p/rna-star/</a></td>
+</tr>
+<tr class="row-odd"><td>SAMTOOLS:</td>
+<td><a class="reference external" href="http://samtools.sourceforge.net/">http://samtools.sourceforge.net/</a></td>
+</tr>
+<tr class="row-even"><td>HTSEQ:</td>
+<td><a class="reference external" href="http://www-huber.embl.de/users/anders/HTSeq/doc/index.html">http://www-huber.embl.de/users/anders/HTSeq/doc/index.html</a></td>
+</tr>
+<tr class="row-odd"><td>RSEQC:</td>
+<td><a class="reference external" href="http://rseqc.sourceforge.net/">http://rseqc.sourceforge.net/</a></td>
+</tr>
+<tr class="row-even"><td>PICARD:</td>
+<td><a class="reference external" href="http://picard.sourceforge.net/">http://picard.sourceforge.net/</a></td>
+</tr>
+<tr class="row-odd"><td>GATK:</td>
+<td><a class="reference external" href="https://www.broadinstitute.org/gatk/download">https://www.broadinstitute.org/gatk/download</a></td>
+</tr>
+<tr class="row-even"><td>FusionCatcher:</td>
+<td><a class="reference external" href="https://code.google.com/p/fusioncatcher/">https://code.google.com/p/fusioncatcher/</a></td>
+</tr>
+<tr class="row-odd"><td>Oncofuse:</td>
+<td><a class="reference external" href="http://www.unav.es/genetica/oncofuse.html">http://www.unav.es/genetica/oncofuse.html</a></td>
+</tr>
+<tr class="row-even"><td>BWA:</td>
+<td><a class="reference external" href="http://bio-bwa.sourceforge.net/">http://bio-bwa.sourceforge.net/</a></td>
+</tr>
+<tr class="row-odd"><td>DNANEXUS SAMTOOLS:</td>
+<td><a class="reference external" href="https://github.com/dnanexus/samtools">https://github.com/dnanexus/samtools</a></td>
+</tr>
+<tr class="row-even"><td>BEDTOOLS:</td>
+<td><a class="reference external" href="https://github.com/arq5x/bedtools2">https://github.com/arq5x/bedtools2</a></td>
+</tr>
+<tr class="row-odd"><td>BLAT:</td>
+<td><a class="reference external" href="https://genome.ucsc.edu/FAQ/FAQblat.html#blat3">https://genome.ucsc.edu/FAQ/FAQblat.html#blat3</a></td>
+</tr>
+<tr class="row-even"><td>SNPiR:</td>
+<td><a class="reference external" href="http://lilab.stanford.edu/SNPiR/">http://lilab.stanford.edu/SNPiR/</a></td>
+</tr>
+<tr class="row-odd"><td>SNPEFF:</td>
+<td><a class="reference external" href="http://snpeff.sourceforge.net/">http://snpeff.sourceforge.net/</a></td>
+</tr>
+<tr class="row-even"><td>SNPSIFT:</td>
+<td><a class="reference external" href="http://snpeff.sourceforge.net/SnpSift.html">http://snpeff.sourceforge.net/SnpSift.html</a></td>
+</tr>
+<tr class="row-odd"><td>VCFTOOLS:</td>
+<td><a class="reference external" href="http://vcftools.sourceforge.net/">http://vcftools.sourceforge.net/</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="html-toggle section" id="tcga-reanalysis-pipeline-rnaseq">
+<h2>TCGA Reanalysis Pipeline - RNAseq<a class="headerlink" href="#tcga-reanalysis-pipeline-rnaseq" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><table border="1" class="html-plain-table docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>GeneTorrent:</td>
+<td><a class="reference external" href="https://cghub.ucsc.edu/docs/user/software.html">https://cghub.ucsc.edu/docs/user/software.html</a></td>
+</tr>
+<tr class="row-even"><td>FASTQC:</td>
+<td><a class="reference external" href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">http://www.bioinformatics.babraham.ac.uk/projects/fastqc/</a></td>
+</tr>
+<tr class="row-odd"><td>STAR:</td>
+<td><a class="reference external" href="http://code.google.com/p/rna-star/">http://code.google.com/p/rna-star/</a></td>
+</tr>
+<tr class="row-even"><td>SAMTOOLS:</td>
+<td><a class="reference external" href="http://samtools.sourceforge.net/">http://samtools.sourceforge.net/</a></td>
+</tr>
+<tr class="row-odd"><td>HTSEQ:</td>
+<td><a class="reference external" href="http://www-huber.embl.de/users/anders/HTSeq/doc/index.html">http://www-huber.embl.de/users/anders/HTSeq/doc/index.html</a></td>
+</tr>
+<tr class="row-even"><td>RSEQC:</td>
+<td><a class="reference external" href="http://rseqc.sourceforge.net/">http://rseqc.sourceforge.net/</a></td>
+</tr>
+<tr class="row-odd"><td>PICARD:</td>
+<td><a class="reference external" href="http://picard.sourceforge.net/">http://picard.sourceforge.net/</a></td>
+</tr>
+<tr class="row-even"><td>GATK:</td>
+<td><a class="reference external" href="https://www.broadinstitute.org/gatk/download">https://www.broadinstitute.org/gatk/download</a></td>
+</tr>
+<tr class="row-odd"><td>FusionCatcher:</td>
+<td><a class="reference external" href="https://code.google.com/p/fusioncatcher/">https://code.google.com/p/fusioncatcher/</a></td>
+</tr>
+<tr class="row-even"><td>Oncofuse:</td>
+<td><a class="reference external" href="http://www.unav.es/genetica/oncofuse.html">http://www.unav.es/genetica/oncofuse.html</a></td>
+</tr>
+<tr class="row-odd"><td>BWA:</td>
+<td><a class="reference external" href="http://bio-bwa.sourceforge.net/">http://bio-bwa.sourceforge.net/</a></td>
+</tr>
+<tr class="row-even"><td>DNANEXUS SAMTOOLS:</td>
+<td><a class="reference external" href="https://github.com/dnanexus/samtools">https://github.com/dnanexus/samtools</a></td>
+</tr>
+<tr class="row-odd"><td>BEDTOOLS:</td>
+<td><a class="reference external" href="https://github.com/arq5x/bedtools2">https://github.com/arq5x/bedtools2</a></td>
+</tr>
+<tr class="row-even"><td>BLAT:</td>
+<td><a class="reference external" href="https://genome.ucsc.edu/FAQ/FAQblat.html#blat3">https://genome.ucsc.edu/FAQ/FAQblat.html#blat3</a></td>
+</tr>
+<tr class="row-odd"><td>SNPiR:</td>
+<td><a class="reference external" href="http://lilab.stanford.edu/SNPiR/">http://lilab.stanford.edu/SNPiR/</a></td>
+</tr>
+<tr class="row-even"><td>SNPEFF:</td>
+<td><a class="reference external" href="http://snpeff.sourceforge.net/">http://snpeff.sourceforge.net/</a></td>
+</tr>
+<tr class="row-odd"><td>SNPSIFT:</td>
+<td><a class="reference external" href="http://snpeff.sourceforge.net/SnpSift.html">http://snpeff.sourceforge.net/SnpSift.html</a></td>
+</tr>
+<tr class="row-even"><td>VCFTOOLS:</td>
+<td><a class="reference external" href="http://vcftools.sourceforge.net/">http://vcftools.sourceforge.net/</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="html-toggle section" id="tcga-reanalysis-pipeline-rnaseq-counts">
+<h2>TCGA Reanalysis Pipeline - RNAseq Counts<a class="headerlink" href="#tcga-reanalysis-pipeline-rnaseq-counts" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><table border="1" class="html-plain-table docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>GeneTorrent:</td>
+<td><a class="reference external" href="https://cghub.ucsc.edu/docs/user/software.html">https://cghub.ucsc.edu/docs/user/software.html</a></td>
+</tr>
+<tr class="row-even"><td>FASTQC:</td>
+<td><a class="reference external" href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">http://www.bioinformatics.babraham.ac.uk/projects/fastqc/</a></td>
+</tr>
+<tr class="row-odd"><td>STAR:</td>
+<td><a class="reference external" href="http://code.google.com/p/rna-star/">http://code.google.com/p/rna-star/</a></td>
+</tr>
+<tr class="row-even"><td>SAMTOOLS:</td>
+<td><a class="reference external" href="http://samtools.sourceforge.net/">http://samtools.sourceforge.net/</a></td>
+</tr>
+<tr class="row-odd"><td>HTSEQ:</td>
+<td><a class="reference external" href="http://www-huber.embl.de/users/anders/HTSeq/doc/index.html">http://www-huber.embl.de/users/anders/HTSeq/doc/index.html</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="html-toggle section" id="mirnaseq-counts-anders-2013">
+<h2>miRNAseq Counts (Anders 2013)<a class="headerlink" href="#mirnaseq-counts-anders-2013" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><table border="1" class="html-plain-table docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>CutAdapt:</td>
+<td><a class="reference external" href="http://code.google.com/p/cutadapt/">http://code.google.com/p/cutadapt/</a></td>
+</tr>
+<tr class="row-even"><td>FASTQC:</td>
+<td><a class="reference external" href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">http://www.bioinformatics.babraham.ac.uk/projects/fastqc/</a></td>
+</tr>
+<tr class="row-odd"><td>STAR:</td>
+<td><a class="reference external" href="http://code.google.com/p/rna-star/">http://code.google.com/p/rna-star/</a></td>
+</tr>
+<tr class="row-even"><td>SAMTOOLS:</td>
+<td><a class="reference external" href="http://samtools.sourceforge.net/">http://samtools.sourceforge.net/</a></td>
+</tr>
+<tr class="row-odd"><td>HTSEQ:</td>
+<td><a class="reference external" href="http://www-huber.embl.de/users/anders/HTSeq/doc/index.html">http://www-huber.embl.de/users/anders/HTSeq/doc/index.html</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="html-toggle section" id="mirnaseq-tuxedo">
+<h2>miRNAseq (Tuxedo)<a class="headerlink" href="#mirnaseq-tuxedo" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><table border="1" class="html-plain-table docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>CutAdapt:</td>
+<td><a class="reference external" href="http://code.google.com/p/cutadapt/">http://code.google.com/p/cutadapt/</a></td>
+</tr>
+<tr class="row-even"><td>FASTQC:</td>
+<td><a class="reference external" href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">http://www.bioinformatics.babraham.ac.uk/projects/fastqc/</a></td>
+</tr>
+<tr class="row-odd"><td>TOPHAT:</td>
+<td><a class="reference external" href="http://tophat.cbcb.umd.edu/">http://tophat.cbcb.umd.edu/</a></td>
+</tr>
+<tr class="row-even"><td>CUFFLINKS:</td>
+<td><a class="reference external" href="http://cufflinks.cbcb.umd.edu/">http://cufflinks.cbcb.umd.edu/</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="contents.html" title="contents">
+          <img class="logo" src="_static/logo.jpg" alt="Logo"/>
+        </a></p><div class="sphinxlocaltoc">
+    <h3><a href="contents.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Third Party Software Dependencies</a><ul>
+<li><a class="reference internal" href="#r-packages-needed">R Packages Needed</a></li>
+<li><a class="reference internal" href="#rna-seq-tuxedo">RNA-seq (Tuxedo)</a></li>
+<li><a class="reference internal" href="#rna-seq-anders-2013">RNA-seq (Anders 2013)</a></li>
+<li><a class="reference internal" href="#whole-exome-sequencing-gatk">Whole Exome Sequencing (GATK)</a></li>
+<li><a class="reference internal" href="#whole-genome-sequencing-gatk">Whole Genome Sequencing (GATK)</a></li>
+<li><a class="reference internal" href="#whole-genome-sequencing-mutect">Whole Genome Sequencing (MUTECT)</a></li>
+<li><a class="reference internal" href="#chip-seq-macs">ChIP-seq (MACS)</a></li>
+<li><a class="reference internal" href="#chip-seq-homer">ChIP-seq (HOMER)</a></li>
+<li><a class="reference internal" href="#breast-cancer-personalized-genomics-report-rnaseq">Breast Cancer Personalized Genomics Report- RNAseq</a></li>
+<li><a class="reference internal" href="#tcga-reanalysis-pipeline-rnaseq">TCGA Reanalysis Pipeline - RNAseq</a></li>
+<li><a class="reference internal" href="#tcga-reanalysis-pipeline-rnaseq-counts">TCGA Reanalysis Pipeline - RNAseq Counts</a></li>
+<li><a class="reference internal" href="#mirnaseq-counts-anders-2013">miRNAseq Counts (Anders 2013)</a></li>
+<li><a class="reference internal" href="#mirnaseq-tuxedo">miRNAseq (Tuxedo)</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="databases.html"
+                          title="Previous page">&larr; Reference Databases Needed</a></p>
+  </div>
+  <div class="sphinxnext">
+    <h4>Next page</h4>
+    <p class="topless"><a href="resources.html"
+                          title="Next page">&rarr; System Requirements</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/dependencies.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="contents.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="resources.html" title="System Requirements"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="databases.html" title="Reference Databases Needed"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="contents.html">Omics Pipe 1.1.3 Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &copy; <a href="copyright.html">Copyright</a> 2014-2015 Kathleen Fisch, Ph.D..
+      Last updated on Sep 21, 2015.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

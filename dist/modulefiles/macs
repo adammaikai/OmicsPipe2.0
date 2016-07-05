@@ -1,0 +1,5 @@
+#%Module
+
+set root /usr/local
+
+prepend-path	PATH	$root/bin

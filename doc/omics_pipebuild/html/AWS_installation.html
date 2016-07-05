@@ -1,0 +1,653 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>OmicsPipe on the Amazon Cloud (AWS EC2) Tutorial &mdash; Omics Pipe v1.1.3 Documentation</title>
+    
+    <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Omics Pipe v1.1.3 Documentation" href="contents.html" />
+    <link rel="next" title="Omics Pipe Tutorial" href="tutorial.html" />
+    <link rel="prev" title="Using Omics Pipe" href="installation.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body role="document">
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="contents.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Omics Pipe Tutorial"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="installation.html" title="Using Omics Pipe"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="contents.html">Omics Pipe 1.1.3 Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="omicspipe-on-the-amazon-cloud-aws-ec2-tutorial">
+<span id="index-0"></span><h1>OmicsPipe on the Amazon Cloud (AWS EC2) Tutorial<a class="headerlink" href="#omicspipe-on-the-amazon-cloud-aws-ec2-tutorial" title="Permalink to this headline">¶</a></h1>
+<p>OmicsPipe on AWS uses a custom <a class="reference external" href="http://star.mit.edu/cluster/">StarCluster</a> image, created with <a class="reference external" href="https://www.docker.io/">docker.io</a> (which installs <a class="reference external" href="https://www.docker.io/">docker.io</a>, <a class="reference external" href="http://modules.sourceforge.net/)">environment-modules</a>, and <a class="reference external" href="https://github.com/hpcugent/easybuild)">easybuild</a> on an AWS EC2 cluster).
+All you have to do is get the docker image, upload your data, launch the Amazon cluster and run a single command to analyze all of your data according to published, best-practice methods.</p>
+<div class="section" id="step-1-create-an-aws-account">
+<h2>Step 1: Create an AWS Account<a class="headerlink" href="#step-1-create-an-aws-account" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Create an AWS account by following the instructions at <a class="reference external" href="http://aws.amazon.com/getting-started/?sc_ichannel=ha&amp;sc_icountry=en&amp;sc_icampaigntype=general_info&amp;sc_icampaign=ha_en_GettingStarted&amp;sc_ipage=homepage&amp;sc_iplace=ha_en_ed&amp;sc_icategory=none&amp;sc_iproduct=none&amp;sc_isegment=none&amp;sc_icontent=default&amp;sc_idetail=none/">Amazon-AWS</a></li>
+<li>Note your AWS ACCESS KEY ID, AWS SECRET ACCESS KEY and AWS USER ID</li>
+</ol>
+</div>
+<div class="section" id="step-2-mac-or-linux-install-starcluster-and-download-config-plugins">
+<h2>Step 2 (Mac or Linux): Install StarCluster and download config/plugins<a class="headerlink" href="#step-2-mac-or-linux-install-starcluster-and-download-config-plugins" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Install StarCluster on your machine following the <a class="reference external" href="http://star.mit.edu/cluster/docs/latest/quickstart.html">StarCluster instructions</a></li>
+<li>Download the template Omics Pipe StarCluster configuration file (config) and three plugin files (sge.py, sgeconfig.py, omicspipe_config_prebuilt.py) from <a class="reference external" href="https://bitbucket.org/sulab/omics_pipe/downloads">Omics Pipe Bitbucket</a></li>
+<li>Move downloaded config file to ~/.starcluster/config</li>
+<li>Move downloaded plugin files to the ~/.starcluster/plugins/ folder.</li>
+<li>Go on to configure StarCluster by following directions below in Step 3.</li>
+</ol>
+</div>
+<div class="section" id="step-2-windows-load-the-the-omicspipe-on-aws-docker-image-on-your-machine">
+<h2>Step 2 (Windows): Load the the OmicsPipe on AWS docker image on your machine<a class="headerlink" href="#step-2-windows-load-the-the-omicspipe-on-aws-docker-image-on-your-machine" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Download <a class="reference external" href="https://www.docker.io/">docker.io</a> following the instructions for your operating system at <a class="reference external" href="http://docs.docker.io/introduction/get-docker/">Get-Docker</a></li>
+</ol>
+<ol class="floater arabic" start="2">
+<li><p class="first">From inside the Docker environment, run the command:</p>
+<div class="highlight-python"><div class="highlight"><pre>docker run -i -t omicspipe/aws_readymade /bin/bash
+</pre></div>
+</div>
+</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you want to share a file from your local computer with the docker container, follow the instructions for <a class="reference external" href="https://github.com/boot2docker/boot2docker#folder-sharing">Docker Folder Sharing</a>, put your desired file within the shared folder and run the command below (this is recommended for saving your /.starcluster/config file from the next step:</p>
+<div class="last highlight-python"><div class="highlight"><pre>docker run -it --volumes-from NameofSharedDataFolder omicspipe/aws_readymade /bin/bash
+</pre></div>
+</div>
+</div>
+<ul class="simple">
+<li>If you are on a local Ubuntu installation, skip this step and <a class="reference external" href="http://web.mit.edu/Star/cluster/docs/latest/installation.html">install</a> the StarCluster client directly.</li>
+<li>If you are using Windows, it might be necessary to update your BIOS to <a class="reference external" href="http://docker.readthedocs.org/en/v0.7.3/installation/windows/#troubleshooting">enable virtualization</a> before installing Docker</li>
+</ul>
+</div>
+<div class="section" id="step-3-configure-starcluster">
+<h2>Step 3: Configure StarCluster<a class="headerlink" href="#step-3-configure-starcluster" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">After running the omicspipe/aws_readymade Docker container, run the command below to edit the StarCluster configuration file:</p>
+<div class="highlight-python"><div class="highlight"><pre>    nano ~/.starcluster/config
+
+Or if you prefer vim::
+
+    vim ~/.starcluster/config
+</pre></div>
+</div>
+</li>
+<li><p class="first">Enter your &#8220;AWS ACCESS KEY ID&#8221;, &#8220;AWS SECRET ACCESS KEY&#8221;, and &#8220;AWS USER ID&#8221;</p>
+</li>
+<li><p class="first">Change the AWS REGION NAME and AWS REGION HOST variables if you do not live in the AWS us-west region to the appropriate region <a class="reference external" href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html">AWS Regions</a>.</p>
+</li>
+<li><p class="first">Select your desired pre-configured cluster by editing the &#8220;DEFAULT_TEMPLATE&#8221; variable or creating a custom cluster. The default is a test cluster with 5 c3.large nodes.</p>
+</li>
+<li><p class="first">Save the edited file (Instructions for <a class="reference external" href="http://mintaka.sdsu.edu/reu/nano.html">Nano</a> and for <a class="reference external" href="http://www.fprintf.net/vimCheatSheet.html">Vim</a>)</p>
+</li>
+<li><p class="first">Create your starcluster SSH key by running the command:</p>
+<div class="highlight-python"><div class="highlight"><pre>starcluster createkey omicspipe -o ~/.ssh/omicspipe.rsa
+</pre></div>
+</div>
+</li>
+</ol>
+<ul>
+<li><p class="first">To remove a key from the AWS registry, run the command:</p>
+<div class="highlight-python"><div class="highlight"><pre>starcluster removekey omicspipe
+</pre></div>
+</div>
+</li>
+<li><p class="first">For more information on editing the StarCluster configuration file, see the <a class="reference external" href="http://star.mit.edu/cluster/">StarCluster</a> website.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="step-4-create-aws-volumes">
+<h2>Step 4: Create AWS Volumes<a class="headerlink" href="#step-4-create-aws-volumes" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Create AWS volumes to store the raw data and results of your analyses. From within the Docker environment, run:</p>
+<div class="highlight-python"><div class="highlight"><pre>starcluster createvolume --name=data -i ami-52112317 -d -s &lt;volume size in GB&gt; us-west-1a
+
+starcluster createvolume --name=results -i ami-52112317 -d -s &lt;volume size in GB&gt; us-west-1a
+</pre></div>
+</div>
+</li>
+</ol>
+<ul class="simple">
+<li>Specify the &lt;volume size in GB&gt; as a number large enough to accomodate all of your raw data and ~4x that size for your results folder</li>
+<li>Change us-west-1b to your region as described in <a class="reference external" href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html">AWS Regions</a>.</li>
+</ul>
+<ol class="arabic simple" start="2">
+<li>Make a volume from the provided snapshot of reference databases (currently only supports H. sapiens)</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>Go to the <a class="reference external" href="https://console.aws.amazon.com">AWS-Console</a></li>
+<li>Click on the <a class="reference external" href="https://console.aws.amazon.com/ec2">EC2 option</a></li>
+<li>Click on Volumes</li>
+<li>Click on &#8220;Create Volume&#8221;</li>
+<li>Set availability zone</li>
+<li>In Snapshot ID search for &#8220;omicspipe_db&#8221; and click on the resulting Snapshot ID</li>
+<li>Click Create</li>
+<li>From the Volumes tab, note the &#8220;VOLUME_ID&#8221; of the database snapshot</li>
+</ul>
+</div></blockquote>
+<ol class="arabic" start="3">
+<li><p class="first">Edit your StarCluster configuration file to add your volume IDs. Run the command below and edit the VOLUME_ID variables for data, results, and database:</p>
+<div class="highlight-python"><div class="highlight"><pre>nano ~/.starcluster/config
+</pre></div>
+</div>
+<p>Edit the fields below:</p>
+<div class="highlight-python"><div class="highlight"><pre>[volume results]
+VOLUME_ID =
+MOUNT_PATH = /data/results
+
+[volume data]
+VOLUME_ID =
+MOUNT_PATH = /data/data
+
+[volume database]
+VOLUME_ID =
+MOUNT_PATH = /data/database
+</pre></div>
+</div>
+</li>
+<li><p class="first">Save your StarCluster configuration file to ~/.starcluster/config</p>
+</li>
+</ol>
+</div>
+<div class="section" id="step-5-launch-the-cluster">
+<h2>Step 5: Launch the Cluster<a class="headerlink" href="#step-5-launch-the-cluster" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">From the Docker container, run the command below to start a new cluster with the name &#8220;mypipe&#8221;:</p>
+<div class="highlight-python"><div class="highlight"><pre>starcluster start mypipe
+</pre></div>
+</div>
+</li>
+<li><p class="first">SSH into the cluster by running the command below:</p>
+<div class="highlight-python"><div class="highlight"><pre>starcluster sshmaster mypipe
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="step-6-upload-data-to-the-cluster">
+<h2>Step 6: Upload data to the cluster<a class="headerlink" href="#step-6-upload-data-to-the-cluster" title="Permalink to this headline">¶</a></h2>
+<p>Now that you are in your cluster, you can use it like any other cluster. Before running omics pipe on your own data (you can skip this step if you are running the test
+data, you will want to upload your data, unless it is already present in your attached data volume. There are several options to upload your data:</p>
+<ol class="arabic">
+<li><p class="first">Upload data from your local machine or cluster using <a class="reference external" href="http://star.mit.edu/cluster/docs/0.93.3/manual/putget.html">StarCluster put</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre>starcluster put mypipe &lt;myfile&gt; /data/raw
+</pre></div>
+</div>
+</li>
+<li><p class="first">Retrieve a file from an <a class="reference external" href="https://www.centos.org/docs/5/html/5.2/Deployment_Guide/s2-openssh-using-scp.html">FTP</a> server:</p>
+<div class="highlight-python"><div class="highlight"><pre>scp &lt;localfile&gt;username@tohostname:&lt;remotefile&gt;
+</pre></div>
+</div>
+</li>
+<li><p class="first">Get a file from an S3 bucket with <a class="reference external" href="http://s3tools.org/usage">S3cmd</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre>s3cmd get s3://BUCKET/OBJECT LOCAL_FILE
+</pre></div>
+</div>
+</li>
+<li><p class="first">Use <a class="reference external" href="http://www.webmin.com/">Webmin</a> to transfer files from your local system to the cluster (recommended for small files only, like parameter files).</p>
+<blockquote>
+<div><ul class="simple">
+<li>In the AWS Management Console go to &#8220;Security Groups&#8221;</li>
+<li>Select the &#8220;StarCluster-0_95_5&#8221; group associated with your cluster&#8217;s name</li>
+<li>On the Inbound tab click on &#8220;Edit&#8221;</li>
+<li>Click on &#8220;Add Rule&#8221; and a new &#8220;Custom TCP Rule&#8221; will apear. On &#8220;Port Range&#8221; enter &#8220;10000&#8221; and on &#8220;Source&#8221; select &#8220;My IP&#8221;</li>
+<li>Hit &#8220;Save&#8221;</li>
+<li>Selct Instances in the AWS managemnt console and note the &#8220;Public IP&#8221; of your instance</li>
+<li>In a Web browser, enter <a class="reference external" href="https://the_public_ip:10000">https://the_public_ip:10000</a>. Type in the Login info when prompted: user: root password: sulab</li>
+<li>This will take a few seconds to load, and once it does, you can navigate your cluster&#8217;s file structure with the tabs on the left</li>
+<li>To upload a file from your local file system, click &#8220;upload&#8221; and specify the directory /data/data to upload your data.</li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="step-7-run-the-test-pipelines">
+<h2>Step 7: Run the test pipelines<a class="headerlink" href="#step-7-run-the-test-pipelines" title="Permalink to this headline">¶</a></h2>
+<p>Once you have successfully started the cluster, you may run Omics Pipe with the following commands for the different pipelines.
+<a href="#id1"><span class="problematic" id="id2">*</span></a>Note: Small .fastq files are provided on the instance for the tests below to demonstrate the functionality of the pipelines, but they may not generate meaningful results. Larger test files can be uploaded to the cluster by following the instructions in the documentation above.</p>
+<p>RNA-seq Count Based Pipeline</p>
+<blockquote>
+<div>omics_pipe RNAseq_count_based /root/src/omics-pipe/tests/test_params_RNAseq_counts_AWS.yaml</div></blockquote>
+<p>RNA-seq Tuxedo Pipeline</p>
+<blockquote>
+<div>omics_pipe RNAseq_Tuxedo /root/src/omics-pipe/tests/test_params_RNAseq_Tuxedo_AWS.yaml</div></blockquote>
+<p>Whole Exome Sequencing:</p>
+<blockquote>
+<div>omics_pipe WES_GATK /root/src/omics-pipe/tests/test_params_WES_GATK_AWS.yaml</div></blockquote>
+<p>ChIP-seq Homer</p>
+<blockquote>
+<div>omics_pipe ChIPseq_HOMER /root/src/omics-pipe/tests/test_params_ChIPseq_HOMER_AWS.yaml</div></blockquote>
+</div>
+<div class="section" id="step-8-run-the-pipelines-with-your-own-data">
+<h2>Step 8: Run the pipelines with your own data<a class="headerlink" href="#step-8-run-the-pipelines-with-your-own-data" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="tutorial.html"><em>Tutorial</em></a></p>
+</div>
+<div class="section" id="installing-extra-software">
+<h2>Installing extra software<a class="headerlink" href="#installing-extra-software" title="Permalink to this headline">¶</a></h2>
+<p>Both the <a class="reference external" href="https://www.broadinstitute.org/gatk/">GATK</a> and <a class="reference external" href="http://www.broadinstitute.org/cancer/cga/mutect">MuTect</a> software are used by OmicsPipe, but they require licenses from The Broad Institute and cannot be distributed with the OmicsPipe software.
+GATK and MuTect are free to download after accepting the license agreement.</p>
+<p>To install GATK:</p>
+<ol class="arabic">
+<li><p class="first"><a class="reference external" href="https://www.broadinstitute.org/gatk/download">Download GATK</a></p>
+</li>
+<li><p class="first">Upload the GenomeAnalysisTK.jar file to the /root/.local/easybuild/software/gatk/3.2-2 using either <a class="reference external" href="http://www.webmin.com/">Webmin</a> or <a class="reference external" href="http://star.mit.edu/cluster/docs/0.93.3/manual/putget.html">StarCluster put</a></p>
+</li>
+<li><p class="first">Make the jar file executable by running the command:</p>
+<div class="highlight-python"><div class="highlight"><pre>chmod +x /root/.local/easybuild/software/gatk/3.2-2/GenomeAnalysisTK.jar
+</pre></div>
+</div>
+</li>
+</ol>
+<p>To install MuTect:</p>
+<ol class="arabic">
+<li><p class="first"><a class="reference external" href="http://www.broadinstitute.org/cancer/cga/mutect_download">Download MuTect</a></p>
+</li>
+<li><p class="first">Upload the muTect-1.1.4.jar file to the /root/.local/easybuild/software/mutect/1.1.4 using either <a class="reference external" href="http://www.webmin.com/">Webmin</a> or <a class="reference external" href="http://star.mit.edu/cluster/docs/0.93.3/manual/putget.html">StarCluster put</a></p>
+</li>
+<li><p class="first">Make the jar file executable by running the command:</p>
+<div class="highlight-python"><div class="highlight"><pre>chmod +x /root/.local/easybuild/software/mutect/1.1.4/muTect-1.1.4.jar
+</pre></div>
+</div>
+</li>
+</ol>
+<p>Adding software that OmicsPipe was not built with might require a little more configuration, but OmicsPipe is designed as a foundation to which new software can be added.
+New software can obviously be added in any manner that the user prefers, but to follow the structure that was used to build OmicsPipe, please refer to the &#8220;custombuild&#8221; scripts.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<ul class="last simple">
+<li>If you configure software that you think extends the functionality of OmicsPipe, please create a pull request on our <a class="reference external" href="https://bitbucket.org/sulab/omics_pipe/pull-requests">Bitbucket</a> page.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="to-build-your-own-docker-image">
+<h2>To build your own docker image<a class="headerlink" href="#to-build-your-own-docker-image" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Download docker.io following the instructions at <a class="reference external" href="http://docs.docker.io/introduction/get-docker/">Get-Docker</a></p>
+</li>
+<li><p class="first">Run the command:</p>
+<div class="highlight-python"><div class="highlight"><pre>docker build -t &lt;Repository Name&gt; https://bitbucket.org/sulab/omics_pipe/downloads/Dockerfile_AWS_prebuiltAMI_public
+</pre></div>
+</div>
+</li>
+</ol>
+<p>This will store the dockercluster image in the Repository Name of your choice.</p>
+<p>There is also an <a class="reference external" href="https://bitbucket.org/sulab/omics_pipe/downloads/Dockerfile_AWS_custombuild">AWS_custombuild Dockerfile</a>, which can be used to build an Amazon Machine Image from scratch</p>
+</div>
+<div class="section" id="add-storage-1tb-to-the-cluster-using-lvm-for-advanced-users">
+<h2>Add storage &gt; 1TB to the cluster using LVM (for advanced users)<a class="headerlink" href="#add-storage-1tb-to-the-cluster-using-lvm-for-advanced-users" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Within StarCluster create x new volumes by running:</p>
+<div class="highlight-python"><div class="highlight"><pre>nvolumes=2 #number of volumes
+vsize=1000 #in gb
+instance=`curl -s http://169.254.169.254/latest/meta-data/instance-id`
+akey=&lt;AWS KEY&gt;
+skey=&lt;AWS SECRET KEY&gt;
+region=us-west-1
+zone=us-west-1a
+
+for x in $(seq 1 $nvolumes)
+do
+  ec2-create-volume \
+      --aws-access-key $akey \
+      --aws-secret-key $skey \
+      --size $vsize \
+      --region $region \
+      --availability-zone $zone
+done &gt; /tmp/vols.txt
+</pre></div>
+</div>
+</li>
+<li><p class="first">Attach the volumes to the head node:</p>
+<div class="highlight-python"><div class="highlight"><pre>i=0
+for vol in $(awk &#39;{print $2}&#39; /tmp/vols.txt)
+do
+      i=$(( i + 1 ))
+      ec2-attach-volume $vol \
+      -O $akey \
+      -W $skey \
+      -i $instance \
+      --region $region \
+      -d /dev/sdh${i}
+done &gt; /tmp/attach.txt
+</pre></div>
+</div>
+</li>
+<li><p class="first">Mark the EBS volumes as physical volumes:</p>
+<div class="highlight-python"><div class="highlight"><pre>for i in $(find /dev/xvdh*)
+do
+     pvcreate $i
+done
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create a volume group:</p>
+<div class="highlight-python"><div class="highlight"><pre>vgcreate vg /dev/xvdh*
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create a logical volume:</p>
+<div class="highlight-python"><div class="highlight"><pre>lvcreate -l100%VG -n lv vg
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create the file system:</p>
+<div class="highlight-python"><div class="highlight"><pre>mkfs -t xfs /dev/vg/lv
+</pre></div>
+</div>
+</li>
+</ol>
+<ol class="arabic" start="8">
+<li><p class="first">Mount the file system:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">mount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vg</span><span class="o">/</span><span class="n">lv</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">data_large</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create mount point and mount the device:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">mkdir</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">data_large</span>
+<span class="n">mount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">md0</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">data_large</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Add new mountpoint to /etc/exports:</p>
+<div class="highlight-python"><div class="highlight"><pre>for x in $(qconf -sh | tail -n +2)
+do
+      echo &#39;/data/data_large&#39; ${x}&#39;(async,no_root_squash,no_subtree_check,rw)&#39; &gt;&gt; /etc/exports
+done
+</pre></div>
+</div>
+</li>
+<li><p class="first">Reload /etc/exports:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">exportfs</span> <span class="o">-</span><span class="n">a</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Mount the new folder on all nodes:</p>
+<div class="highlight-python"><div class="highlight"><pre>for x in $(qconf -sh | tail -n +2)
+do
+      ssh $x &#39;mkdir /data/data_large&#39;
+      ssh $x &#39;mount -t nfs master:/data/data_large /data/data_large&#39;
+done
+</pre></div>
+</div>
+</li>
+</ol>
+<p><strong>How to increase volume size?</strong></p>
+<ol class="arabic">
+<li><p class="first">Create and attach EBS volumes as described in steps 1. &amp; 2. and then create the additional physical volumes:</p>
+<div class="highlight-python"><div class="highlight"><pre>for i in $(cat /tmp/attach.txt  | cut -f 4 | sed &#39;s/[^0-9]*//g&#39;)
+do
+       pvcreate /dev/xvdh${i}
+done
+</pre></div>
+</div>
+</li>
+<li><p class="first">Add new volumes to the volume group:</p>
+<div class="highlight-python"><div class="highlight"><pre>for i in $(cat /tmp/attach.txt  | cut -f 4 | sed &#39;s/[^0-9]*//g&#39;)
+do
+       vgextend vg /dev/xvdh${i}
+done
+
+lvextend -l100%VG /dev/mapper/vg-lv
+</pre></div>
+</div>
+</li>
+<li><p class="first">Grow the file system to the new size:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">xfs_growfs</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">data_large</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="add-storage-1tb-to-the-cluster-using-raid-0-for-advanced-users">
+<h2>Add storage &gt; 1TB to the cluster using RAID 0 (for advanced users)<a class="headerlink" href="#add-storage-1tb-to-the-cluster-using-raid-0-for-advanced-users" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Within StarCluster create x new volumes by running:</p>
+<div class="highlight-python"><div class="highlight"><pre>nvolumes=2 #number of volumes
+vsize=1000 #in gb
+instance=`curl -s http://169.254.169.254/latest/meta-data/instance-id`
+akey=&lt;AWS KEY&gt;
+skey=&lt;AWS SECRET KEY&gt;
+region=us-west-1
+zone=us-west-1a
+
+for x in $(seq 1 $nvolumes)
+do
+  ec2-create-volume \
+      --aws-access-key $akey \
+      --aws-secret-key $skey \
+      --size $vsize \
+      --region $region \
+      --availability-zone $zone
+done &gt; /tmp/vols.txt
+</pre></div>
+</div>
+</li>
+<li><p class="first">Attach the volumes to the head node:</p>
+<div class="highlight-python"><div class="highlight"><pre>i=0
+for vol in $(awk &#39;{print $2}&#39; /tmp/vols.txt)
+do
+      i=$(( i + 1 ))
+      ec2-attach-volume $vol \
+      -O $akey \
+      -W $skey \
+      -i $instance \
+      --region $region \
+      -d /dev/sdh${i}
+done
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create a raid 0 volume:</p>
+<div class="highlight-python"><div class="highlight"><pre>mdadm --create -l 0 -n $nvolumes /dev/md0 /dev/xvdh*
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create a file system:</p>
+<div class="highlight-python"><div class="highlight"><pre>mkfs -t ext4 /dev/md0
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create mount point and mount the device:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">mkdir</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">data_large</span>
+<span class="n">mount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">md0</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">data_large</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Add new mountpoint to /etc/exports:</p>
+<div class="highlight-python"><div class="highlight"><pre>for x in $(qconf -sh | tail -n +2)
+do
+      echo &#39;/data/data_large&#39; ${x}&#39;(async,no_root_squash,no_subtree_check,rw)&#39; &gt;&gt; /etc/exports
+done
+</pre></div>
+</div>
+</li>
+<li><p class="first">Reload /etc/exports:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">exportfs</span> <span class="o">-</span><span class="n">a</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Mount the new folder on all nodes:</p>
+<div class="highlight-python"><div class="highlight"><pre>for x in $(qconf -sh | tail -n +2)
+do
+      ssh $x &#39;mkdir /data/data_large&#39;
+      ssh $x &#39;mount -t nfs master:/data/data_large /data/data_large&#39;
+done
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="backing-up-your-data-to-s3">
+<h2>Backing up your data to S3<a class="headerlink" href="#backing-up-your-data-to-s3" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Run:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s3cmd</span> <span class="o">--</span><span class="n">configure</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>and follow the instructions</p>
+<ol class="arabic" start="2">
+<li><p class="first">Create a S3 bucket:</p>
+<div class="highlight-python"><div class="highlight"><pre>s3cmd mb s3://backup
+</pre></div>
+</div>
+</li>
+<li><p class="first">Copy data to the bucket:</p>
+<div class="highlight-python"><div class="highlight"><pre>s3cmd put -r /data/results s3://backup
+</pre></div>
+</div>
+</li>
+</ol>
+<p>More info on s3cmd here: <a class="reference external" href="https://github.com/s3tools/s3cmd">https://github.com/s3tools/s3cmd</a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="contents.html" title="contents">
+          <img class="logo" src="_static/logo.jpg" alt="Logo"/>
+        </a></p><div class="sphinxlocaltoc">
+    <h3><a href="contents.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">OmicsPipe on the Amazon Cloud (AWS EC2) Tutorial</a><ul>
+<li><a class="reference internal" href="#step-1-create-an-aws-account">Step 1: Create an AWS Account</a></li>
+<li><a class="reference internal" href="#step-2-mac-or-linux-install-starcluster-and-download-config-plugins">Step 2 (Mac or Linux): Install StarCluster and download config/plugins</a></li>
+<li><a class="reference internal" href="#step-2-windows-load-the-the-omicspipe-on-aws-docker-image-on-your-machine">Step 2 (Windows): Load the the OmicsPipe on AWS docker image on your machine</a></li>
+<li><a class="reference internal" href="#step-3-configure-starcluster">Step 3: Configure StarCluster</a></li>
+<li><a class="reference internal" href="#step-4-create-aws-volumes">Step 4: Create AWS Volumes</a></li>
+<li><a class="reference internal" href="#step-5-launch-the-cluster">Step 5: Launch the Cluster</a></li>
+<li><a class="reference internal" href="#step-6-upload-data-to-the-cluster">Step 6: Upload data to the cluster</a></li>
+<li><a class="reference internal" href="#step-7-run-the-test-pipelines">Step 7: Run the test pipelines</a></li>
+<li><a class="reference internal" href="#step-8-run-the-pipelines-with-your-own-data">Step 8: Run the pipelines with your own data</a></li>
+<li><a class="reference internal" href="#installing-extra-software">Installing extra software</a></li>
+<li><a class="reference internal" href="#to-build-your-own-docker-image">To build your own docker image</a></li>
+<li><a class="reference internal" href="#add-storage-1tb-to-the-cluster-using-lvm-for-advanced-users">Add storage &gt; 1TB to the cluster using LVM (for advanced users)</a></li>
+<li><a class="reference internal" href="#add-storage-1tb-to-the-cluster-using-raid-0-for-advanced-users">Add storage &gt; 1TB to the cluster using RAID 0 (for advanced users)</a></li>
+<li><a class="reference internal" href="#backing-up-your-data-to-s3">Backing up your data to S3</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="installation.html"
+                          title="Previous page">&larr; Using Omics Pipe</a></p>
+  </div>
+  <div class="sphinxnext">
+    <h4>Next page</h4>
+    <p class="topless"><a href="tutorial.html"
+                          title="Next page">&rarr; Omics Pipe Tutorial</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/AWS_installation.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="contents.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Omics Pipe Tutorial"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="installation.html" title="Using Omics Pipe"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="contents.html">Omics Pipe 1.1.3 Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &copy; <a href="copyright.html">Copyright</a> 2014-2015 Kathleen Fisch, Ph.D..
+      Last updated on Sep 21, 2015.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

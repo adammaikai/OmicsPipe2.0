@@ -1,0 +1,5 @@
+#%Module
+
+set root /root/.local/easybuild/software/snpeff/3.6/snpEff
+
+prepend-path	PATH	$root

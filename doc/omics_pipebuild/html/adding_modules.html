@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Omics Pipe Tutorial – Adding a New Module (Tool) &mdash; Omics Pipe v1.1.3 Documentation</title>
+    
+    <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Omics Pipe v1.1.3 Documentation" href="contents.html" />
+    <link rel="next" title="Omics Pipe Available Pipelines" href="pipelines.html" />
+    <link rel="prev" title="Omics Pipe Tutorial – Creating a Custom Pipeline Script" href="custom_pipelines.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body role="document">
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="contents.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="pipelines.html" title="Omics Pipe Available Pipelines"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="custom_pipelines.html" title="Omics Pipe Tutorial – Creating a Custom Pipeline Script"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="contents.html">Omics Pipe 1.1.3 Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="omics-pipe-tutorial-adding-a-new-module-tool">
+<span id="index-0"></span><h1>Omics Pipe Tutorial &#8211; Adding a New Module (Tool)<a class="headerlink" href="#omics-pipe-tutorial-adding-a-new-module-tool" title="Permalink to this headline">¶</a></h1>
+<p>Users can easily create new analysis modules for use within omics_pipe.
+The user has two options for creating new analysis modules:
+- Adding analysis modules directly within the omics_pipe/scripts installation directory
+- Creating a new working directory where all analysis modules scripts are located
+(this can be changed in the parameters file by changing the WORKING_DIR parameter
+to the desired location).  If you want to use option 2, in order to use pre-installed analysis
+modules, for the time being you must copy these analysis modules to your new working
+directory.  If you choose option 1, you can simply add additional analysis modules and they
+will be accessible along with the pre-installed analysis modules.</p>
+<p>To create a new analysis module, you need to perform four steps:
+1.      Create a Bash script with the command to be sent to the cluster
+2.      Create a Python module that calls the Bash script
+3.      Add  your module to your custom pipeline
+4.      Add new module parameters to parameters file</p>
+<p>The section below details each of these steps.</p>
+<div class="section" id="create-a-bash-script">
+<h2>1.      Create a Bash script<a class="headerlink" href="#create-a-bash-script" title="Permalink to this headline">¶</a></h2>
+<p>The first step in creating your custom module is to create the Bash script with the command you
+would like to run. If you are unsure how to write a Bash script, you can look at the examples in
+omics_pipe/scripts or work through this tutorial (<a class="reference external" href="http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html">http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html</a>).
+In many cases, this will be a simple script with a one line command to call the analysis program.  You
+should name your script something that will be easily identifiable and it should have the
+suffix .sh (e.g. analysis_script.sh).  At the beginning of your analysis script, you should put the following lines:</p>
+<div class="highlight-python"><div class="highlight"><pre>#!/bin/bash
+set -x
+#Source modules for current shell
+source $MODULESHOME/init/bash
+#Make output directory if it doesn&#39;t exist
+mkdir -p ${variable} #RESULTS_DIR
+#Move tmp dir to scratch
+export TMPDIR=${variable} #TEMP_DIR
+#Load specified software version
+module load fastqc/${variable} #VERSION
+</pre></div>
+</div>
+<p>The ${variable} will be changed to ${number} (e.g. $1) based on the location of the variable in the input
+script (more on this below).   These settings are assuming you are working on a cluster with a modular
+structure. If not, “module load” may not be appropriate to load the software, so please ask your system
+administrator to provide assistance with this if your cluster has a different system.  After you specify the
+software and other configuration variables, you can write the commands for the software you would like
+to use. When you are finished with the commands, exit the script with ‘exit 0.’  An example script for running
+the software program FASTQC is below.</p>
+<div class="highlight-python"><div class="highlight"><pre>#Runs fastqc with $1=SAMPLE, $2=RAW_DATA_DIR, $3=QC_PATH
+fastqc -o $3 $2/$1.fastq
+
+exit 0
+</pre></div>
+</div>
+<p>Substitute all variables that you would like to change from the parameter file with a variable notation, in the
+form of $1, $2, $3, etc for the first, second, third, etc input parameter that will be passed to the script.  Once
+you have appropriately parameterized the script, save the script either in your working directory (along will all
+the other scripts you will need, possibly copied from omics_pipe/scripts) or in the omics_pipe/scripts directory.</p>
+</div>
+<div class="section" id="create-a-python-module">
+<h2>2.      Create a Python module<a class="headerlink" href="#create-a-python-module" title="Permalink to this headline">¶</a></h2>
+<p>Now that you have created your custom script, you can create the Python module that will handle that script and
+schedule a job on the compute cluster using DRMAA (<a class="reference external" href="https://code.google.com/p/drmaa-python/wiki/Tutorial">https://code.google.com/p/drmaa-python/wiki/Tutorial</a>).
+You should name the Python module the same name as your custom analysis module, but with the extension .py.
+In this example, your Python module would be named analysis_script.py and the function within it would also be
+called analysis_script. Save your custom Python module within the same directory as your custom pipeline script.
+At the top of your Python module, cut and copy the text below.</p>
+<div class="highlight-python"><div class="highlight"><pre>#!/usr/bin/env python
+
+import drmaa
+from omics_pipe.parameters.default_parameters import default_parameters
+from omics_pipe.utils import *
+p = Bunch(default_parameters)
+
+You will then write a simple Python function that take the form of the function below. You can directly cut and copy
+this function and then change the necessary names/parameters to fit your custom analysis.  ::
+
+def fastqc(sample, fastqc_flag):
+        &#39;&#39;&#39;QC check of raw .fastq files using FASTQC
+                input: .fastq file
+                output: folder and zipped folder containing html, txt and image files
+                citation: Babraham Bioinformatics
+                link: http://www.bioinformatics.babraham.ac.uk/projects/fastqc/
+                parameters from parameters file: RAW_DATA_DIR,QC_PATH, FASTQC_VERSION&#39;&#39;&#39;
+                  spawn_job(jobname = &#39;fastqc&#39;, SAMPLE = sample, LOG_PATH = p.LOG_PATH, RESULTS_EMAIL = p.RESULTS_EMAIL, walltime = &quot;12:00:00&quot;, queue = p.QUEUE, nodes = 1, ppn = 8, memory = &quot;16gb&quot;, script = &quot;/fastqc_drmaa.sh&quot;, args_list = [sample, p.RAW_DATA_DIR,p.QC_PATH, p.FASTQC_VERSION])
+                job_status(jobname = &#39;fastqc&#39;, resultspath = p.QC_PATH, SAMPLE = sample, outputfilename = sample + &quot;_fastq/&quot; + &quot;fastqc_data.txt&quot;, FLAG_PATH = p.FLAG_PATH)
+        return
+</pre></div>
+</div>
+<p>Name your function the same as the names of both the Bash and Python scripts you just created for consistency.
+In our example, the first line would look like: “def analysis_script(sample, analysis_script_flag):”.  As you can see,
+I changed the name of the function as well as the name of the flag input file.  The document string should be change
+to describe what your analysis module does, what type of input file it takes, a citation and link to the tool that you are
+calling, as well as the parameters that are needed in the parameters file that will be passed to the Bash script that you
+created.  After you are done documenting your function, you will change a few items within the spawn_job and job_status
+functions that are called from the omics_pipe.utils module.  In the spawn_job function, you should change the job name to
+match the name of your function, you can customize the resources your job will request from the compute cluster, you will
+need to change the name of the script to match that of the Bash script that you just created, and then you will change the
+parameters listed in the variable “args_list.”  The variable “sample” is lower case because it is passed to this function from
+omics_pipe, but input parameters coming from the parameters file must be prefixed with “p.” List the parameters that you
+need to feed into your custom analysis script in the order that you numbered them in the Bash script. In the example above,
+$1 corresponds to ‘sample’ $2 corresponds to p.RAW_DATA_DIR, etc.  Once you have the spawn_job function updated, you
+will update the job_status function with the job name, results path and a name of an output file that will be produced from your
+Bash script. This can be any file that is created.  This function will check that this file exists in the specified results directory,
+check that its size is greater than zero, and then it will create a flag file if it exists.  Once you complete this, you are finished
+creating your custom Python module.</p>
+</div>
+<div class="section" id="add-custom-python-module-to-your-custom-pipeline">
+<h2>3.      Add custom Python module to your custom pipeline<a class="headerlink" href="#add-custom-python-module-to-your-custom-pipeline" title="Permalink to this headline">¶</a></h2>
+<p>In order to use your custom analysis module, you will need to create a custom pipeline with your custom analysis module included
+as a step in the pipeline. For a tutorial on how to create a custom pipeline, see Section “Creating a Custom Pipeline Script.”  Once
+you have a custom pipeline script, please make sure your custom analysis module and custom pipeline script are in the same directory.</p>
+</div>
+<div class="section" id="add-new-parameters-to-parameters-file">
+<h2>4.      Add new parameters to parameters file<a class="headerlink" href="#add-new-parameters-to-parameters-file" title="Permalink to this headline">¶</a></h2>
+<p>Add the parameters necessary for your custom analysis module to run into the
+parameters file.  Simply add the parameters to your parameters script, save it, and then run your custom pipeline.</p>
+</div>
+<div class="section" id="create-custom-module-directory">
+<h2>5.      Create Custom Module Directory<a class="headerlink" href="#create-custom-module-directory" title="Permalink to this headline">¶</a></h2>
+<p>In order for Omics Pipe to find your custom modules and scripts, create a local directory and put your new scripts, module files and custom pipeline within this folder. In your parameter file,
+specify this directory as the WORKING_DIR: parameter. In your custom pipeline script, you can import custom modules at the beginning of the script that are within the same folder as the custom pipeline.
+For Omics Pipe modules, import those modules as they appear in the Omics Pipe pipeline scripts.</p>
+</div>
+<div class="section" id="run-your-pipeline">
+<h2>6. Run your pipeline<a class="headerlink" href="#run-your-pipeline" title="Permalink to this headline">¶</a></h2>
+<p>Run your custom modules/pipeline as you would from the command line for running a custom pipeline.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="contents.html" title="contents">
+          <img class="logo" src="_static/logo.jpg" alt="Logo"/>
+        </a></p><div class="sphinxlocaltoc">
+    <h3><a href="contents.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Omics Pipe Tutorial &#8211; Adding a New Module (Tool)</a><ul>
+<li><a class="reference internal" href="#create-a-bash-script">1.      Create a Bash script</a></li>
+<li><a class="reference internal" href="#create-a-python-module">2.      Create a Python module</a></li>
+<li><a class="reference internal" href="#add-custom-python-module-to-your-custom-pipeline">3.      Add custom Python module to your custom pipeline</a></li>
+<li><a class="reference internal" href="#add-new-parameters-to-parameters-file">4.      Add new parameters to parameters file</a></li>
+<li><a class="reference internal" href="#create-custom-module-directory">5.      Create Custom Module Directory</a></li>
+<li><a class="reference internal" href="#run-your-pipeline">6. Run your pipeline</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="custom_pipelines.html"
+                          title="Previous page">&larr; Omics Pipe Tutorial &#8211; Creating a Custom Pipeline Script</a></p>
+  </div>
+  <div class="sphinxnext">
+    <h4>Next page</h4>
+    <p class="topless"><a href="pipelines.html"
+                          title="Next page">&rarr; Omics Pipe Available Pipelines</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/adding_modules.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="contents.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="pipelines.html" title="Omics Pipe Available Pipelines"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="custom_pipelines.html" title="Omics Pipe Tutorial – Creating a Custom Pipeline Script"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="contents.html">Omics Pipe 1.1.3 Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &copy; <a href="copyright.html">Copyright</a> 2014-2015 Kathleen Fisch, Ph.D..
+      Last updated on Sep 21, 2015.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

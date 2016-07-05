@@ -1,0 +1,95 @@
+SAMPLE_LIST: [test_RNA1, test_RNA2]
+STEP: last_function
+STEPS: [fastqc, star, htseq, htseq_gencode, bwa1, bwa2, snpir_variants, RNAseq_QC, filter_variants, fusion_catcher, intogen, BreastCancer_RNA_report, last_function]
+ENDS: PE
+PIPE_MULTIPROCESS: 100
+PIPE_REBUILD: 'True'
+PIPE_VERBOSE: 5
+RESULTS_EMAIL: kfisch@scripps.edu
+USERNAME: kfisch 
+QUEUE: workq
+GENOME: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/WholeGenomeFasta/genome.fa
+RAW_DATA_DIR: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests
+FLAG_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/cancer
+FUSION_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/cancer
+ONCOFUSE_VERSION: '1.0.6'
+HTSEQ_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/cancer
+HTSEQ_GENCODE_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/cancer
+LOG_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/cancer
+QC_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/cancer
+RESULTS_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/cancer
+REPORT_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/cancer
+STAR_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/cancer
+VARIANT_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/cancer
+R_REPORT_SAMPLE_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests
+WORKING_DIR: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts
+CHROM: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/Chromosomes
+FASTQC_VERSION: '0.10.1'
+FUSIONCATCHERBUILD_DIR: /gpfs/group/databases/ensembl_v72
+FUSIONCATCHER_OPTIONS: -t /scratch/kfisch
+FUSIONCATCHER_VERSION: '0.98'
+HTSEQ_OPTIONS: -m intersection-nonempty -s no -t exon
+REF_GENES: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Annotation/Genes/genes.gtf
+RESULTS_EMAIL: kfisch@scripps.edu
+R_VERSION: '3.0.1'
+SAMTOOLS_VERSION:  "0.1.19"
+STAR_INDEX: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/star_genome
+STAR_OPTIONS: --readFilesCommand cat --runThreadN 16 --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical
+STAR_VERSION: '2.3.0'
+TEMP_DIR: /scratch/kfisch
+VARSCAN_OPTIONS: --min-coverage 15 --min-reads2 5 --min-var-freq 0.1 --min-avg-qual 30 --p-value 0.995 --output-vcf 1
+VARSCAN_PATH: /opt/applications/varscan/2.3.6/VarScan.jar
+VARSCAN_VERSION: '2.3.6'
+VCFTOOLS_VERSION: '0.1.10'
+DPS_VERSION: '1.3.1111'
+REF_GENES_GENCODE: /gpfs/group/su/meissto/cancer_report/src/annotation/gencode.v18.annotation.gtf
+SAMTOOLS_OPTIONS: -C 500
+VARIANT_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/cancer
+BWA_VERSION: "0.7.4"
+PICARD_VERSION: "1.92"
+GATK_VERSION: "2.7-4"
+BEDTOOLS_VERSION: "2.17.0"
+UCSC_TOOLS_VERSION: "273"
+REPEAT_MASKER: /gpfs/group/databases/SNPiR/annotations/RepeatMasker.bed
+SNPIR_ANNOTATION: /gpfs/group/databases/SNPiR/annotations/anno_combined_sorted
+RNA_EDIT: /gpfs/group/databases/SNPiR/rnaedit/Human_AG_all_hg19.bed
+DBSNP: /gpfs/group/databases/GATK/hg19/dbsnp_137.hg19.vcf
+MILLS: /gpfs/group/databases/GATK/hg19/Mills_and_1000G_gold_standard.indels.hg19.vcf
+G1000: /gpfs/group/databases/GATK/hg19/1000G_phase1.indels.hg19.vcf
+BWA_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/cancer
+GATK_READ_GROUP_INFO: '@RG\tID:laneID\tLB:TrueSeq\tPL:ILLUMINA\tSM:sampleID'
+SNPIR_VERSION: '1.0'
+BWA_INDEX: /gpfs/group/databases/SNPiR/BWAIndex/hg19_genome_junctions.fa
+BAM_FILE_NAME: Aligned.out.sorted.bam
+PARAMS_FILE: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_params_RNAseq_cancer.yaml
+SNPIR_CONFIG: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts
+VCF_FILE: intogen_input.vcf 
+INTOGEN_OPTIONS: --single-tumor 
+INTOGEN_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/cancer
+INTOGEN_VERSION: '2.3.0'
+INTOGEN_CONFIG: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts/intogen.conf
+SNPIR_DIR: /opt/applications/snpir/1.0/bin 
+RSEQC_REF: /gpfs/group/su/meissto/data/refFlat.txt
+RSEQC_VERSION: '2.3.7'
+SNPEFF_VERSION: '3.5'
+dbNSFP: /gpfs/group/su/meissto/data/dbNSFP/dbNSFP2.0.txt.gz
+SNP_FILTER_OUT_REF: /gpfs/group/su/meissto/cancer_report/src/RNA/vcf/common_no_known_medical_impact_00-latest.vcf
+RESOURCES: '-q workq -l nodes=1:ppn=8 -l mem=31gb'
+TUMOR_TYPE: 'BRCA'
+GENELIST: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts/reporting/ref/brca.txt
+COSMIC: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts/reporting/ref/cosmic.tsv
+CLINVAR: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts/reporting/ref/clinvar.txt
+PHARMGKB_rsID: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts/reporting/ref/pharmgkbRSID.csv
+PHARMGKB_Allele: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts/reporting/ref/pharmgkbAllele.tsv
+DRUGBANK: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts/reporting/ref/drugbank.tsv
+CADD: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts/reporting/ref/cadd.tsv.gz
+ENCODING: phred64
+SUMATRA_DB_PATH: /gpfs/home/kfisch/sumatra
+SUMATRA_RUN_NAME: default_sumatra_project
+REPOSITORY: https://kfisch@bitbucket.org/sulab/omics_pipe
+HG_USERNAME: Kathleen Fisch <kfisch@scripps.edu>
+PYTHON_VERSION: 2.6.5
+SCHEDULER: PBS
+R_SOURCE_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts/reporting
+DRMAA_PATH: /opt/applications/pbs-drmaa/current/gnu/lib/libdrmaa.so
+COMPRESSION: none

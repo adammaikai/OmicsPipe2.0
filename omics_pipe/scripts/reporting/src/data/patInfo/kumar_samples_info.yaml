@@ -1,0 +1,29 @@
+SRR1027184:
+    patient_details:
+        date_of_birth     : 01.01.1990
+        clinical_diagnosis: Breast Cancer
+        cancer_stage      : III
+        date_of_diagnosis : 01.01.1999
+        receptor_type     : HER2+ ER- PR-
+        molecular_type    : HER2
+    patient_addr:
+        name    : Peppermint
+        surname : Patty
+        street  : 123 Cray Court
+        state   : CA
+        city    : San Diego
+        zip     : 12345
+    physician_addr:
+        name    : House
+        surname : Gregory
+        street  : 1 Princeton-Plainsboro Teaching Hospital
+        state   : NJ
+        city    : Princeton
+        zip     : 12345
+    sample_details:
+        sampling_date  : 05.01.1999
+        sample_volume  : 100 ml
+        sample_purity  : 88\\%
+        amount_rna_used: 25 ng
+        seq_type       : RNA-Seq
+        seq_protocoll  : Illumina total RNA-Seq

@@ -1,0 +1,13 @@
+name = 'SAMtools'
+version = '0.1.19'
+
+homepage = 'http://samtools.sourceforge.net/'
+description = """SAM (Sequence Alignment/Map) format is a generic format
+for storing large nucleotide sequence alignments."""
+
+toolchain = {'name' : 'dummy', 'version': 'dummy'}
+
+sources = [SOURCELOWER_TAR_BZ2]
+source_urls = [('http://sourceforge.net/projects/samtools/files/%(namelower)s/%(version)s', 'download')]
+
+moduleclass = 'bio'

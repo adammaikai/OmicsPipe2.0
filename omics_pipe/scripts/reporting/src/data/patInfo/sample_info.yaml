@@ -1,0 +1,32 @@
+SAMPLEID:
+    patient_details:
+        date_of_birth     :
+        clinical_diagnosis:
+        cancer_stage      :
+        date_of_diagnosis :
+        receptor_type     :
+        molecular_type    :
+    patient_addr:
+        name    : 
+        surname :
+        street  : 
+        state   :
+        city    :
+        zip     :
+    physician_addr:
+        name    :
+        surname :
+        street  :
+        state   :
+        city    :
+        zip     :
+    sample_details:
+        sampling_date  :
+        sample_volume  :
+        sample_purity  :
+        amount_rna_used:
+        seq_type       :
+        seq_protocoll  :
+
+    
+

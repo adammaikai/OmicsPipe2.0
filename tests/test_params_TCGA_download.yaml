@@ -1,0 +1,25 @@
+SAMPLE_LIST: []
+STEP: last_function
+STEPS: [TCGA_download, last_function]
+FLAG_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+LOG_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/logs
+WORKING_DIR: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts
+PIPE_MULTIPROCESS: 1000
+PIPE_REBUILD: 'True'
+PIPE_VERBOSE: 5
+RESULTS_EMAIL: kfisch@scripps.edu
+TEMP_DIR: /scratch/kfisch
+QUEUE: workq
+USERNAME: kfisch 
+DRMAA_PATH: /opt/applications/pbs-drmaa/current/gnu/lib/libdrmaa.so
+TCGA_XML_FILE: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/TCGA_manifest.xml
+TCGA_KEY: /gpfs/home/asu/dbgap/cghub.key
+TCGA_OUTPUT_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/cancer
+CGATOOLS_VERSION: '288'
+SUMATRA_DB_PATH: /gpfs/home/kfisch/sumatra
+SUMATRA_RUN_NAME: TCGA_download
+REPOSITORY: https://kfisch@bitbucket.org/sulab/omics_pipe
+HG_USERNAME: Kathleen Fisch <kfisch@scripps.edu>
+PYTHON_VERSION: 2.6.5
+SCHEDULER: PBS
+COMPRESSION: none

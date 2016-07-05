@@ -1,0 +1,47 @@
+SAMPLE_LIST: [ChIP_test1_chip, ChIP_test1_input, ChIP_test2_chip, ChIP_test2_input]
+PAIR_LIST: 'ChIP_test1_chip-ChIP_test1_input ChIP_test2_chip-ChIP_test2_input'
+STEP: last_function
+STEPS: [fastqc, ChIP_trim, bowtie, macs, last_function]
+STEPS_PAIRS: [macs, find_motifs, homer_peaks, peak_track, annotate_peaks]
+RAW_DATA_DIR: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests
+FLAG_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+LOG_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+QC_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+RESULTS_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+WORKING_DIR: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts
+BOWTIE_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/bowtie
+HOMER_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/homer
+ENDS: SE
+FASTQC_VERSION: '0.10.1'
+GENOME: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/WholeGenomeFasta/genome.fa
+PIPE_MULTIPROCESS: 1000
+PIPE_REBUILD: 'True'
+PIPE_VERBOSE: 5
+REF_GENES: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Annotation/Genes/genes.gtf
+RESULTS_EMAIL: kfisch@scripps.edu
+TEMP_DIR: /scratch/kfisch
+QUEUE: workq
+USERNAME: kfisch 
+BOWTIE_INDEX: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/BowtieIndex/genome
+BOWTIE_VERSION: '1.0.0'
+BOWTIE_OPTIONS: -q -y -a -v 2 -p 8 -m 3 --sam --best --strata
+SAMTOOLS_VERSION: '0.1.19'
+BEDTOOLS_VERSION: '2.17.0'
+HOMER_VERSION: '4.4'
+TRIMMED_DATA_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/trimmed
+HOMER_TRIM_OPTIONS: -3 GATCGGAAGAGCACACGTCT -mis 1 -minMatchLength 6 -min 45
+CHROM_SIZES: /gpfs/group/su/kfisch/references/hg19.chrom.sizes
+MACS_VERSION: '1.4.2'
+MACS_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/macs
+HOMER_PEAKS_OPTIONS: -style factor -o auto
+HOMER_MOTIFS_OPTIONS: -size 200 -mask -preparsedDir /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+HOMER_ANNOTATE_OPTIONS: 
+HOMER_GENOME: hg19
+DRMAA_PATH: /opt/applications/pbs-drmaa/current/gnu/lib/libdrmaa.so
+SUMATRA_DB_PATH: /gpfs/home/kfisch/sumatra
+SUMATRA_RUN_NAME: default_sumatra_project
+REPOSITORY: https://kfisch@bitbucket.org/sulab/omics_pipe
+HG_USERNAME: Kathleen Fisch <kfisch@scripps.edu>
+PYTHON_VERSION: 2.6.5
+SCHEDULER: PBS
+COMPRESSION: none

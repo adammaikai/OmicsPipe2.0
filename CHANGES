@@ -1,0 +1,52 @@
+.. -*- restructuredtext -*-
+
+==================
+Release History
+=================
+
+**1.1.3** (2014/08/22)
+======================
+
+*New release for PyPi with bug fixes
+
+**1.1.2b** (2014/08/05)
+=====================
+
+New Features
+------------
+	* Added support for latest GATK version
+	* Added GATK Group Variant Calling pipeline
+	* Added noncoding RNA HTseq module
+
+Bug Fixes
+---------
+	* AMI memory handling
+	* Fixed Sumatra parameters file handling
+	* RNAseq count based pipeline produces single report for all samples
+
+
+**1.1.0** (2014/07/09)
+=====================
+First public release!
+
+**1.0.16** (2014/07/01)
+=====================
+
+New Features
+-----------
+  * Added Sumatra for logging of each run to Sumatra database
+  * Added  reading samples from a text file
+  * Added  AWS distribution and docs
+
+Bug Fixes
+-----------
+  * Import modules for utils.py sumatra and hgapi
+
+**1.0.15** (2014/06/20)
+=======================
+
+New Features
+--------------
+  * Added TCGA download support
+
+  

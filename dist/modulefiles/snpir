@@ -1,0 +1,5 @@
+#%Module
+
+set root /root/.local/easybuild/software/snpir/1.0
+
+prepend-path	PATH	$root/bin

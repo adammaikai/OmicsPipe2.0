@@ -1,0 +1,5 @@
+#%Module
+
+set root /apps/fusioncatcher
+
+prepend-path	PATH	$root/bin

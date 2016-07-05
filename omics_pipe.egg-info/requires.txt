@@ -1,0 +1,11 @@
+ruffus>=2.0.0
+drmaa
+sumatra>=0.5.2
+PyYAML>=3.10
+argparse
+ez_setup
+setuptools
+mercurial
+hgapi
+raven
+importlib

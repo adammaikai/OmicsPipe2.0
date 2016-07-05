@@ -1,0 +1,5 @@
+Sample,condition,libType
+test1,Control,single-end
+test2,Condition,single-end
+test3,Control,single-end
+test4,Condition,single-end

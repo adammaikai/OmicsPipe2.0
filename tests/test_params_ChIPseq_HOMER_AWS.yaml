@@ -1,0 +1,47 @@
+SAMPLE_LIST: [ChIP_test1_chip, ChIP_test1_input, ChIP_test2_chip, ChIP_test2_input]
+PAIR_LIST: 'ChIP_test1_chip-ChIP_test1_input ChIP_test2_chip-ChIP_test2_input'
+STEP: last_function
+STEPS: [fastqc, ChIP_trim, bowtie, read_density, last_function]
+STEPS_PAIRS: [macs, find_motifs, homer_peaks, peak_track, annotate_peaks]
+RAW_DATA_DIR: /root/src/omics-pipe/tests
+FLAG_PATH: /data/results/homer/flags
+LOG_PATH: :/data/results/homer/logs
+QC_PATH: /data/results/homer/QC
+RESULTS_PATH: /data/results/homer
+WORKING_DIR: /root/src/omics-pipe/omics_pipe/scripts
+BOWTIE_RESULTS: /data/results/homer/results/bowtie
+HOMER_RESULTS: /data/results/homer/results/homer
+ENDS: SE
+FASTQC_VERSION: '0.10.1'
+GENOME: /data/database/Homo_sapiens/UCSC/hg19/Sequence/WholeGenomeFasta/genome.fa
+PIPE_MULTIPROCESS: 1000
+PIPE_REBUILD: 'True'
+PIPE_VERBOSE: 5
+REF_GENES: /data/database/Homo_sapiens/UCSC/hg19/Annotation/Genes/genes.gtf
+RESULTS_EMAIL: kfisch@scripps.edu
+TEMP_DIR: /scratch
+QUEUE: all.r
+USERNAME: root
+BOWTIE_INDEX: /data/database/Homo_sapiens/UCSC/hg19/Sequence/BowtieIndex/genome
+BOWTIE_VERSION: '1.0.1'
+BOWTIE_OPTIONS: -q -y -a -v 2 -p 8 -m 3 --sam --best --strata
+SAMTOOLS_VERSION: '0.1.19'
+BEDTOOLS_VERSION: '2.20.1'
+HOMER_VERSION: '4.6'
+TRIMMED_DATA_PATH: /data/results/homer/trimmed
+HOMER_TRIM_OPTIONS: -3 GATCGGAAGAGCACACGTCT -mis 1 -minMatchLength 6 -min 45
+CHROM_SIZES: /data/database/Homo_sapiens/UCSC/hg19/hg19.chrom.sizes
+MACS_VERSION: '1.4.2'
+MACS_RESULTS: /data/results/homer/macs
+HOMER_PEAKS_OPTIONS: -style factor -o auto
+HOMER_MOTIFS_OPTIONS: -size 200 -mask -preparsedDir /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+HOMER_ANNOTATE_OPTIONS:
+HOMER_GENOME: hg19
+DRMAA_PATH: /opt/sge6-fresh/lib/linux-x64/libdrmaa.so
+SUMATRA_DB_PATH: /data/results/homer/sumatra
+SUMATRA_RUN_NAME: default_sumatra_project
+REPOSITORY: https://kfisch@bitbucket.org/sulab/omics_pipe
+HG_USERNAME: Kathleen Fisch <kfisch@scripps.edu>
+PYTHON_VERSION: 2.7.4
+SCHEDULER: SGE
+COMPRESSION: none

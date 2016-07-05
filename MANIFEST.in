@@ -1,0 +1,26 @@
+include *.py
+include *.sh
+include *.r
+recursive-include doc *
+recursive-include tests *.sh *.py *.fastq *.yaml
+recursive-include scripts *.sh *.py *.r *.config
+recursive-include modules *.py
+recursive-include parameters *.py *.yaml
+recursive-include omics_pipe/scripts *.sh *.py *.r *.R *.config *.*
+recursive-include omics_pipe/scripts/reporting *
+recursive-include omics_pipe/scripts/reporting/src *
+recursive-include omics_pipe/scripts/reporting/data/brca_mol_class *
+recursive-include omics_pipe/scripts/reporting/data/DoG *
+recursive-include omics_pipe/scripts/reporting/data/geneLists *
+recursive-include omics_pipe/scripts/reporting/data/SPIA *
+recursive-include omics_pipe/scripts/reporting/src/core *
+recursive-include omics_pipe/scripts/reporting/src/modules *
+recursive-include omics_pipe/modules *.py
+recursive-include omics_pipe/parameters *.py *.yaml
+prune omics_pipe/scripts/reporting/ref
+prune omics_pipe/scripts/reporting/data
+prune tests/test_run
+prune dist/AWS_customBuild
+prune dist/AWS_prebuiltAMI
+prune dist/easyconfigs
+prune dist/modulefiles

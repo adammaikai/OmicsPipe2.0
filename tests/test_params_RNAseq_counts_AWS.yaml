@@ -1,0 +1,43 @@
+SAMPLE_LIST: [test1, test2]
+STEP: last_function
+STEPS: [fastqc, star, htseq, RNAseq_report_counts, last_function]
+RAW_DATA_DIR: /root/src/omics-pipe/tests
+FLAG_PATH: /data/results/flags
+HTSEQ_RESULTS: /data/results/counts
+LOG_PATH: :/data/results/logs
+QC_PATH: /data/results/QC
+RESULTS_PATH: /data/results/
+STAR_RESULTS: /data/results/star
+WORKING_DIR: /root/src/omics-pipe/omics_pipe/scripts
+REPORT_RESULTS: /data/results
+ENDS: SE
+FASTQC_VERSION: '0.10.1'
+GENOME: /data/database/Homo_sapiens/UCSC/hg19/Sequence/WholeGenomeFasta/genome.fa
+HTSEQ_OPTIONS: -m intersection-nonempty -s no -t exon
+PIPE_MULTIPROCESS: 100
+PIPE_REBUILD: 'True'
+PIPE_VERBOSE: 5
+REF_GENES: /data/database/Homo_sapiens/UCSC/hg19/Annotation/Genes/genes.gtf
+RESULTS_EMAIL: kfisch@scripps.edu
+STAR_INDEX: /data/database/Homo_sapiens/UCSC/hg19/star_genome
+STAR_OPTIONS: --readFilesCommand cat --runThreadN 8 --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical
+STAR_VERSION: '2.3.0e'
+TEMP_DIR: /tmp
+QUEUE: all.q
+USERNAME: kfisch
+DRMAA_PATH: /opt/sge6-fresh/lib/linux-x64/libdrmaa.so
+BAM_FILE_NAME: Aligned.out.bam
+PARAMS_FILE: '/root/src/omics-pipe/tests/test_params_RNAseq_counts_AWS.yaml'
+DESEQ_META: /root/src/omics-pipe/tests/counts_meta.csv
+DESIGN: '~ condition'
+PVAL: '0.05'
+DESEQ_RESULTS: /data/results/deseq
+SUMATRA_DB_PATH: /data/results/sumatra
+SUMATRA_RUN_NAME: sumatra_project
+REPOSITORY: https://kfisch@bitbucket.org/sulab/omics_pipe
+HG_USERNAME: Kathleen Fisch <kfisch@scripps.edu>
+SCHEDULER: SGE
+PYTHON_VERSION: 2.7.4
+R_SOURCE_PATH: /root/src/omics-pipe/omics_pipe/scripts/reporting
+R_VERSION: 3.1.0
+COMPRESSION: none

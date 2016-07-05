@@ -1,0 +1,40 @@
+SAMPLE_LIST: [SRR1027171, SRR1027172, SRR1027173, SRR1027174, SRR1027175, SRR1027176, SRR1027177, SRR1027178, SRR1027179, SRR1027180, SRR1027181, SRR1027182, SRR1027183, SRR1027184, SRR1027185, SRR1027186, SRR1027187, SRR1027188, SRR1027189, SRR1027190]
+STEP: last_function
+STEPS: [fastqc, star, htseq, htseq_gencode, bwa1, bwa2, snpir_variants, RNAseq_QC, filter_variants, fusion_catcher, intogen, RNAseq_report, last_function]
+RAW_DATA_DIR: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/data
+FLAG_PATH: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/logs/flags
+HTSEQ_RESULTS: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/results/counts
+HTSEQ_GENCODE_RESULTS: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/results/counts/gencode
+LOG_PATH: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/logs
+QC_PATH: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/results/QC
+RESULTS_PATH: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/results
+REPORT_RESULTS: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/results/report
+STAR_RESULTS: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/results/alignment
+R_REPORT_SAMPLE_PATH: /gpfs/group/su/meissto/cancer_report/SRP032789
+WORKING_DIR: /gpfs/home/meissto/bin/virtual_env/omics_pipe_1.0.8/lib/python2.6/site-packages/omics_pipe-1.0.8-py2.6.egg/omics_pipe/scripts
+ENDS: PE
+FASTQC_VERSION: '0.10.1'
+GENOME: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/WholeGenomeFasta/genome.fa
+HTSEQ_OPTIONS: -m intersection-nonempty -s no -t exon
+PIPE_MULTIPROCESS: 100
+PIPE_REBUILD: 'True'
+PIPE_VERBOSE: 5
+REF_GENES: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Annotation/Genes/genes.gtf
+RESULTS_EMAIL: meissto@scripps.edu
+R_VERSION: '3.0.1'
+R_SOURCE_PATH: /gpfs/group/su/meissto/cancer_report/src/oncorep/
+SAMTOOLS_VERSION:  "0.1.19"
+STAR_INDEX: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/star_genome
+STAR_OPTIONS: --readFilesCommand cat --runThreadN 16 --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical
+STAR_VERSION: '2.3.0'
+TEMP_DIR: /scratch/meissto
+DPS_VERSION: '1.3.1111'
+QUEUE: bigmem
+SAMTOOLS_OPTIONS: -C 500
+PICARD_VERSION: "1.92"
+BEDTOOLS_VERSION: "2.17.0"
+UCSC_TOOLS_VERSION: "273"
+PARAMS_FILE: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/parameters/SRP032789_params.yaml
+USERNAME: meissto 
+TRIMGALORE_VERSION: 0.3.3
+ADAPTER: TGGAATTCTCGGGTGCCAAGG

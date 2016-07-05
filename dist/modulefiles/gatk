@@ -1,0 +1,5 @@
+#%Module
+
+set root /root/.local/easybuild/software/gatk/3.2-2/
+
+prepend-path	PATH	$root

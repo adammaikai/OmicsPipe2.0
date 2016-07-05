@@ -1,0 +1,201 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Breast Cancer Personalized Genomics Report- RNAseq &mdash; Omics Pipe v1.1.3 Documentation</title>
+    
+    <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Omics Pipe v1.1.3 Documentation" href="contents.html" />
+    <link rel="next" title="TCGA Reanalysis Pipeline - RNAseq" href="RNAseq_cancer_modules_TCGA.html" />
+    <link rel="prev" title="RNA-seq Count Based Modules" href="RNAseq_counts_modules.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body role="document">
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="contents.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="RNAseq_cancer_modules_TCGA.html" title="TCGA Reanalysis Pipeline - RNAseq"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="RNAseq_counts_modules.html" title="RNA-seq Count Based Modules"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="contents.html">Omics Pipe 1.1.3 Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="breast-cancer-personalized-genomics-report-rnaseq">
+<h1>Breast Cancer Personalized Genomics Report- RNAseq<a class="headerlink" href="#breast-cancer-personalized-genomics-report-rnaseq" title="Permalink to this headline">¶</a></h1>
+<p>Modules included in the RNAseq Cancer pipeline.</p>
+<div class="html-toggle section" id="fastqc">
+<h2>FASTQC<a class="headerlink" href="#fastqc" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="html-toggle section" id="star-aligner">
+<h2>STAR Aligner<a class="headerlink" href="#star-aligner" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="html-toggle section" id="htseq-count">
+<h2>HTSEQ-count<a class="headerlink" href="#htseq-count" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="html-toggle section" id="rseqc">
+<h2>RSEQC<a class="headerlink" href="#rseqc" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="html-toggle section" id="fusion-catcher">
+<h2>Fusion Catcher<a class="headerlink" href="#fusion-catcher" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="html-toggle section" id="bwa-snpir">
+<h2>BWA/SNPiR<a class="headerlink" href="#bwa-snpir" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="bwa">
+<h3>BWA<a class="headerlink" href="#bwa" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="snpir">
+<h3>SNPiR<a class="headerlink" href="#snpir" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="filter-variants">
+<h3>Filter Variants<a class="headerlink" href="#filter-variants" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="html-toggle section" id="intogen">
+<h2>Intogen<a class="headerlink" href="#intogen" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="html-toggle section" id="oncorep-cancer-report">
+<h2>OncoRep Cancer Report<a class="headerlink" href="#oncorep-cancer-report" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="contents.html" title="contents">
+          <img class="logo" src="_static/logo.jpg" alt="Logo"/>
+        </a></p><div class="sphinxlocaltoc">
+    <h3><a href="contents.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Breast Cancer Personalized Genomics Report- RNAseq</a><ul>
+<li><a class="reference internal" href="#fastqc">FASTQC</a></li>
+<li><a class="reference internal" href="#star-aligner">STAR Aligner</a></li>
+<li><a class="reference internal" href="#htseq-count">HTSEQ-count</a></li>
+<li><a class="reference internal" href="#rseqc">RSEQC</a></li>
+<li><a class="reference internal" href="#fusion-catcher">Fusion Catcher</a></li>
+<li><a class="reference internal" href="#bwa-snpir">BWA/SNPiR</a><ul>
+<li><a class="reference internal" href="#bwa">BWA</a></li>
+<li><a class="reference internal" href="#snpir">SNPiR</a></li>
+<li><a class="reference internal" href="#filter-variants">Filter Variants</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#intogen">Intogen</a></li>
+<li><a class="reference internal" href="#oncorep-cancer-report">OncoRep Cancer Report</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="RNAseq_counts_modules.html"
+                          title="Previous page">&larr; RNA-seq Count Based Modules</a></p>
+  </div>
+  <div class="sphinxnext">
+    <h4>Next page</h4>
+    <p class="topless"><a href="RNAseq_cancer_modules_TCGA.html"
+                          title="Next page">&rarr; TCGA Reanalysis Pipeline - RNAseq</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/RNAseq_cancer_modules.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="contents.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="RNAseq_cancer_modules_TCGA.html" title="TCGA Reanalysis Pipeline - RNAseq"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="RNAseq_counts_modules.html" title="RNA-seq Count Based Modules"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="contents.html">Omics Pipe 1.1.3 Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &copy; <a href="copyright.html">Copyright</a> 2014-2015 Kathleen Fisch, Ph.D..
+      Last updated on Sep 21, 2015.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

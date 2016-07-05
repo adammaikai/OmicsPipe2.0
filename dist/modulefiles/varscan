@@ -1,0 +1,5 @@
+#%Module
+
+set root /root/.local/easybuild/software/varscan/2.3.7/
+
+prepend-path	PATH	$root

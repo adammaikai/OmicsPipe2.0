@@ -1,0 +1,46 @@
+SAMPLE_LIST: [test1, test2]
+STEP: last_function
+STEPS: [fastqc, cutadapt_miRNA, fastq_length_filter_miRNA, star, htseq, RNAseq_report_counts, last_function]
+RAW_DATA_DIR: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests
+ADAPTER: TGGAATTCTCGGGTGCCAAGG
+TRIMMED_DATA_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests
+FLAG_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+HTSEQ_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/counts
+LOG_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+QC_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+RESULTS_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+STAR_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/star
+WORKING_DIR: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts
+REPORT_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+ENDS: SE
+FASTQC_VERSION: '0.10.1'
+GENOME: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/WholeGenomeFasta/genome.fa
+HTSEQ_OPTIONS: -m intersection-nonempty -s no -t exon
+PIPE_MULTIPROCESS: 100
+PIPE_REBUILD: 'True'
+PIPE_VERBOSE: 5
+REF_GENES: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Annotation/Genes/genes.gtf
+RESULTS_EMAIL: kfisch@scripps.edu
+STAR_INDEX: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/star_genome
+STAR_OPTIONS: --readFilesCommand cat --runThreadN 8 --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical
+STAR_VERSION: '2.3.0'
+TEMP_DIR: /scratch/kfisch
+QUEUE: workq
+USERNAME: kfisch 
+DRMAA_PATH: /opt/applications/pbs-drmaa/current/gnu/lib/libdrmaa.so
+DPS_VERSION: '1.3.1111'
+RESOURCES: '-q gpu -l nodes=1:ppn=8 -l mem=31gb'
+BAM_FILE_NAME: Aligned.out.bam
+PARAMS_FILE: '/gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_params_RNAseq_counts.yaml'
+DESEQ_META: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/counts_meta.csv
+DESIGN: '~ condition'
+PVAL: '0.05'
+DESEQ_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/DESEQ
+SUMATRA_DB_PATH: /gpfs/home/kfisch/sumatra
+SUMATRA_RUN_NAME: default_sumatra_project
+REPOSITORY: https://kfisch@bitbucket.org/sulab/omics_pipe
+HG_USERNAME: Kathleen Fisch <kfisch@scripps.edu>
+PYTHON_VERSION: 2.6.5
+SCHEDULER: PBS
+R_SOURCE_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts/reporting
+COMPRESSION: none

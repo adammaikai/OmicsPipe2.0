@@ -1,0 +1,330 @@
+%% read in sample information
+<<sampleinfo, echo=FALSE>>=
+sample <- yaml.load_file(config$SAMPLEINFO)[[patientID]]
+@
+
+% read in data
+<<ptsresults, echo=FALSE>>=
+snps <- read.csv2('src/snps.csv', sep='\t', header=T, stringsAsFactors=FALSE)
+fusions <- read.csv2('src/fusions.csv', sep='\t', header=T, stringsAsFactors=FALSE)
+@
+
+% functions
+<<functions, echo=FALSE>>=
+
+# function returns all genes within all the sig. pawthays in the spiaRES object 
+# for the given pw database
+allGenesInSigPWs <- function(spiaRES, pw) {
+  if(pw=='kegg') {
+    load('data/SPIA/keggExSPIA.RData')  
+  }
+  if(pw=='nci') {
+    load('data/SPIA/nciExSPIA.RData')
+  }
+  if(pw=='reactome') {
+    load('data/SPIA/reactomeExSPIA.RData')
+  }
+  if(pw=='biocarta') {
+    load('data/SPIA/biocartaExSPIA.RData')
+  }
+  
+  x <- lapply(spiaRES[[pw]]$Name, function(x) {
+    return(path.info[[x]]$nodes)
+  })
+  x <- unique(unlist(x))
+  return(x)
+}
+@
+
+%% latex packages
+\PassOptionsToPackage{table}{xcolor}
+\documentclass[12pt, stdletter, dateno]{newlfm}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{wallpaper}
+
+%% styling 
+\newlfmP{noheadline,noHeadline}
+\Cfooter{\thepage} %% page numbering centered on letterhead
+\rfooter{\thepage} %% page numbering right on non-letterhead pages
+%\Background{data/sacret_heard_letterhead.pdf}
+
+%% add section support 
+\newcounter{section}
+\newcounter{subsection}[section]
+\newcounter{subsubsection}[section]
+\setcounter{secnumdepth}{4}
+\makeatletter
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+                                   {-3.5ex \@plus -1ex \@minus -.2ex}%
+                                   {2.3ex \@plus.2ex}%
+                                   {\normalfont\normalsize\bfseries}}
+\newcommand\subsection{\@startsection{subsection}{2}{\z@}%
+                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\normalfont\normalsize\bfseries}}
+\newcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+                                     {-3ex\@plus -1ex \@minus -.2ex}%
+                                     {0.7ex \@plus .2ex}%
+                                     {\normalfont\normalsize\bfseries}}                                     
+\renewcommand\thesection{\@arabic\c@section}
+\renewcommand\thesubsection{\thesection.\@arabic\c@subsection}
+\renewcommand\thesubsubsection{\thesubsubsection.\@arabic\c@subsubsection}
+\makeatother
+
+%% address to send to (treating physician)
+\nameto{\Sexpr{sample$physician_addr$surname} \Sexpr{sample$physician_addr$name}} 
+\addrto{\parbox{3in}{\Sexpr{sample$physician_addr$street} \\ 
+                     \Sexpr{sample$physician_addr$city}, \Sexpr{sample$physician_addr$state}, \Sexpr{sample$physician_addr$zip}}}
+%% addres send from
+%\namefrom{Sherlock Holmes} 
+%\addrfrom{\parbox{2in}{221B Baker Street \\ London, UK}}
+
+%\greetto{}
+ 
+\begin{document}
+
+\begin{newlfm}
+
+\ThisCenterWallPaper{1}{data/stagment_letterhead.pdf}
+
+\vspace*{1.75cm}
+\textbf{Oncogenomics Report for Patient \Sexpr{patientID}}
+
+% patient information
+\vspace*{-0.5cm}
+\line(1,0){475} 
+\vspace{-0.3cm}
+\begin{tabbing}
+\textbf{Name:  } \=\Sexpr{sample$patient_addr$name} \Sexpr{sample$patient_addr$surname} \hspace{6cm} \= \textbf{Date of birth:} \=\Sexpr{sample$patient_details$date_of_birth} \\ 
+\textbf{Adress:} \>\Sexpr{sample$patient_addr$street}, \Sexpr{sample$patient_addr$city}, \Sexpr{sample$patient_addr$state}, \Sexpr{sample$patient_addr$zip}
+\end{tabbing}
+\vspace{-0.6cm}
+\line(1,0){475}
+\begin{tabbing}
+\textbf{Clinical Diagnosis:} \hspace{1cm} \=\Sexpr{sample$patient_details$clinical_diagnosis} \hspace{1cm} \=\textbf{Stage:} \=\Sexpr{sample$patient_details$cancer_stage} \\
+\textbf{Molecular-subtype:} \>\Sexpr{sample$patient_details$molecular_type}
+\>\textbf{Receptor-status:} \Sexpr{sample$patient_details$receptor_type} \\
+\textbf{Date of first Diagnosis:} \>\Sexpr{sample$patient_details$date_of_diagnosis} \\
+\end{tabbing}
+
+% information about analysis
+\vspace*{-0.5cm}
+\begin{tabular}{ | l l | } \hline
+Sampling-Date: & \Sexpr{sample$sample_details$sampling_date} \tabularnewline 
+Sample volume: &  \Sexpr{sample$sample_details$sample_volume} \tabularnewline 
+Purity: &  \Sexpr{sample$sample_details$sample_purity} \tabularnewline
+Amount of RNA used: &  \Sexpr{sample$sample_details$amount_rna_used} \tabularnewline
+Seq-Type(s): & \Sexpr{sample$sample_details$seq_type} \tabularnewline
+Seq-Protocoll(s): & \Sexpr{sample$sample_details$seq_protocoll} \tabularnewline \hline
+\end{tabular}
+
+<<drugs, echo=FALSE>>=
+#get list of approved drugs
+if(config$TUMOR_TYPE=='BRCA') {
+  ad <- read.csv2(config$APDRGUS, sep=',', header=FALSE, stringsAsFactors=FALSE)
+}
+
+require(xtable)
+dog <- read.csv2('src/dog.csv', sep='\t', header=T, stringsAsFactors=FALSE)
+
+#only antineoplastic drugs
+dogA <- dog[grep('Antineoplastic', dog$Categorie), ]
+approved <- na.omit(match(dogA$Drug, ad$V2))
+
+dogAapproved <- dogA[approved,]
+dogAother <- dogA[-approved,]
+
+# FDA approved drugs for this cancer entity
+dogATabapproved <- aggregate(dogAapproved[,c(7)], list(dogAapproved$Target), function(x) {
+  paste(unique(x[!is.na(x)]), " ", sep="", collapse="")
+})
+colnames(dogATabapproved) <- c('Target', 'Drugs')
+# add regulation
+dogATabapproved$Diff <- ifelse(dog$Target_FC[match(dogATabapproved$Target, dog$Target)]>=0, 
+                                     "$\\text{\\color{purple}{\\rlap{$\\uparrow$}}}\\square$", 
+                                     "$\\text{\\color{purple}{\\rlap{$\\downarrow$}}}\\square$"                              
+                                     )
+
+# check if treatment targets a knwon mutation
+# --> not functional yet...
+# cololor : orange
+dogATabapproved$Mut <- "$\\square$"                             
+                                     
+# check if treatment targets a discorvered fusion event
+# --> not functional yet ....
+# color: blue
+dogATabapproved$Fus <-  "$\\square$"
+
+#check if the target is within a altered pathway
+pwsGenes <- unique(c(allGenesInSigPWs(spiaRES,'kegg'), 
+         allGenesInSigPWs(spiaRES, 'nci'), 
+         allGenesInSigPWs(spiaRES,'biocarta'), 
+         allGenesInSigPWs(spiaRES,'reactome'))
+        )
+dogTAEntrez <- anno$gene_id[match(dogATabapproved$Target, anno$symbol)]
+dogATabapproved$PW <- ifelse(dogTAEntrez %in% pwsGenes, 
+                                     "$\\text{\\color{green}{\\rlap{$\\checkmark$}}}\\square$",
+                                     "$\\square$"                           
+                                     )
+
+
+# FDA approved drugs for other cancer entities
+dogATabother <- aggregate(dogAother[,c(7)], list(dogAother$Target), function(x) {
+  paste(unique(x[!is.na(x)]), " ", sep="", collapse="")
+})
+colnames(dogATabother) <- c('Target', 'Drugs')
+# add regulation
+dogATabother$Diff <- ifelse(dog$Target_FC[match(dogATabother$Target, dog$Target)]>=0, 
+                                     "$\\text{\\color{purple}{\\rlap{$\\uparrow$}}}\\square$", 
+                                     "$\\text{\\color{purple}{\\rlap{$\\downarrow$}}}\\square$"                               
+                                     )
+
+# check if treatment targets a knwon mutation
+# --> not functional yet...
+# cololor : orange
+dogATabother$Mut <- "$\\square$"                             
+                                     
+# check if treatment targets a discorvered fusion event
+# --> not functional yet ....
+# color: blue
+dogATabother$Fus <-  "$\\square$"
+
+#check if the target is within a altered pathway
+dogTOEntrez <- anno$gene_id[match(dogATabother$Target, anno$symbol)]
+dogATabother$PW <- ifelse(dogTOEntrez %in% pwsGenes, 
+                                     "$\\text{\\color{green}{\\rlap{$\\checkmark$}}}\\square$",
+                                     "$\\square$"                           
+                                     )
+@
+
+\vspace*{-0.25cm}
+\section*{FDA Approved Therapies (in patients tumor type)}
+
+<<drugsEnt, results=tex, echo=FALSE>>=
+tabapproved <- xtable(dogATabapproved, 
+                      caption="\\footnotesize{Diff: arrow indicates if target is up- or downregulated. Mut: if checked, drug targets known mutation. Fus: if checked, drug targets fusion. PW: if checked, target is member of altered pathway}")
+align(tabapproved) <- "llp{9.5cm}llll"
+print(tabapproved, 
+      include.rownames=FALSE, 
+      type='latex', 
+      table.placement="h!", 
+      sanitize.text.function = function(x) x,
+      caption.placement='bottom')
+@
+
+% begin of page 2 ...
+\clearpage
+
+\section*{FDA Approved Therapies (in another tumor type)}
+
+<<drugsOther, results=tex, echo=FALSE>>=
+tabother <- xtable(dogATabother,
+                   caption="\\footnotesize{Diff: arrow indicates if target is up- or downregulated. Mut: if checked, drug targets known mutation. Fus: if checked, drug targets fusion. PW: if checked, target is member of altered pathway}")
+align(tabother) <- "llp{10cm}llll"
+print(tabother, 
+      include.rownames=FALSE, 
+      type='latex',
+      table.placement="h!",
+      sanitize.text.function = function(x) x,
+      caption.placement='bottom')
+@
+
+% begin of page 3...
+\clearpage
+
+%summarized results
+\section*{Summarized Patient Results}
+
+\begin{minipage}[t]{0.45\textwidth}
+\begin{tabularx}{0.95\textwidth}{ |X| }
+\hline
+\cellcolor{orange} \Sexpr{dim(snps)[1]} mutations \\
+\hline \hline
+\cellcolor{blue} \Sexpr{dim(fusions)[1]} fusions \\
+\hline
+\end{tabularx}
+
+\end{minipage}
+%
+\begin{minipage}[t]{0.45\textwidth}
+\begin{tabularx}{0.95\textwidth}{ |X| }
+\hline
+\cellcolor{green} \Sexpr{length(spiaRES$kegg) + length(spiaRES$biocarta) + length(spiaRES$nci) + length(spiaRES$reactome)} altered pathways \\
+\hline \hline
+\cellcolor{yellow} \Sexpr{length(diffExpNBinom$FCdiff)} altered genes \\
+\hline
+\end{tabularx}
+
+\end{minipage}
+
+% list all the genomics finding starting here..
+\section*{Detailed Results}
+
+\subsection*{Mutations}
+
+<<snps, results=tex, echo=FALSE>>=
+require(dplyr)
+chr <- c(seq(1:22),'X','Y')
+snps$CHROM <- factor(snps$CHROM, levels=chr)
+snps <- arrange(snps, CHROM, POS)
+snps <- snps[,c(1:8)]
+colnames(snps) <- c('Chr', 'Pos', 'rsID', 'Gene', 'Diff',
+                    'Driver', 'CADD', 'Effect')
+snpTab <- xtable(snps)
+align(snpTab) <- 'rp{0.5cm}llp{1.5cm}p{2cm}p{2cm}lp{4cm}'
+print(snpTab, include.rownames=FALSE, type='latex', tabular.environment='longtable', floating=FALSE, size="tiny")
+@
+
+\subsection*{Fusions}
+
+<<fusions, results=tex, echo=FALSE>>=
+fusions <- fusions[,c(1,2,3,9,10,14,15)]
+fusions$fusion_description <- gsub(',', ', ', fusions$fusion_description)
+fusTab <- xtable(fusions)
+align(fusTab) <- "lllp{4cm}llll"
+print(fusTab, include.rownames=FALSE, type='latex', floating=FALSE, size="tiny")
+@
+
+\subsection*{Pathways}
+
+\subsection*{KEGG}
+
+<<pws_kegg, results=tex, echo=FALSE>>=
+keggTab <- xtable(spiaRES$kegg)
+print(keggTab, include.rownames=FALSE, type='latex', floating=FALSE, size="tiny")
+@
+
+\newline
+\subsection*{Biocarta}
+
+<<pws_biocarta, results=tex, echo=FALSE>>=
+biocartaTab <- xtable(spiaRES$biocarta)
+print(biocartaTab, include.rownames=FALSE, type='latex', floating=FALSE, size="tiny")
+@
+
+\newline
+\subsection*{NCI}
+
+<<pws_nci, results=tex, echo=FALSE>>=
+nciTab <- xtable(spiaRES$nci)
+print(nciTab, include.rownames=FALSE, type='latex', floating=FALSE, size="tiny")
+@
+
+\newline
+\subsection*{Reactome}
+
+<<pws_reactome, results=tex, echo=FALSE>>=
+reactomeTab <- xtable(spiaRES$reactome)
+print(reactomeTab, include.rownames=FALSE, type='latex', floating=FALSE, size="tiny")
+@
+
+
+
+
+
+\end{newlfm}
+\end{document}

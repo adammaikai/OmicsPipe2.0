@@ -1,0 +1,82 @@
+SAMPLE_LIST: [SRR1027171, SRR1027172, SRR1027173, SRR1027174, SRR1027175, SRR1027176, SRR1027177, SRR1027178, SRR1027179, SRR1027180, SRR1027181, SRR1027182, SRR1027183, SRR1027184, SRR1027185, SRR1027186, SRR1027187, SRR1027188, SRR1027189, SRR1027190]
+STEP: last_function
+STEPS: [fastqc, star, htseq, htseq_gencode, bwa1, bwa2, snpir_variants, RNAseq_QC, filter_variants, fusion_catcher, intogen, RNAseq_report, last_function]
+ENDS: PE
+PIPE_MULTIPROCESS: 100
+PIPE_REBUILD: 'True'
+PIPE_VERBOSE: 5
+RESULTS_EMAIL: kfisch@scripps.edu
+USERNAME: kfisch 
+QUEUE: bigmem
+GENOME: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/WholeGenomeFasta/genome.fa
+RAW_DATA_DIR: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/data
+FLAG_PATH: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/logs/flags
+FUSIONCATCHER_RESULTS: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/results/fusions
+HTSEQ_RESULTS: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/results/counts
+HTSEQ_GENCODE_RESULTS: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/results/counts/gencode
+LOG_PATH: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/logs
+QC_PATH: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/results/QC
+RESULTS_PATH: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/results
+REPORT_RESULTS: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/results/report
+STAR_RESULTS: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/results/alignment
+VARIANT_RESULTS: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/results/variants
+R_REPORT_SAMPLE_PATH: /gpfs/group/su/meissto/cancer_report/SRP032789
+WORKING_DIR: /gpfs/home/meissto/bin/virtual_env/omics_pipe_1.0.8/lib/python2.6/site-packages/omics_pipe-1.0.8-py2.6.egg/omics_pipe/scripts
+ANNOVARDB: /gpfs/group/databases/annovar/humandb
+ANNOVAR_OPTIONS: -buildver hg19 -protocol nonsyn_splicing,1000g2012apr_all,esp6500_ea,esp6500_aa,snp135NonFlagged,cg46,ljb_sift,ljb_pp2,dominant -operation g,f,f,f,f,f,f,f,m
+ANNOVAR_OPTIONS2: -genetype knowngene --remove
+ANNOVAR_VERSION: '07292013'
+CHROM: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/Chromosomes
+FASTQC_VERSION: '0.10.1'
+FUSIONCATCHERBUILD_DIR: /gpfs/group/databases/ensembl_v72
+FUSIONCATCHER_OPTIONS: -t /scratch/meissto
+FUSIONCATCHER_VERSION: '0.98'
+HTSEQ_OPTIONS: -m intersection-nonempty -s no -t exon
+REF_GENES: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Annotation/Genes/genes.gtf
+RESULTS_EMAIL: meissto@scripps.edu
+R_VERSION: '3.0.1'
+REPORT_SCRIPT: /gpfs/group/su/meissto/cancer_report/src/oncorep/src/knitMeR.R
+R_MARKUP_FILE: /gpfs/group/su/meissto/cancer_report/src/oncorep/src/oncorep.Rmd
+R_SOURCE_PATH: /gpfs/group/su/meissto/cancer_report/src/oncorep/
+SAMTOOLS_VERSION:  "0.1.19"
+STAR_INDEX: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/star_genome
+STAR_OPTIONS: --readFilesCommand cat --runThreadN 16 --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical
+STAR_VERSION: '2.3.0'
+TEMP_DIR: /scratch/meissto
+VARSCAN_OPTIONS: --min-coverage 15 --min-reads2 5 --min-var-freq 0.1 --min-avg-qual 30 --p-value 0.995 --output-vcf 1
+VARSCAN_PATH: /opt/applications/varscan/2.3.6/VarScan.jar
+VARSCAN_VERSION: '2.3.6'
+VCFTOOLS_VERSION: '0.1.10'
+DPS_VERSION: '1.3.1111'
+REF_GENES_GENCODE: /gpfs/group/su/meissto/cancer_report/src/annotation/gencode.v18.annotation.gtf
+SAMTOOLS_OPTIONS: -C 500
+SNPIR_RESULTS: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/results/SNPIR
+BWA_VERSION: "0.7.4"
+PICARD_VERSION: "1.92"
+GATK_VERSION: "2.7-4"
+BEDTOOLS_VERSION: "2.17.0"
+UCSC_TOOLS_VERSION: "273"
+REPEAT_MASKER: /gpfs/group/databases/SNPiR/annotations/RepeatMasker.bed
+SNPIR_ANNOTATION: /gpfs/group/databases/SNPiR/annotations/anno_combined_sorted
+RNA_EDIT: /gpfs/group/databases/SNPiR/rnaedit/Human_AG_all_hg19.bed
+DBSNP: /gpfs/group/databases/GATK/hg19/dbsnp_137.hg19.vcf
+MILLS: /gpfs/group/databases/GATK/hg19/Mills_and_1000G_gold_standard.indels.hg19.vcf
+G1000: /gpfs/group/databases/GATK/hg19/1000G_phase1.indels.hg19.vcf
+BWA_RESULTS: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/results/bwa
+GATK_READ_GROUP_INFO: '@RG\tID:laneID\tLB:TrueSeq\tPL:ILLUMINA\tSM:sampleID'
+SNPIR_VERSION: '1.0'
+BWA_INDEX: /gpfs/group/databases/SNPiR/BWAIndex/hg19_genome_junctions.fa
+BAM_FILE_NAME: Aligned.out.sorted.bam
+PARAMS_FILE: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/parameters/SRP032789_params.yaml
+SNPIR_CONFIG: /gpfs/group/su/meissto/cancer_report/src/RNA
+VCF_FILE: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/results/SNPIR/intogen_input.vcf 
+INTOGEN_OPTIONS: --single-tumor 
+INTOGEN_RESULTS: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/results/intogen
+INTOGEN_VERSION: '2.3.0'
+INTOGEN_CONFIG: /gpfs/group/su/meissto/cancer_report/SRP032789/RNA/RNA_seq/results/intogen.conf
+SNPIR_DIR: /opt/applications/snpir/1.0/bin 
+RSEQC_REF: /gpfs/group/su/meissto/data/knowngene.bed
+RSEQC_VERSION: '2.3.7'
+SNPEFF_VERSION: '3.5'
+dbNSFP: /gpfs/group/su/meissto/data/dbNSFP/dbNSFP2.4.txt.gz
+SNP_FILTER_OUT_REF: /gpfs/group/su/meissto/cancer_report/src/RNA/vcf/common_no_known_medical_impact_00-latest.vcf

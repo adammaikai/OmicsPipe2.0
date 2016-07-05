@@ -1,0 +1,5 @@
+#%Module
+
+set root /root/.local/easybuild/software/tophat/2.0.12/tophat-2.0.12.Linux_x86_64/
+
+prepend-path	PATH	$root

@@ -1,0 +1,19 @@
+easyblock = "PackedBinary"
+
+name = 'STAR'
+version = '2.3.0e'
+
+homepage = 'http://code.google.com/p/rna-star/'
+description = """STAR aligns RNA-seq reads to a reference genome using uncompressed suffix arrays."""
+
+toolchain = {'name' : 'dummy', 'version': 'dummy'}
+
+sources = ['%s_%s.tgz' % (name, version)]
+source_urls = ['http://rna-star.googlecode.com/files/']
+
+sanity_check_paths = {
+	'files': ["README.txt"],
+	'dirs': ["parametersDefault"],
+}
+
+moduleclass = 'bio'

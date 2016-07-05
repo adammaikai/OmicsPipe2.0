@@ -1,0 +1,25 @@
+SAMPLE_LIST:[]
+STEP: last_function
+STEPS: [TCGA_download, last_function]
+FLAG_PATH: /data/results/flags
+LOG_PATH: /data/results/logs
+WORKING_DIR: /root/src/omics-pipe/omics_pipe/scripts
+PIPE_MULTIPROCESS: 1000
+PIPE_REBUILD: 'True'
+PIPE_VERBOSE: 5
+RESULTS_EMAIL: kfisch@scripps.edu
+TEMP_DIR: /scratch/kfisch
+QUEUE: workq
+USERNAME: kfisch 
+DRMAA_PATH: /opt/sge6-fresh/lib/linux-x64/libdrmaa.so
+TCGA_XML_FILE: /data/data/TCGA_manifest.xml
+TCGA_KEY: /data/data/cghub.key
+TCGA_OUTPUT_PATH: /data/results/TCGA
+CGATOOLS_VERSION: '287'
+SUMATRA_DB_PATH: /data/results/sumatra
+SUMATRA_RUN_NAME: TCGA_download
+REPOSITORY: https://kfisch@bitbucket.org/sulab/omics_pipe
+HG_USERNAME: Kathleen Fisch <kfisch@scripps.edu>
+PYTHON_VERSION: 2.7.4
+SCHEDULER: SGE
+COMPRESSION: none

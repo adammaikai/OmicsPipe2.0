@@ -1,0 +1,126 @@
+Differential expression using CuffDiff
+========================================================
+  
+<!-- dataTables -->
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.js"></script>
+<link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css"/>
+<script src="http://next.datatables.net/release-datatables/examples/resources/bootstrap/3/dataTables.bootstrap.js"></script>
+<link rel="stylesheet" href="http://next.datatables.net/release-datatables/examples/resources/bootstrap/3/dataTables.bootstrap.css"/>
+  
+<!-- TableTools -->
+<script src="http://cdn.aldu.net/jquery.datatables/extras/tabletools/2.0.3/js/TableTools.js"></script>
+<link rel="stylesheet" href="http://cdn.aldu.net/jquery.datatables/extras/tabletools/2.0.3/css/TableTools.css"/>
+  
+<!-- ZeroClipboard -->
+<script src="http://cdn.aldu.net/jquery.datatables/extras/tabletools/2.0.3/js/ZeroClipboard.js"></script>
+  
+<!-- ColViz -->
+<script src="http://cdn.eventcore.com/js/plugins/dataTables.ColVis-1.07.js"></script>
+  
+## Load packages
+  
+```{r start}
+library(cummeRbund) #lq2d package
+
+opts_chunk$set(warning = FALSE)
+opts_chunk$set(message = FALSE)
+```
+
+## Prepare data
+
+```{r prepareData}
+  myGeneIds <- config$GENEIDS
+  condition1 <- config$COND1
+  condition2 <- config$COND2
+  cuff_data <- readCufflinks(dir=config$CUFFDIFF_RESULTS,
+                             gtfFile=config$REF_GENES, 
+                             genome=config$GENOME, 
+                             verbose=TRUE) #create a CummeRbund database from cuffdiff output
+```
+
+# global stats and quality control
+
+## Dispersion
+```{r dispersion}
+  dispersionPlot(genes(cuff_data))
+```
+
+## squared coefficient of variation
+```{r sqdvariation}
+  fpkmSCVPlot(genes(cuff_data))
+  fpkmSCVPlot(isoforms(cuff_data))
+```
+
+## Density plots
+
+```{r density}
+  csDensity(genes(cuff_data)) #plot distribution of expression levels for each samplecsDensity(genes(cuff_data), replicates=T)
+```
+
+## Boxplots
+```{r boxplots}
+  csBoxplot(genes(cuff_data))
+  csBoxplot(genes(cuff_data), replicates=T)
+  csBoxplot(isoforms(cuff_data), replicates=T)
+```
+
+## Scatterplots
+
+```{r scatterplots}
+  csScatter(genes(cuff_data), condition1, condition2) #compare the expression of each gene in two conditions with a scatter plot
+  csScatterMatrix(genes(cuff_data))
+```
+
+## MvsA plot
+
+```{r mvsa}
+  MAplot(genes(cuff_data), condition1, condition2)
+  MAplot(genes(cuff_data), condition1, condition2, useCount=T)
+```
+
+## Volcano plot
+
+```{r volcano}
+  csVolcanoMatrix(genes(cuff_data))
+  csVolcanoMatrix(isoforms(cuff_data))
+  csVolcano(genes(cuff_data), condition1, condition2, alpha=0.05, showSignificant=TRUE, features=TRUE, xlimits=c(-10,10)) #create a volcano plot to inspect differentially expressed genes
+  csVolcano(isoforms(cuff_data), condition1, condition2, alpha=0.05, showSignificant=TRUE, features=TRUE, xlimits=c(-10,10)) #create a volcano plot to inspect differentially expressed genes
+```
+
+# CREATING GENE SETS
+
+```{r}
+  myGenes <- getGenes(cuff_data, myGeneIds)
+```
+
+## Heatmap
+
+```{r heatmap}
+  csHeatmap(myGenes, cluster='both')
+  csHeatmap(myGenes, cluster='both', replicates=T)
+```
+
+## Other geneset plots
+
+```{r othergsetplots}
+  csScatter(myGenes,condition1, condition2)
+  csVolcano(myGenes, condition1, condition2)
+  csHeatmap(isoforms(myGenes), cluster='both', labRow=T)
+  csHeatmap(isoforms(myGenes), cluster='both', labRow=T, replicates=T)
+  csHeatmap(TSS(myGenes),cluster='both', labRow=T)
+  csHeatmap(TSS(myGenes),cluster='both', labRow=T, replicates=T)
+  csDendro(myGenes, replicates=T) 
+  myClustering<-csCluster(myGenes, k=2)
+  csClusterPlot(myClustering)
+```
+
+# DATA EXPLORATION
+
+```{r dataexploration}
+  sigMatrix(cuff_data, level='genes', alpha=0.05)
+  csDistHeat(genes(cuff_data))
+  csDistHeat(genes(cuff_data), replicates=T)
+  #PCAplot(genes(cuff_data), condition1, condition2)
+  #PCAplot(genes(cuff_data), condition1, condition2, replicates=T)
+  MDSplot(genes(cuff_data), replicates=T)
+```

@@ -1,0 +1,5 @@
+#%Module
+
+set root /root/.local/easybuild/software/homer/4.6
+
+prepend-path	PATH	$root/bin

@@ -1,0 +1,280 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Omics Pipe Tutorial &mdash; Omics Pipe v1.1.3 Documentation</title>
+    
+    <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Omics Pipe v1.1.3 Documentation" href="contents.html" />
+    <link rel="next" title="Omics Pipe Tutorial – Configuring the Parameter File" href="parameter_file.html" />
+    <link rel="prev" title="OmicsPipe on the Amazon Cloud (AWS EC2) Tutorial" href="AWS_installation.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body role="document">
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="contents.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="parameter_file.html" title="Omics Pipe Tutorial – Configuring the Parameter File"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="AWS_installation.html" title="OmicsPipe on the Amazon Cloud (AWS EC2) Tutorial"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="contents.html">Omics Pipe 1.1.3 Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="omics-pipe-tutorial">
+<span id="index-0"></span><h1>Omics Pipe Tutorial<a class="headerlink" href="#omics-pipe-tutorial" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="installation.html"><em>Installation instructions</em></a></p>
+<p>Test your installation by typing:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">omics_pipe</span>
+</pre></div>
+</div>
+<p>on the command line. If you get the omics_pipe help readout, it has been installed correctly and you can continue.</p>
+</div>
+<div class="section" id="before-running-omics-pipe-configuring-parameters-file">
+<h2>Before Running Omics Pipe: Configuring Parameters File<a class="headerlink" href="#before-running-omics-pipe-configuring-parameters-file" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Before running omics_pipe, you must configure the parameters file,
+which is a YAML document.   Follow the instructions here: <a class="reference internal" href="parameter_file.html"><em>Configuring the parameters file</em></a></p>
+</div>
+</div>
+<div class="section" id="running-omics-pipe">
+<h2>Running Omics Pipe<a class="headerlink" href="#running-omics-pipe" title="Permalink to this headline">¶</a></h2>
+<p>When you are ready to run omics pipe, simply type the command:</p>
+<div class="highlight-python"><div class="highlight"><pre>omics_pipe RNAseq_count_based /path/to/parameter_file.yaml
+</pre></div>
+</div>
+<p>To run the basic RNAseq_count_based pipeline with your parameter file. Additional usage instructions below and are available by typing omics_pipe –h.:</p>
+<div class="highlight-python"><div class="highlight"><pre>omics_pipe [-h] [--custom_script_path CUSTOM_SCRIPT_PATH]
+          [--custom_script_name CUSTOM_SCRIPT_NAME]
+                          [--compression {gzip, bzip}]
+          {RNAseq_Tuxedo, RNAseq_count_based, RNAseq_cancer_report, RNAseq_TCGA, RNAseq_TCGA_counts,
+                          Tumorseq_MUTECT, miRNAseq_count_based, miRNAseq_tuxedo, WES_GATK, WGS_GATK, SomaticInDels, ChIPseq_MACS, ChIPseq_HOMER,  custom}
+          parameter_file
+</pre></div>
+</div>
+<p>If your .fastq files are compressed, please use the compression option and indicate the type of compression used for your files. Currently supported compression types are gzip and bzip.</p>
+</div>
+<div class="section" id="running-omics-pipe-with-the-test-data-and-parameters">
+<h2>Running Omics Pipe with the Test Data and Parameters<a class="headerlink" href="#running-omics-pipe-with-the-test-data-and-parameters" title="Permalink to this headline">¶</a></h2>
+<p>To run Omics Pipe with the test parameter files and data, type the commands below to run each pipeline.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Replace the ~ with the path to your Omics Pipe installation.</p>
+</div>
+<p><strong>RNA-seq (Tuxedo)</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre>omics_pipe RNAseq_Tuxedo ~/tests/test_params_RNAseq_Tuxedo.yaml
+</pre></div>
+</div>
+<p><strong>RNA-seq(Anders 2013)</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre>omics_pipe RNAseq_count_based ~/tests/test_params_RNAseq_counts.yaml
+</pre></div>
+</div>
+<p><strong>Whole Exome Sequencing (GATK)</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre>omics_pipe WES_GATK ~/tests/test_params_WES_GATK.yaml
+</pre></div>
+</div>
+<p><strong>Whole Genome Sequencing (GATK)</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre>omics_pipe WGS_GATK ~/tests/test_params_WGS_GATK.yaml
+</pre></div>
+</div>
+<p><strong>Whole Genome Sequencing (MUTECT)</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre>omics_pipe Tumorseq_MUTECT ~/tests/test_params_MUTECT.yaml
+</pre></div>
+</div>
+<p><strong>ChIP-seq (MACS)</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre>omics_pipe ChIPseq_MACS ~/tests/test_params_MACS.yaml
+</pre></div>
+</div>
+<p><strong>ChIP-seq (HOMER)</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre>omics_pipe ChIPseq_HOMER ~/tests/test_params_HOMER.yaml
+</pre></div>
+</div>
+<p><strong>Breast Cancer Personalized Genomics Report- RNAseq</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre>omics_pipe RNAseq_cancer_report ~/tests/test_params_RNAseq_cancer.yaml
+</pre></div>
+</div>
+<p><strong>TCGA Reanalysis Pipeline - RNAseq</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre>omics_pipe RNAseq_TCGA ~/tests/test_params_RNAseq_TCGA.yaml
+</pre></div>
+</div>
+<p><strong>TCGA Reanalysis Pipeline - RNAseq Counts</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre>omics_pipe RNAseq_TCGA_counts ~/tests/test_params_RNAseq_TCGA_counts.yaml
+</pre></div>
+</div>
+<p><strong>miRNAseq Counts (Anders 2013)</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre>omics_pipe miRNAseq_count_based ~/tests/test_params_miRNAseq_counts.yaml
+</pre></div>
+</div>
+<p><strong>miRNAseq (Tuxedo)</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre>omics_pipe miRNAseq_tuxedo ~/tests/test_params_miRNAseq_Tuxedo.yaml
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-omics-pipe-with-your-own-data">
+<h2>Running Omics Pipe with your own data<a class="headerlink" href="#running-omics-pipe-with-your-own-data" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Copy the test parameter file for the pipeline that you want to run into your home directory:</p>
+<div class="highlight-python"><div class="highlight"><pre>cp ~/tests/test_params_RNAseq_counts.yaml ~/my_params.yaml
+</pre></div>
+</div>
+</li>
+<li><p class="first">Configure the parameter file to point to the path to your data (fastq files), results directories, correct software versions, third party software tool parameters and the correct genome/annotations as described here: <a class="reference internal" href="parameter_file.html"><em>Configuring the parameters file</em></a>.</p>
+</li>
+<li><p class="first">Ensure that your fastq files follow the naming convention Sample1_1.fastq Sample1_2.fastq for paired end samples.</p>
+</li>
+<li><p class="first">Type the Omics Pipe command corresponding to your parameter file/pipeline of interest to run the pipeline:</p>
+<div class="highlight-python"><div class="highlight"><pre>omics_pipe RNAseq_count_based ~/my_params.yaml
+</pre></div>
+</div>
+</li>
+<li><p class="first">Omics Pipe will log out to the screen as it is running through the steps in the pipeline.</p>
+<blockquote>
+<div><p><a href="#id1"><span class="problematic" id="id2">*</span></a>The pipeline will log out to the screen details regarding the progress of the analysis, including the analysis and status of each step in the pipeline.</p>
+<p><a href="#id3"><span class="problematic" id="id4">*</span></a>Individual log files for each job will be located in /data/results/logs (LOG_PATH parameter in parameter file)</p>
+<p><a href="#id5"><span class="problematic" id="id6">*</span></a>If there are flag files present in the /data/results/flags (FLAG_PATH parameter) folder, these steps in the pipeline will be skipped as they have completed successfully. To redo these steps on the next run of the pipeline, simply delete the flag files and rerun the pipeline.</p>
+<p><a href="#id7"><span class="problematic" id="id8">*</span></a>Monitor the progress of the pipeline through the standard output from the Omics Pipe command along with the individual log files for each job to ensure completion.</p>
+<p><a href="#id9"><span class="problematic" id="id10">*</span></a>Each job (step in the pipeline for each sample) will be completed on one of the slave nodes, and Omics Pipe (controller script) will be run on the master node.</p>
+<p><a href="#id11"><span class="problematic" id="id12">*</span></a>To check the status of your jobs, type the qstat command.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Wait for the pipeline to finish completely and check the results folders you specified for result files.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="contents.html" title="contents">
+          <img class="logo" src="_static/logo.jpg" alt="Logo"/>
+        </a></p><div class="sphinxlocaltoc">
+    <h3><a href="contents.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Omics Pipe Tutorial</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#before-running-omics-pipe-configuring-parameters-file">Before Running Omics Pipe: Configuring Parameters File</a></li>
+<li><a class="reference internal" href="#running-omics-pipe">Running Omics Pipe</a></li>
+<li><a class="reference internal" href="#running-omics-pipe-with-the-test-data-and-parameters">Running Omics Pipe with the Test Data and Parameters</a></li>
+<li><a class="reference internal" href="#running-omics-pipe-with-your-own-data">Running Omics Pipe with your own data</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="AWS_installation.html"
+                          title="Previous page">&larr; OmicsPipe on the Amazon Cloud (AWS EC2) Tutorial</a></p>
+  </div>
+  <div class="sphinxnext">
+    <h4>Next page</h4>
+    <p class="topless"><a href="parameter_file.html"
+                          title="Next page">&rarr; Omics Pipe Tutorial &#8211; Configuring the Parameter File</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/tutorial.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="contents.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="parameter_file.html" title="Omics Pipe Tutorial – Configuring the Parameter File"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="AWS_installation.html" title="OmicsPipe on the Amazon Cloud (AWS EC2) Tutorial"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="contents.html">Omics Pipe 1.1.3 Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &copy; <a href="copyright.html">Copyright</a> 2014-2015 Kathleen Fisch, Ph.D..
+      Last updated on Sep 21, 2015.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

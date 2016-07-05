@@ -1,0 +1,69 @@
+SAMPLE_LIST: [test_DNA1, test_DNA2]
+STEP: last_function
+STEPS: [intogen, snpeff, annovar, DNAseq_variant_report, last_function]
+RAW_DATA_DIR: /root/src/omics-pipe/tests
+FLAG_PATH: /data/results/WES/flags
+LOG_PATH: :/data/results/WES/log
+QC_PATH: /data/results/WES/QC
+RESULTS_PATH: /data/results/WES
+WORKING_DIR: /root/src/omics-pipe/omics_pipe/scripts
+BWA_RESULTS: /data/results/WES/BWA
+VARIANT_RESULTS: /data/results/WES/variants
+ENDS: SE
+FASTQC_VERSION: '0.10.1'
+GENOME: /data/database/GATK/hg19/ucsc.hg19.fasta
+PIPE_MULTIPROCESS: 1000
+PIPE_REBUILD: 'True'
+PIPE_VERBOSE: 5
+RESULTS_EMAIL: kfisch@scripps.edu
+TEMP_DIR: /tmp
+QUEUE: all.q
+USERNAME: kfisch
+SAMTOOLS_VERSION: '0.1.19'
+BEDTOOLS_VERSION: '2.20.1'
+DRMAA_PATH: /opt/sge6-fresh/lib/linux-x64/libdrmaa.so
+BWA_OPTIONS: -t 8 -M
+BWA_INDEX: /data/database/Homo_sapiens/UCSC/hg19/Sequence/BWAIndex/genome.fa
+GATK_VERSION: '3.2-2'
+OMNI: /data/database/GATK/hg19/1000G_omni2.5.hg19.vcf
+HAPMAP: /data/database/GATK/hg19/hapmap_3.3.hg19.vcf
+DBSNP: /data/database/GATK/hg19/dbsnp_137.hg19.vcf
+MILLS: /data/database/GATK/hg19/Mills_and_1000G_gold_standard.indels.hg19.vcf
+G1000: /data/database/GATK/hg19/1000G_phase1.indels.hg19.vcf
+CAPTURE_KIT_BED: /data/database/GATK/truseq_exome_targeted_regions.hg19.bed
+BWA_VERSION: '0.7.9a'
+MILLS_G1000: /data/database/GATK/hg19/Mills_and_1000G_gold_standard.indels.hg19.vcf
+PICARD_VERSION: '1.114'
+RESOURCES: '-q gpu -l nodes=1:ppn=8 -l mem=31gb'
+SUMATRA_DB_PATH: /data/results/WES/sumatra
+SUMATRA_RUN_NAME: default_sumatra_project
+REPOSITORY: https://kfisch@bitbucket.org/sulab/omics_pipe
+HG_USERNAME: Kathleen Fisch <kfisch@scripps.edu>
+PYTHON_VERSION: 2.6.5
+SCHEDULER: SGE
+R_SOURCE_PATH: /root/src/omics-pipe/omics_pipe/scripts/reporting
+R_VERSION: 3.1.0
+G1000_SNPs: /data/database/GATK/hg19/1000G_phase1.snps.high_confidence.hg19.vcf
+G1000_Indels: /data/database/GATK/hg19/1000G_phase1.indels.hg19.vcf
+REPORT_RESULTS: /data/results/WES/report
+PARAMS_FILE: /data/data/test_params_WES_GATK_Report_AWS.yaml
+TABIX_VERSION: ""
+TUMOR_TYPE: EPI
+INTOGEN_RESULTS: /data/results/variants
+INTOGEN_VERSION: '2.3.0'
+INTOGEN_OPTIONS: --single-tumor 
+INTOGEN_CONFIG: /root/src/omics-pipe/omics_pipe/scripts/intogen.conf
+COSMIC: /data/database/snpDatabases/cosmic.tsv
+CLINVAR: /data/database/snpDatabases/clinvar.txt
+PHARMGKB_rsID: /data/database/ref/pharmgkbRSID.csv
+PHARMGKB_Allele: /data/database/ref/pharmgkbAllele.tsv
+DRUGBANK: /data/database/snpDatabases/drugbank.tsv
+CADD: /data/database/snpDatabases/cadd.tsv.gz
+VCFTOOLS_VERSION: ""
+ANNOVARDB: /gpfs/group/databases/annovar/humandb
+ANNOVAR_OPTIONS: -buildver hg19 -protocol nonsyn_splicing,1000g2012apr_all,esp6500_ea,esp6500_aa,snp135NonFlagged,cg46,ljb_sift,ljb_pp2,dominant -operation g,f,f,f,f,f,f,f,m
+ANNOVAR_OPTIONS2: -genetype knowngene --remove
+ANNOVAR_VERSION: '07292013'
+VCF_FILE: ""
+SNPEFF_VERSION: ""
+COMPRESSION: none

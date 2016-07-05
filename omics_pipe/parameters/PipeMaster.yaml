@@ -1,0 +1,208 @@
+SAMPLE_LIST: [
+CCD055,
+CCD200,
+CCD273,
+CCD315
+]
+STEP: last_function
+STEPS: [
+fastqc, bbduk, fastqc, Star, mojo, snpir_variants_plus_bwa, 
+WGS_preprocess, GATK_variant_calling, Samtools_pileup, 
+Varscan, MuTect, Varscan_somatic, GATK_Varscan_Annotation, 
+Somatic_Annotation, Qualimap, last_function]
+OMICSPIPE:
+  WORKING_DIR: /home/adam/.virtualenvs/pm/omics_pipe/omics_pipe/scripts
+  PARAMS_FILE: ~/config.yaml
+  FLAG_PATH: /data/storage/patients/flags
+  LOG_PATH: :/data/storage/patients/logs
+  RESULTS_PATH: /data/storage/patients/vcf
+  SCHEDULER: SGE
+  TEMP_DIR: /tmp
+  QUEUE: all.q
+  USERNAME: adam
+  EMAIL: adammark@scripps.edu
+  DRMAA_PATH: /opt/sge6-fresh/lib/linux-x64/libdrmaa.so
+  PIPE_MULTIPROCESS: 1000
+  PIPE_REBUILD: 'True'
+  PIPE_VERBOSE: 5
+SUMATRA:
+  RESULTS: /data/storage/patients
+  RUN_NAME: sumatra_project
+  DB_PATH: /data/storage/patients/sumatra
+  REPOSITORY: https://adammaikai@bitbucket.org/sulab/omics_pipe
+  HG_USERNAME: adammaikai
+DNA:
+  TUMOR_EXT:
+  NORMAL_EXT:
+RNA:
+  TUMOR_EXT: [-T1-RNA]
+BBDUK:
+  RESULTS: /data/storage/patients/cleanfastq
+  VERSION: '34.46'
+  RAW_DATA: /data/s3/averafastq/patients
+  REF_ADAPTER: /data/database/contaminents/truseq_rna.fa.gz
+  OPTIONS: minlen=25 qtrim=rl trimq=10 ktrim=r k=25 mink=11 hdist=1 overwrite=true tbo=t tpe=t
+  NODES: '1'
+  CPU: '8'
+  WALLTIME: '240:00:00'
+  MEMORY: '8gb'
+FASTQC:
+  PATH: /data/storage/patients/cleanfastq
+  RESULTS: /data/storage/patients/fastqc
+  VERSION: '0.11.2'
+  COMPRESSION: GZIP
+  NODES: '1'
+  CPU: '8'
+  WALLTIME: '240:00:00'
+  MEMORY: '8gb'
+STAR:
+  RAW_DATA: /data/storage/patients/cleanfastq
+  RESULTS: /data/storage/patients/alignments
+  VERSION: '2.4.2a'
+  STARFUSION_VERSION: '0.5.4'
+  STARFUSION_LIB: /data/database/starfusion/Hg19_CTAT_resource_lib
+  FUSIONANNOTATOR_VERSION: '0.0.2'
+  FUSIONANNOTATOR_LIB: /opt/software/fusionannotator/FusionAnnotator-0.0.2/Hg19_CTAT_fusion_annotator_lib
+  GENOME:  /data/database/Homo_sapiens/UCSC/hg19/star_2.4.2a_ercc_genome
+  REFGTF: /data/database/Homo_sapiens/UCSC/hg19/Annotation/Genes/genes_ercc92.gtf
+  NODES: '1'
+  CPU: '32'
+  WALLTIME: '240:00:00'
+  MEMORY: '58gb'
+MOJO:
+  RESULTS: /data/storage/patients/mojo
+  VERSION: '0.0.5'
+  RAW_DATA: /data/storage/patients/cleanfastq
+  ENDS: PE
+  CONFIG: /opt/software/mojo/MOJO-v0.0.5-linux-x86_64/config.txt
+  FUSIONANNOTATOR_LIB: /opt/software/fusionannotator/FusionAnnotator-0.0.2/Hg19_CTAT_fusion_annotator_lib
+  FUSIONANNOTATOR_VERSION: '0.0.2'
+  NODES: '1'
+  CPU: '32'
+  WALLTIME: '240:00:00'
+  MEMORY: '58gb'
+SNPIR:
+  RESULTS: /data/storage/patients/snpir
+  VARIANT_DIR: /data/storage/patients
+  VERSION: '1.0'
+  ENCODING: 'phred33'
+  DIR: /opt/software/snpir/1.0/bin
+  CONFIG: /opt/software/snpir/1.0
+  TEMP: /tmp
+  SAMTOOLS_VERSION: '0.1.19'
+  BWA_VERSION: '0.7.10'
+  RAW_DATA: /data/storage/patients/cleanfastq
+  BWA_INDEX: /data/database/SNPiR/BWAIndex/hg19_genome_junctions_75.fa
+  PICARD_VERSION: '1.121'
+  GATK_VERSION: 'nightly_2015-02-25-g8a0ce74'
+  BEDTOOLS_VERSION: '2.21'
+  UCSC_TOOLS_VERSION: '287'
+  CALLABLELOCI: 'yes'
+  LOCIBED: /data/database/avera/nanostringPanCancer.bed
+  RGLB: TRUESEQ
+  RGPL: ILLUMINA
+  SAMBLASTER_VERSION: '0.1.20'
+  SAMBAMBA_VERSION: '0.4.7'
+  R_VERSION: '3.1.1'
+  G1000: /data/database/GATK/hg19/1000G_phase1.indels.hg19.vcf
+  MILLS: /data/database/GATK/hg19/Mills_and_1000G_gold_standard.indels.hg19.vcf
+  REPEAT_MASKER: /data/database/SNPiR/annotations/RepeatMasker.bed
+  ANNOTATION: /data/database/SNPiR/annotations/anno_combined_sorted
+  RNA_EDIT: /data/database/SNPiR/rnaedit/Human_AG_all_hg19.bed
+  DBSNP: /data/database/GATK/hg19/dbsnp_137.hg19.vcf
+  GENOME: /data/database/Homo_sapiens/UCSC/hg19/Sequence/WholeGenomeFasta/genome.fa
+  NODES: '1'
+  CPU: '32'
+  WALLTIME: '240:00:00'
+  MEMORY: '58gb'
+PREPROCESS:
+  FASTQ_PATH: /data/storage/patients/cleanfastq
+  GENOME: /data/database/GATK/hg19/ucsc.hg19.fasta
+  BWA_INDEX: /data/database/Homo_sapiens/UCSC/hg19/Sequence/BWAIndex/genome.fa
+  BWA_VERSION: '0.7.10'
+  ALIGNMENT_DIR: /data/storage/patients/alignments
+  SAMTOOLS_VERSION: '1.1'
+  SAMBAMBA_VERSION: '0.5.6'
+  SAMBLASTER_VERSION: '0.1.20'
+  ABRA_VERSION: '0.94'
+  NODES: '1'
+  CPU: '32'
+  WALLTIME: '240:00:00'
+  MEMORY: '58gb'
+QUALIMAP:
+  RESULTS: /data/storage/patients/qualimap
+  VERSION: '2.1.1'
+  ALIGNMENT_DIR: /data/storage/patients/alignments
+  DNA_OPTIONS: bamqc --java-mem-size=10G -gd HUMAN -sd
+  RNA_OPTIONS: rnaseq -s -pe -gtf /data/database/Homo_sapiens/UCSC/hg19/Annotation/Genes/genes.gtf --java-mem-size=10G -p strand-specific-reverse
+  NODES: '1'
+  CPU: '16'
+  WALLTIME: "240:00:00"
+  MEMORY: '29gb'
+BQSR:
+  ALIGNMENT_DIR: /data/storage/patients/alignments
+  VERSION: '3.3-0'
+  HAPMAP: /data/database/GATK/hg19/hapmap_3.3.hg19.vcf
+  DBSNP: /data/database/GATK/hg19/dbsnp_137.hg19.vcf
+  MILLS: /data/database/GATK/hg19/Mills_and_1000G_gold_standard.indels.hg19.vcf
+  G1000: /data/database/GATK/hg19/1000G_phase1.indels.hg19.vcf
+  NODES: '1'
+  CPU: '32'
+  WALLTIME: '240:00:00'
+  MEMORY: '58gb'
+MUTECT:
+  RESULTS: /data/storage/patients/vcf
+  COSMIC: /data/database/cosmic/CosmicCodingMuts_v68_wchr_sort.vcf
+  VERSION: '1.1.7'
+  NODES: '1'
+  CPU: '32'
+  WALLTIME: '240:00:00'
+  MEMORY: '58gb'
+SAMTOOLS:
+  ALIGNMENT_DIR: /data/storage/patients/alignments
+  VERSION: '1.1'
+  SAMBAMBA_VERSION: '0.5.6'
+  GENOME: /data/database/GATK/hg19/ucsc.hg19.fasta
+  NODES: '1'
+  CPU: '32'
+  WALLTIME: '240:00:00'
+  MEMORY: '58gb'
+GATK:
+  RESULTS: /data/storage/patients/vcf
+  VERSION: '3.3-0'
+  R_VERSION: '3.2.2'
+  GENOME: /data/database/GATK/hg19/ucsc.hg19.fasta
+  ALIGNMENT_DIR: /data/storage/patients/alignments
+  OMNI: /data/database/GATK/hg19/1000G_omni2.5.hg19.vcf
+  HAPMAP: /data/database/GATK/hg19/hapmap_3.3.hg19.vcf
+  DBSNP: /data/database/GATK/hg19/dbsnp_137.hg19.vcf
+  MILLS: /data/database/GATK/hg19/Mills_and_1000G_gold_standard.indels.hg19.vcf
+  G1000: /data/database/GATK/hg19/1000G_phase1.indels.hg19.vcf
+  KG: /data/database/GATK/hg19/1000G_phase1.snps.high_confidence.hg19.vcf
+  NODES: '1'
+  CPU: '32'
+  WALLTIME: '240:00:00'
+  MEMORY: '58gb'
+VARSCAN:
+  GENOME: /data/database/GATK/hg19/ucsc.hg19.fasta
+  ALIGNMENT_DIR: /data/storage/patients/alignments
+  SOMATIC_RESULTS: /data/storage/patients/vcf
+  SAMTOOLS_VERSION: '1.1'
+  VCFLIB_VERSION: '1.0' 
+  R_VERSION: '3.2.2'
+  VCFTOOLS_VERSION: '0.1.12b'
+  RESULTS: /data/storage/patients/vcf
+  VERSION: '2.3.9'
+  OPTIONS: --min-avg-qual 20 --output-vcf 1 --variants 1
+  NODES: '1'
+  CPU: '32'
+  WALLTIME: '240:00:00'
+  MEMORY: '58gb'
+ANNOTATION:
+  GENOME: /data/database/GATK/hg19/ucsc.hg19.fasta
+  VARIANT_DIR: /data/storage/patients/vcf
+  NODES: '1'
+  CPU: '32'
+  WALLTIME: '120:00:00'
+  MEMORY: '8gb'
+CAPTURE_KIT_BED: /data/database/avera/MedExome_hg19_capture_targets_6.bed

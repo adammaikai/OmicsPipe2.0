@@ -1,0 +1,48 @@
+SAMPLE_LIST: [test_miRNA,test2_miRNA]
+STEP: last_function
+STEPS: [fastqc_miRNA, cutadapt_miRNA, fastq_length_filter_miRNA, tophat_miRNA, cufflinks_miRNA, htseq_miRNA, last_function]
+STEPS_DE: [cuffmerge_miRNA, cuffmergetocompare_miRNA, cuffdiff_miRNA, last_function]
+ENDS: SE
+TEMP_DIR: /scratch/kfisch
+TRIMMED_DATA_PATH: /gpfs/group/su/kfisch/OA/data/rawdata/miRNA/trimmed
+TOPHAT_RESULTS: /gpfs/group/su/kfisch/OA/results/miRNA/alignments
+WORKING_DIR: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts
+FLAG_PATH: /gpfs/group/su/kfisch/OA/flags
+LOG_PATH: /gpfs/group/su/kfisch/OA/logs
+QC_PATH: /gpfs/group/su/kfisch/OA/data/QC
+RAW_DATA_DIR: /gpfs/group/su/kfisch/OA/data/rawdata/miRNA
+REF_GENES: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Annotation/Genes/genes.gtf
+RESULTS_PATH: /gpfs/group/su/kfisch/OA/results
+R_SOURCE_PATH: /gpfs/group/sanford/src/
+CUFFLINKS_RESULTS: /gpfs/group/su/kfisch/OA/results/miRNA/assemblies
+CUFFMERGE_RESULTS: /gpfs/group/su/kfisch/OA/results/miRNA/assemblies/cuffmerge
+CUFFDIFF_RESULTS: /gpfs/group/su/kfisch/OA/results/miRNA/cuffdiff
+CUFFDIFF_INPUT_LIST_COND1: /gpfs/group/su/kfisch/OA/results/miRNA/alignments/test_miRNA/accepted_hits.bam 
+CUFFDIFF_INPUT_LIST_COND2: /gpfs/group/su/kfisch/OA/results/miRNA/alignments/test2_miRNA/accepted_hits.bam
+HTSEQ_RESULTS: /gpfs/group/su/kfisch/OA/results/miRNA/counts
+HTSEQ_OPTIONS: -m intersection-nonempty -s no -t miRNA
+GENOME: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/WholeGenomeFasta/genome.fa
+miRNA_BOWTIE_INDEX: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/Bowtie2Index/genome
+miRNA_GTF: /gpfs/group/su/kfisch/references/miRBase/miRNA.gtf
+miRNA_GFF: /gpfs/group/su/kfisch/references/miRBase/hsa.gff3
+BOWTIE_INDEX: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/Bowtie2Index/genome
+CHROM: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/Chromosomes
+TOPHAT_OPTIONS: -p 8 -N 1 --b2-L 15  --library-type fr-secondstrand --no-novel-juncs
+CUFFLINKS_OPTIONS: -u -N  
+CUFFMERGE_OPTIONS: -p 8
+CUFFMERGETOCOMPARE_OPTIONS: -CG
+CUFFDIFF_OPTIONS: -p 8 -FDR 0.01 -L Normal,OA -N --compatible-hits-norm
+ADAPTER: TGGAATTCTCGGGTGCCAAGG
+PIPE_MULTIPROCESS: 100
+PIPE_REBUILD: True
+PIPE_VERBOSE: 5
+RESULTS_EMAIL: kfisch@scripps.edu
+QUEUE: workq
+FASTQC_VERSION: 0.10.1
+TOPHAT_VERSION: 2.0.9
+CUFFLINKS_VERSION: 2.1.1 
+TRIMGALORE_VERSION: 0.3.3
+SAMTOOLS_VERSION: 0.1.19
+R_VERSION: 3.0.1
+DPS_VERSION: 1.3.1111
+DRMAA_PATH: /opt/applications/pbs-drmaa/current/gnu/lib/libdrmaa.so

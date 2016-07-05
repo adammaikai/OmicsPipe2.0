@@ -1,0 +1,320 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Omics Pipe Tutorial – Creating a Custom Pipeline Script &mdash; Omics Pipe v1.1.3 Documentation</title>
+    
+    <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Omics Pipe v1.1.3 Documentation" href="contents.html" />
+    <link rel="next" title="Omics Pipe Tutorial – Adding a New Module (Tool)" href="adding_modules.html" />
+    <link rel="prev" title="Omics Pipe Tutorial – Configuring the Parameter File" href="parameter_file.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body role="document">
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="contents.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="adding_modules.html" title="Omics Pipe Tutorial – Adding a New Module (Tool)"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="parameter_file.html" title="Omics Pipe Tutorial – Configuring the Parameter File"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="contents.html">Omics Pipe 1.1.3 Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="omics-pipe-tutorial-creating-a-custom-pipeline-script">
+<span id="index-0"></span><h1>Omics Pipe Tutorial &#8211; Creating a Custom Pipeline Script<a class="headerlink" href="#omics-pipe-tutorial-creating-a-custom-pipeline-script" title="Permalink to this headline">¶</a></h1>
+<p>A pipeline script is a .py file that has the steps in the pipeline that you want to run in your analysis.
+To create a custom pipeline, you will create a new Python script (<a href="#id1"><span class="problematic" id="id2">*</span></a>.py) file and place it in your working
+directory (or wherever you want).  The available analysis steps built-in to omics_pipe are available in the
+(List of currently available omics_pipe analysis steps).</p>
+<p>You may add new modules directly to the module directory (see <a class="reference internal" href="adding_modules.html"><em>Adding Custom Modules</em></a>),
+and they will become available steps that you can use in your custom pipeline.</p>
+<dl class="docutils">
+<dt>There are three steps to creating a custom pipeline:</dt>
+<dd><ol class="first last arabic simple">
+<li>Designing the structure of your pipeline</li>
+<li>Creating the script</li>
+<li>Updating your parameters file</li>
+</ol>
+</dd>
+</dl>
+<p>The section below details each of these steps.</p>
+<div class="section" id="designing-the-structure-of-the-pipeline">
+<h2>Designing the structure of the pipeline<a class="headerlink" href="#designing-the-structure-of-the-pipeline" title="Permalink to this headline">¶</a></h2>
+<p>Omics_pipe depends upon the pipelining module Ruffus to handle the automation. Please read the documentation
+at the Ruffus website <a class="reference external" href="http://www.ruffus.org.uk/">http://www.ruffus.org.uk/</a> for more information.  To design your pipeline, you need to decide</p>
+<blockquote>
+<div><ul class="simple">
+<li>What analysis modules you want to run,</li>
+<li>What order you want the analysis modules to run in,</li>
+<li>Which, if any, of the analysis modules depend upon the results from another analysis module.</li>
+</ul>
+</div></blockquote>
+<p>For example, we will create a custom pipeline that runs fastqc, star and htseq (depends on output from star).</p>
+</div>
+<div class="section" id="creating-the-script">
+<h2>Creating the script<a class="headerlink" href="#creating-the-script" title="Permalink to this headline">¶</a></h2>
+<p>To create the script, create a text file name custom_script.py (or whatever name you choose).
+At the top of the file, cut and copy this text:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="kn">from</span> <span class="nn">ruffus</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">drmaa</span>
+<span class="kn">from</span> <span class="nn">omics_pipe.utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">omics_pipe.parameters.default_parameters</span> <span class="kn">import</span> <span class="n">default_parameters</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">(</span><span class="n">default_parameters</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">WORKING_DIR</span><span class="p">)</span>
+<span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="n">date</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&quot;%Y-%m-</span><span class="si">%d</span><span class="s"> %H:%M&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">p</span>
+<span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">STEPS</span><span class="p">:</span>
+        <span class="nb">vars</span><span class="p">()[</span><span class="s">&#39;inputList_&#39;</span> <span class="o">+</span> <span class="n">step</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">SAMPLE_LIST</span><span class="p">:</span>
+                <span class="nb">vars</span><span class="p">()[</span><span class="s">&#39;inputList_&#39;</span> <span class="o">+</span> <span class="n">step</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">sample</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">_</span><span class="si">%s</span><span class="s">_completed.flag&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">FLAG_PATH</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">sample</span><span class="p">)])</span>
+        <span class="k">print</span> <span class="nb">vars</span><span class="p">()[</span><span class="s">&#39;inputList_&#39;</span> <span class="o">+</span> <span class="n">step</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>After this has been completed, you will need to import each of the analysis modules that you will use in your pipeline.
+For each analysis module, write the line below (fill in analysis_name with the name of the analysis module):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">omics_pipe.modules.analysis_name</span> <span class="kn">import</span> <span class="n">analysis_name</span>
+</pre></div>
+</div>
+<p>In our example, you will have three lines (see below):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">omics_pipe.modules.fastqc</span> <span class="kn">import</span> <span class="n">fastqc</span>
+<span class="kn">from</span> <span class="nn">omics_pipe.modules.star</span> <span class="kn">import</span> <span class="n">star</span>
+<span class="kn">from</span> <span class="nn">omics_pipe.modules.htseq</span> <span class="kn">import</span> <span class="n">htseq</span>
+</pre></div>
+</div>
+<p>Now you are ready to write the functions to run each of these steps in the analysis.  For each step in our analysis pipeline,
+we will need to write a function.  You can cut and copy these from the pre-packaged analysis pipeline scripts (or eventually
+a function reference) or create them.  Each function needs to have two decorators from Ruffus: &#64;parallel(inputList_analysis_name)
+to specify that the pipeline should run in parallel for more than one sample and &#64;check_if_uptodate(check_file_exists) to call a
+function to check if that step in the pipeline is up to date.  Name each function with the name of the analysis prefixed by “<a href="#id3"><span class="problematic" id="id4">run_</span></a>.”
+The function input should always be (sample, analysis_name_flag).  Within the function, you will call the analysis module that you
+loaded above.  If you want an analysis module to run only after a module it depends upon finishes, you must add the &#64;follows()
+Ruffus decorator before the function, with the name of the step that it depends upon. For example, if htseq needs to run after star,
+you would put &#64;follows(run_star) above the run_htseq function. If you have steps that do not have functions that are dependent
+upon them, you can create a more complex pipeline structure by creating a “Last Function” that ties together all steps of your pipeline.
+The last function below is an example of such a function, and it also produces a PDF diagram of your pipeline when it completes.
+The functions for our example are below.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@parallel</span><span class="p">(</span><span class="n">inputList_fastqc</span><span class="p">)</span>
+<span class="nd">@check_if_uptodate</span><span class="p">(</span><span class="n">check_file_exists</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_fastqc</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">fastqc_flag</span><span class="p">):</span>
+        <span class="n">fastqc</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">fastqc_flag</span><span class="p">)</span>
+        <span class="k">return</span>
+
+<span class="nd">@parallel</span><span class="p">(</span><span class="n">inputList_star</span><span class="p">)</span>
+<span class="nd">@check_if_uptodate</span><span class="p">(</span><span class="n">check_file_exists</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_star</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">star_flag</span><span class="p">):</span>
+        <span class="n">star</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">star_flag</span><span class="p">)</span>
+        <span class="k">return</span>
+
+<span class="nd">@parallel</span><span class="p">(</span><span class="n">inputList_htseq</span><span class="p">)</span>
+<span class="nd">@check_if_uptodate</span><span class="p">(</span><span class="n">check_file_exists</span><span class="p">)</span>
+<span class="nd">@follows</span><span class="p">(</span><span class="n">run_star</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_htseq</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">htseq_flag</span><span class="p">):</span>
+        <span class="n">htseq</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">htseq_flag</span><span class="p">)</span>
+        <span class="k">return</span>
+
+
+<span class="nd">@parallel</span><span class="p">(</span><span class="n">inputList_last_function</span><span class="p">)</span>
+<span class="nd">@check_if_uptodate</span><span class="p">(</span><span class="n">check_file_exists</span><span class="p">)</span>
+<span class="nd">@follows</span><span class="p">(</span><span class="n">run_fastqc</span><span class="p">,</span> <span class="n">run_htseq</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">last_function</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">last_function_flag</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;PIPELINE HAS FINISHED SUCCESSFULLY!!! YAY!&quot;</span>
+        <span class="n">pipeline_graph_output</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">FLAG_PATH</span> <span class="o">+</span> <span class="s">&quot;/pipeline_&quot;</span> <span class="o">+</span> <span class="n">sample</span> <span class="o">+</span> <span class="s">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">date</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;.pdf&quot;</span>
+        <span class="n">pipeline_printout_graph</span> <span class="p">(</span><span class="n">pipeline_graph_output</span><span class="p">,</span><span class="s">&#39;pdf&#39;</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">no_key_legend</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="n">stage</span> <span class="o">=</span> <span class="s">&quot;last_function&quot;</span>
+        <span class="n">flag_file</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">_</span><span class="si">%s</span><span class="s">_completed.flag&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">FLAG_PATH</span><span class="p">,</span> <span class="n">stage</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+        <span class="nb">open</span><span class="p">(</span><span class="n">flag_file</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span>
+</pre></div>
+</div>
+<p>Once you have created all of the functions for each step of your pipeline, cut and copy the code below to the bottom of your script:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+
+        <span class="n">pipeline_run</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">STEP</span><span class="p">,</span> <span class="n">multiprocess</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">PIPE_MULTIPROCESS</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">PIPE_VERBOSE</span><span class="p">,</span> <span class="n">gnu_make_maximal_rebuild_mode</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">PIPE_REBUILD</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>At this point, please save your script and move on to step 3.</p>
+</div>
+<div class="section" id="updating-your-parameters-file">
+<h2>Updating your parameters file<a class="headerlink" href="#updating-your-parameters-file" title="Permalink to this headline">¶</a></h2>
+<p>In order for your script to run successfully, you need to configure your parameter file so that each analysis module has the necessary parameters
+to execute successfully. The full list of parameters for all modules in the current version of omics_pipe are located in the
+omics_pipe/parameters/default_parameters.py file (and eventually organized somewhere).  You can view the list of necessary parameters for each
+analysis module by importing the analysis module into an interactive python session (from omics_pipe.modules.analysis_module import analysis_module)
+and typing analysis_module.__doc__.  The parameters necessary for that analysis module will be listed under “parameters from parameters file.” These
+parameters must be put into your parameters.yaml file and spelled exactly as shown (including all caps).   Below is the list of parameters that are
+necessary to run omics_pipe in addition to the module specific parameters.</p>
+<div class="highlight-python"><div class="highlight"><pre>SAMPLE_LIST: [test, test1]
+STEP: run_last_function
+STEPS: [fastqc, star, htseq, last_function]
+RAW_DATA_DIR: /gpfs/group/sanford/patient/SSKT/test_patient/RNA/RNA_seq/data
+FLAG_PATH: /gpfs/group/sanford/patient/SSKT/test_patient/RNA/RNA_seq/logs/flags
+LOG_PATH: /gpfs/group/sanford/patient/SSKT/test_patient/RNA/RNA_seq/logs
+WORKING_DIR: /gpfs/home/kfisch/virt_env/virt2/lib/python2.6/site-packages/omics_pipe-1.0.7-py2.6.egg/omics_pipe/scripts
+ENDS: PE
+PIPE_MULTIPROCESS: 100
+PIPE_REBUILD: &#39;True&#39;
+PIPE_VERBOSE: 5
+RESULTS_EMAIL: kfisch@scripps.edu
+TEMP_DIR: /scratch/kfisch
+DPS_VERSION: &#39;1.3.1111&#39;
+QUEUE: bigmem
+PARAMS_FILE: /gpfs/home/kfisch/omics_pipe_docs/test_params.yaml
+USERNAME: kfisch
+GENOME: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/WholeGenomeFasta/genome.fa
+CHROM: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/Chromosomes
+REF_GENES: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Annotation/Genes/genes.gtf
+STAR_INDEX: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/star_genome
+BOWTIE_INDEX: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/Bowtie2Index/genome
+</pre></div>
+</div>
+<p>Once you have all of the necessary parameters in your parameters.yaml file, for your custom script you will need to change the STEP and STEPS parameters.
+In the STEP parameter, you will write the name of the last function in your pipeline that you want to run, which should be configured so that it captures all steps
+in the pipeline (as in the example above). Make sure to put <a href="#id5"><span class="problematic" id="id6">run_</span></a> in front of this, since you are calling the function, not the analysis module.  In order for
+omics_pipe to know what steps you have in your pipeline, you need to list each analysis module name in the STEPS parameter separated with commas
+(without <a href="#id7"><span class="problematic" id="id8">run_</span></a> in the prefix).  You are now ready to run your custom script.</p>
+<p>Running omics_pipe with a custom pipeline script
+When you call the omics_pipe function, you will specify the path to your custom script using the command</p>
+<div class="highlight-python"><div class="highlight"><pre>omics_pipe custom  --custom_script_path ~/path/to/the/script --custom_script_name name_of_customscript /path/to/parameters.yaml
+</pre></div>
+</div>
+<p>This will automatically load your custom script and run through the steps in your pipeline using the default modules available in omics_pipe.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="contents.html" title="contents">
+          <img class="logo" src="_static/logo.jpg" alt="Logo"/>
+        </a></p><div class="sphinxlocaltoc">
+    <h3><a href="contents.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Omics Pipe Tutorial &#8211; Creating a Custom Pipeline Script</a><ul>
+<li><a class="reference internal" href="#designing-the-structure-of-the-pipeline">Designing the structure of the pipeline</a></li>
+<li><a class="reference internal" href="#creating-the-script">Creating the script</a></li>
+<li><a class="reference internal" href="#updating-your-parameters-file">Updating your parameters file</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="parameter_file.html"
+                          title="Previous page">&larr; Omics Pipe Tutorial &#8211; Configuring the Parameter File</a></p>
+  </div>
+  <div class="sphinxnext">
+    <h4>Next page</h4>
+    <p class="topless"><a href="adding_modules.html"
+                          title="Next page">&rarr; Omics Pipe Tutorial &#8211; Adding a New Module (Tool)</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/custom_pipelines.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="contents.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="adding_modules.html" title="Omics Pipe Tutorial – Adding a New Module (Tool)"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="parameter_file.html" title="Omics Pipe Tutorial – Configuring the Parameter File"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="contents.html">Omics Pipe 1.1.3 Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &copy; <a href="copyright.html">Copyright</a> 2014-2015 Kathleen Fisch, Ph.D..
+      Last updated on Sep 21, 2015.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

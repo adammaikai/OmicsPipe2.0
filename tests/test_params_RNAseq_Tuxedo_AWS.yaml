@@ -1,0 +1,52 @@
+SAMPLE_LIST: [test1, test2]
+STEP: last_function
+STEPS: [fastqc, tophat, rseqc, cufflinks]
+STEPS_DE: [cuffmerge, cuffmergetocompare, cuffdiff, RNAseq_report_tuxedo, last_function]
+ENDS: SE
+RESULTS_EMAIL: kfisch@scripps.edu
+TEMP_DIR: /scratch
+QUEUE: all.q
+USERNAME: root
+RAW_DATA_DIR: /root/src/omics-pipe/tests
+FLAG_PATH: /data/results/tuxedo/flags
+LOG_PATH: :/data/results/tuxedo/log
+QC_PATH: /data/results/tuxedo/QC
+RESULTS_PATH: /data/results/tuxedo
+WORKING_DIR: /root/src/omics-pipe/omics_pipe/scripts
+TOPHAT_RESULTS: /data/results/tuxedo/alignments
+CUFFLINKS_RESULTS: /data/results/tuxedo/assemblies
+CUFFMERGE_RESULTS: /data/results/tuxedo/cuffmerge
+CUFFDIFF_RESULTS: /data/results/tuxedo/cuffdiff
+CUFFDIFF_INPUT_LIST_COND1: /data/results/tuxedo/alignments/test1/accepted_hits.bam
+CUFFDIFF_INPUT_LIST_COND2: /data/results/tuxedo/alignments/test2/accepted_hits.bam
+TOPHAT_OPTIONS: -p 8 -a 5 --microexon-search --library-type fr-secondstrand
+CUFFLINKS_OPTIONS: -u -N
+CUFFMERGE_OPTIONS: -p 8
+CUFFMERGETOCOMPARE_OPTIONS: -CG
+CUFFDIFF_OPTIONS: -p 8 -FDR 0.01 -L Group1,Group2 -N --compatible-hits-norm
+FASTQC_VERSION: '0.10.1'
+TOPHAT_VERSION: '2.0.12'
+CUFFLINKS_VERSION: '2.2.1'
+PIPE_MULTIPROCESS: 100
+PIPE_REBUILD: 'True'
+PIPE_VERBOSE: 5
+REF_GENES: /data/database/Homo_sapiens/UCSC/hg19/Annotation/Genes/genes.gtf
+GENOME: /data/database/Homo_sapiens/UCSC/hg19/Sequence/WholeGenomeFasta/genome.fa
+BOWTIE_INDEX: /data/database/Homo_sapiens/UCSC/hg19/Sequence/Bowtie2Index/genome
+CHROM: /data//database/Homo_sapiens/UCSC/hg19/Sequence/Chromosomes
+DRMAA_PATH: /opt/sge6-fresh/lib/linux-x64/libdrmaa.so
+R_VERSION: '3.1.0'
+REPORT_RESULTS: /data/results/tuxedo
+PARAMS_FILE: '/data/data/params/test_params_RNAseq_Tuxedo_AWS.yaml'
+GENEIDS: [GAPDH, COL2A1, BRCA2]
+COND1: Group1
+COND2: Group2
+NAME: Test_run_date
+SUMATRA_DB_PATH: data/results/tuxedo/sumatra
+SUMATRA_RUN_NAME: default_sumatra_project
+REPOSITORY: https://kfisch@bitbucket.org/sulab/omics_pipe
+HG_USERNAME: Kathleen Fisch <kfisch@scripps.edu>
+PYTHON_VERSION: 2.7.4
+SCHEDULER: SGE
+R_SOURCE_PATH: /root/src/omics-pipe/omics_pipe/scripts/reporting
+COMPRESSION: none

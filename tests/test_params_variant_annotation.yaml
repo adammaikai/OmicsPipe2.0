@@ -1,0 +1,50 @@
+SAMPLE_LIST: [test_DNA1, test_DNA2]
+STEP: last_function
+STEPS: [filter_variants_DNA, intogen,  annovar, DNAseq_variant_report, last_function]
+FLAG_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/flags
+LOG_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/log
+RESULTS_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/
+WORKING_DIR: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts
+VARIANT_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests
+PIPE_MULTIPROCESS: 1000
+PIPE_REBUILD: 'True'
+PIPE_VERBOSE: 5
+RESULTS_EMAIL: kfisch@scripps.edu
+TEMP_DIR: /scratch/kfisch
+QUEUE: workq
+USERNAME: kfisch
+DRMAA_PATH: /opt/applications/pbs-drmaa/current/gnu/lib/libdrmaa.so
+SUMATRA_DB_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/sumatra
+SUMATRA_RUN_NAME: default_sumatra_project
+REPOSITORY: https://kfisch@bitbucket.org/sulab/omics_pipe
+HG_USERNAME: Kathleen Fisch <kfisch@scripps.edu>
+SCHEDULER: PBS
+R_SOURCE_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts/reporting
+REPORT_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/report
+PARAMS_FILE: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_params_variant_annotation.yaml
+TABIX_VERSION: 0.2.6
+TUMOR_TYPE: EPI
+INTOGEN_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/variants
+INTOGEN_OPTIONS: --single-tumor 
+INTOGEN_CONFIG: /root/src/omics-pipe/omics_pipe/scripts/intogen.conf
+GENELIST: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts/reporting/ref/brca.txt
+COSMIC: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts/reporting/ref/cosmic.tsv
+CLINVAR: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts/reporting/ref/clinvar.txt
+PHARMGKB_rsID: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts/reporting/ref/pharmgkbRSID.csv
+PHARMGKB_Allele: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts/reporting/ref/pharmgkbAllele.tsv
+DRUGBANK: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts/reporting/ref/drugbank.tsv
+CADD: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts/reporting/ref/cadd.tsv.gz
+ANNOVARDB: /gpfs/group/databases/annovar/humandb
+ANNOVAR_OPTIONS: -buildver hg19 -protocol nonsyn_splicing,1000g2012apr_all,esp6500_ea,esp6500_aa,snp135NonFlagged,cg46,ljb_sift,ljb_pp2,dominant -operation g,f,f,f,f,f,f,f,m
+ANNOVAR_OPTIONS2: -genetype knowngene --remove
+VCF_FILE: "intogen_input.vcf"
+SNPEFF_VERSION: '3.5'
+VCFTOOLS_VERSION: 0.1.10
+ANNOVAR_VERSION: '08232013'
+INTOGEN_VERSION: '2.3.0'
+R_VERSION: 3.1.0
+PYTHON_VERSION: 2.6.5
+BEDTOOLS_VERSION: "2.17.0"
+dbNSFP: /gpfs/group/su/meissto/data/dbNSFP/dbNSFP2.0.txt.gz
+SNP_FILTER_OUT_REF: /gpfs/group/su/meissto/cancer_report/src/RNA/vcf/common_no_known_medical_impact_00-latest.vcf
+COMPRESSION: none

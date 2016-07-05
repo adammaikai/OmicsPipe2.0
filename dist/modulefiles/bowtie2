@@ -1,0 +1,5 @@
+#%Module
+
+set root /root/.local/easybuild/software/bowtie2/2.2.3
+
+prepend-path	PATH	$root/bowtie2-2.2.3

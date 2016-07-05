@@ -1,0 +1,340 @@
+<ResultSet date="2014-27-05 18:50:30">
+  <Hits>15</Hits>
+  <Result id="1">
+    <analysis_id>0d632b21-7e6c-4710-b905-ff41798a43fa</analysis_id>
+    <state>live</state>
+    <reason/>
+    <last_modified>2014-01-15T02:50:01Z</last_modified>
+    <upload_date>2014-01-15T01:46:32Z</upload_date>
+    <published_date>2014-01-15T02:50:01Z</published_date>
+    <center_name>UNC-LCCC</center_name>
+    <study>phs000178</study>
+    <aliquot_id>1323e58e-5e3f-459a-99ff-e7a6748d3d77</aliquot_id>
+    <files>
+      <file>
+        <filename>UNCID_2319300.1323e58e-5e3f-459a-99ff-e7a6748d3d77.130827_UNC15-SN850_0324_AC2B28ACXX_6_ACTTGA.tar.gz</filename>
+        <filesize>6466209895</filesize>
+        <checksum type="MD5">da26b3ba5d315b585f805507ea60da2e</checksum>
+      </file>
+    </files>
+    <refassem_short_name></refassem_short_name>
+    <analysis_detail_uri>https://cghub.ucsc.edu/cghub/metadata/analysisDetail/0d632b21-7e6c-4710-b905-ff41798a43fa</analysis_detail_uri>
+    <analysis_submission_uri>https://cghub.ucsc.edu/cghub/metadata/analysisSubmission/0d632b21-7e6c-4710-b905-ff41798a43fa</analysis_submission_uri>
+    <analysis_data_uri>https://cghub.ucsc.edu/cghub/data/analysis/download/0d632b21-7e6c-4710-b905-ff41798a43fa</analysis_data_uri>
+  </Result>
+  <Result id="2">
+    <analysis_id>2cec92cb-1c5e-45d5-92ed-5b9cba4dbeee</analysis_id>
+    <state>live</state>
+    <reason/>
+    <last_modified>2013-09-30T01:53:01Z</last_modified>
+    <upload_date>2013-09-30T01:31:04Z</upload_date>
+    <published_date>2013-09-30T01:53:01Z</published_date>
+    <center_name>UNC-LCCC</center_name>
+    <study>phs000178</study>
+    <aliquot_id>141e15ac-1537-4182-9db5-ba2115cd93d6</aliquot_id>
+    <files>
+      <file>
+        <filename>UNCID_2207459.141e15ac-1537-4182-9db5-ba2115cd93d6.110706_UNC12-SN629_0107_BD0DKWABXX_7.tar.gz</filename>
+        <filesize>5160200004</filesize>
+        <checksum type="MD5">c27f41aa324758bef554c6a5f3b6bffe</checksum>
+      </file>
+    </files>
+    <refassem_short_name></refassem_short_name>
+    <analysis_detail_uri>https://cghub.ucsc.edu/cghub/metadata/analysisDetail/2cec92cb-1c5e-45d5-92ed-5b9cba4dbeee</analysis_detail_uri>
+    <analysis_submission_uri>https://cghub.ucsc.edu/cghub/metadata/analysisSubmission/2cec92cb-1c5e-45d5-92ed-5b9cba4dbeee</analysis_submission_uri>
+    <analysis_data_uri>https://cghub.ucsc.edu/cghub/data/analysis/download/2cec92cb-1c5e-45d5-92ed-5b9cba4dbeee</analysis_data_uri>
+  </Result>
+  <Result id="3">
+    <analysis_id>1cb8e302-2153-4341-8f5f-e8d004b7fea3</analysis_id>
+    <state>live</state>
+    <reason/>
+    <last_modified>2013-09-30T07:16:02Z</last_modified>
+    <upload_date>2013-09-30T18:56:04Z</upload_date>
+    <published_date>2013-09-30T07:16:02Z</published_date>
+    <center_name>UNC-LCCC</center_name>
+    <study>phs000178</study>
+    <aliquot_id>143e8620-56cc-4b65-a2aa-d793543f6854</aliquot_id>
+    <files>
+      <file>
+        <filename>UNCID_2208837.143e8620-56cc-4b65-a2aa-d793543f6854.110607_UNC14-SN744_0124_AD0CVCABXX_3.tar.gz</filename>
+        <filesize>5972260669</filesize>
+        <checksum type="MD5">d68bef218e5b76c75463658f934907f6</checksum>
+      </file>
+    </files>
+    <refassem_short_name></refassem_short_name>
+    <analysis_detail_uri>https://cghub.ucsc.edu/cghub/metadata/analysisDetail/1cb8e302-2153-4341-8f5f-e8d004b7fea3</analysis_detail_uri>
+    <analysis_submission_uri>https://cghub.ucsc.edu/cghub/metadata/analysisSubmission/1cb8e302-2153-4341-8f5f-e8d004b7fea3</analysis_submission_uri>
+    <analysis_data_uri>https://cghub.ucsc.edu/cghub/data/analysis/download/1cb8e302-2153-4341-8f5f-e8d004b7fea3</analysis_data_uri>
+  </Result>
+  <Result id="4">
+    <analysis_id>79983119-f309-4863-8008-fd363e93a021</analysis_id>
+    <state>live</state>
+    <reason/>
+    <last_modified>2013-09-28T20:42:02Z</last_modified>
+    <upload_date>2013-09-28T20:16:05Z</upload_date>
+    <published_date>2013-09-28T20:42:03Z</published_date>
+    <center_name>UNC-LCCC</center_name>
+    <study>phs000178</study>
+    <aliquot_id>14404fa2-adc4-4ecd-b4ee-5f4a75b54ff2</aliquot_id>
+    <files>
+      <file>
+        <filename>UNCID_2206946.14404fa2-adc4-4ecd-b4ee-5f4a75b54ff2.110803_UNC15-SN850_0106_BD0DK2ABXX_5_CAGATC.tar.gz</filename>
+        <filesize>3539689544</filesize>
+        <checksum type="MD5">b384805e0591c1f51299fcc94909aeb9</checksum>
+      </file>
+    </files>
+    <refassem_short_name></refassem_short_name>
+    <analysis_detail_uri>https://cghub.ucsc.edu/cghub/metadata/analysisDetail/79983119-f309-4863-8008-fd363e93a021</analysis_detail_uri>
+    <analysis_submission_uri>https://cghub.ucsc.edu/cghub/metadata/analysisSubmission/79983119-f309-4863-8008-fd363e93a021</analysis_submission_uri>
+    <analysis_data_uri>https://cghub.ucsc.edu/cghub/data/analysis/download/79983119-f309-4863-8008-fd363e93a021</analysis_data_uri>
+  </Result>
+  <Result id="5">
+    <analysis_id>ebbb3f4e-469a-4f3b-b061-b70b5a105b06</analysis_id>
+    <state>live</state>
+    <reason/>
+    <last_modified>2013-09-17T17:27:02Z</last_modified>
+    <upload_date>2013-09-17T17:07:05Z</upload_date>
+    <published_date>2013-09-17T17:27:02Z</published_date>
+    <center_name>UNC-LCCC</center_name>
+    <study>phs000178</study>
+    <aliquot_id>1462b0a9-6467-4977-aea7-006ea3f5109e</aliquot_id>
+    <files>
+      <file>
+        <filename>UNCID_2187519.1462b0a9-6467-4977-aea7-006ea3f5109e.120823_UNC17-SN7001277_0047_AC0Y3YACXX_3_TAGCTT.tar.gz</filename>
+        <filesize>7425288478</filesize>
+        <checksum type="MD5">7aa56d4cf85e522a7b0b6728d5221538</checksum>
+      </file>
+    </files>
+    <refassem_short_name></refassem_short_name>
+    <analysis_detail_uri>https://cghub.ucsc.edu/cghub/metadata/analysisDetail/ebbb3f4e-469a-4f3b-b061-b70b5a105b06</analysis_detail_uri>
+    <analysis_submission_uri>https://cghub.ucsc.edu/cghub/metadata/analysisSubmission/ebbb3f4e-469a-4f3b-b061-b70b5a105b06</analysis_submission_uri>
+    <analysis_data_uri>https://cghub.ucsc.edu/cghub/data/analysis/download/ebbb3f4e-469a-4f3b-b061-b70b5a105b06</analysis_data_uri>
+  </Result>
+  <Result id="6">
+    <analysis_id>badb4d8b-6c3b-454a-87ac-e16a635c4e4b</analysis_id>
+    <state>live</state>
+    <reason/>
+    <last_modified>2013-09-27T07:34:02Z</last_modified>
+    <upload_date>2013-09-27T07:07:05Z</upload_date>
+    <published_date>2013-09-27T07:34:02Z</published_date>
+    <center_name>UNC-LCCC</center_name>
+    <study>phs000178</study>
+    <aliquot_id>147d6ebb-7359-449a-9e6a-6c8443ebaa2e</aliquot_id>
+    <files>
+      <file>
+        <filename>UNCID_2206522.147d6ebb-7359-449a-9e6a-6c8443ebaa2e.110919_UNC13-SN749_0113_AB00WUABXX_3_CGATGT.tar.gz</filename>
+        <filesize>7606309309</filesize>
+        <checksum type="MD5">7bcfe71256ba172fa605bc4ddc04f9c7</checksum>
+      </file>
+    </files>
+    <refassem_short_name></refassem_short_name>
+    <analysis_detail_uri>https://cghub.ucsc.edu/cghub/metadata/analysisDetail/badb4d8b-6c3b-454a-87ac-e16a635c4e4b</analysis_detail_uri>
+    <analysis_submission_uri>https://cghub.ucsc.edu/cghub/metadata/analysisSubmission/badb4d8b-6c3b-454a-87ac-e16a635c4e4b</analysis_submission_uri>
+    <analysis_data_uri>https://cghub.ucsc.edu/cghub/data/analysis/download/badb4d8b-6c3b-454a-87ac-e16a635c4e4b</analysis_data_uri>
+  </Result>
+  <Result id="7">
+    <analysis_id>d847940a-cec1-4936-acdd-6dad414f7d9e</analysis_id>
+    <state>live</state>
+    <reason/>
+    <last_modified>2013-10-03T07:42:02Z</last_modified>
+    <upload_date>2013-10-03T07:26:04Z</upload_date>
+    <published_date>2013-10-03T07:42:02Z</published_date>
+    <center_name>UNC-LCCC</center_name>
+    <study>phs000178</study>
+    <aliquot_id>0c74bde4-0411-4cfd-9c60-d8eaf8a09629</aliquot_id>
+    <files>
+      <file>
+        <filename>UNCID_2212279.0c74bde4-0411-4cfd-9c60-d8eaf8a09629.110228_UNC10-SN254_0198_BB041RABXX_3.tar.gz</filename>
+        <filesize>6313087719</filesize>
+        <checksum type="MD5">77b9e4ce2539749eb98ef48b3da1928d</checksum>
+      </file>
+    </files>
+    <refassem_short_name></refassem_short_name>
+    <analysis_detail_uri>https://cghub.ucsc.edu/cghub/metadata/analysisDetail/d847940a-cec1-4936-acdd-6dad414f7d9e</analysis_detail_uri>
+    <analysis_submission_uri>https://cghub.ucsc.edu/cghub/metadata/analysisSubmission/d847940a-cec1-4936-acdd-6dad414f7d9e</analysis_submission_uri>
+    <analysis_data_uri>https://cghub.ucsc.edu/cghub/data/analysis/download/d847940a-cec1-4936-acdd-6dad414f7d9e</analysis_data_uri>
+  </Result>
+  <Result id="8">
+    <analysis_id>1dae2dd2-dc38-443a-a43c-fd44ce6c8608</analysis_id>
+    <state>live</state>
+    <reason/>
+    <last_modified>2013-10-22T02:58:03Z</last_modified>
+    <upload_date>2013-10-22T02:36:05Z</upload_date>
+    <published_date>2013-10-22T02:58:03Z</published_date>
+    <center_name>UNC-LCCC</center_name>
+    <study>phs000178</study>
+    <aliquot_id>0c7fc003-950b-4138-8390-036c072b640e</aliquot_id>
+    <files>
+      <file>
+        <filename>UNCID_2239596.0c7fc003-950b-4138-8390-036c072b640e.111006_UNC11-SN627_0157_AB01YAABXX_3_GCCAAT.tar.gz</filename>
+        <filesize>7731826500</filesize>
+        <checksum type="MD5">d934d859543510717fc6071397959ddf</checksum>
+      </file>
+    </files>
+    <refassem_short_name></refassem_short_name>
+    <analysis_detail_uri>https://cghub.ucsc.edu/cghub/metadata/analysisDetail/1dae2dd2-dc38-443a-a43c-fd44ce6c8608</analysis_detail_uri>
+    <analysis_submission_uri>https://cghub.ucsc.edu/cghub/metadata/analysisSubmission/1dae2dd2-dc38-443a-a43c-fd44ce6c8608</analysis_submission_uri>
+    <analysis_data_uri>https://cghub.ucsc.edu/cghub/data/analysis/download/1dae2dd2-dc38-443a-a43c-fd44ce6c8608</analysis_data_uri>
+  </Result>
+  <Result id="9">
+    <analysis_id>cf6f5e2a-ddae-4709-a35f-7d332d82e93a</analysis_id>
+    <state>live</state>
+    <reason/>
+    <last_modified>2013-09-30T00:09:02Z</last_modified>
+    <upload_date>2013-09-29T23:55:04Z</upload_date>
+    <published_date>2013-09-30T00:09:02Z</published_date>
+    <center_name>UNC-LCCC</center_name>
+    <study>phs000178</study>
+    <aliquot_id>69f0bc59-c026-40e2-a3b6-88fcde091a82</aliquot_id>
+    <files>
+      <file>
+        <filename>UNCID_2207421.69f0bc59-c026-40e2-a3b6-88fcde091a82.110706_UNC12-SN629_0107_BD0DKWABXX_8.tar.gz</filename>
+        <filesize>5814031645</filesize>
+        <checksum type="MD5">6c76c6eb5ebc582c4770d9c088b8c7b3</checksum>
+      </file>
+    </files>
+    <refassem_short_name></refassem_short_name>
+    <analysis_detail_uri>https://cghub.ucsc.edu/cghub/metadata/analysisDetail/cf6f5e2a-ddae-4709-a35f-7d332d82e93a</analysis_detail_uri>
+    <analysis_submission_uri>https://cghub.ucsc.edu/cghub/metadata/analysisSubmission/cf6f5e2a-ddae-4709-a35f-7d332d82e93a</analysis_submission_uri>
+    <analysis_data_uri>https://cghub.ucsc.edu/cghub/data/analysis/download/cf6f5e2a-ddae-4709-a35f-7d332d82e93a</analysis_data_uri>
+  </Result>
+  <Result id="10">
+    <analysis_id>99d3cedc-1447-4c24-86ee-4656fd221662</analysis_id>
+    <state>live</state>
+    <reason/>
+    <last_modified>2013-09-29T12:44:02Z</last_modified>
+    <upload_date>2013-09-29T12:06:06Z</upload_date>
+    <published_date>2013-09-29T12:44:02Z</published_date>
+    <center_name>UNC-LCCC</center_name>
+    <study>phs000178</study>
+    <aliquot_id>8131b824-c3db-4c83-99b9-aa0c60747c5d</aliquot_id>
+    <files>
+      <file>
+        <filename>UNCID_2207132.8131b824-c3db-4c83-99b9-aa0c60747c5d.110718_UNC12-SN629_0110_AB0AR8ABXX_7.tar.gz</filename>
+        <filesize>5964648078</filesize>
+        <checksum type="MD5">02635cf4b1bafe80ec4b97972672342c</checksum>
+      </file>
+    </files>
+    <refassem_short_name></refassem_short_name>
+    <analysis_detail_uri>https://cghub.ucsc.edu/cghub/metadata/analysisDetail/99d3cedc-1447-4c24-86ee-4656fd221662</analysis_detail_uri>
+    <analysis_submission_uri>https://cghub.ucsc.edu/cghub/metadata/analysisSubmission/99d3cedc-1447-4c24-86ee-4656fd221662</analysis_submission_uri>
+    <analysis_data_uri>https://cghub.ucsc.edu/cghub/data/analysis/download/99d3cedc-1447-4c24-86ee-4656fd221662</analysis_data_uri>
+  </Result>
+  <Result id="11">
+    <analysis_id>e1725be8-7afb-4e8e-a0d0-b7acac602477</analysis_id>
+    <state>live</state>
+    <reason/>
+    <last_modified>2013-09-22T06:33:02Z</last_modified>
+    <upload_date>2013-09-22T05:56:04Z</upload_date>
+    <published_date>2013-09-22T06:33:02Z</published_date>
+    <center_name>UNC-LCCC</center_name>
+    <study>phs000178</study>
+    <aliquot_id>aad871a8-1a52-4e96-8b13-444d08289236</aliquot_id>
+    <files>
+      <file>
+        <filename>UNCID_2192632.aad871a8-1a52-4e96-8b13-444d08289236.120419_UNC12-SN629_0204_BD0VCGACXX_3_CTTGTA.tar.gz</filename>
+        <filesize>6790656885</filesize>
+        <checksum type="MD5">323c04575d0edebdeb2e270e04e85834</checksum>
+      </file>
+    </files>
+    <refassem_short_name></refassem_short_name>
+    <analysis_detail_uri>https://cghub.ucsc.edu/cghub/metadata/analysisDetail/e1725be8-7afb-4e8e-a0d0-b7acac602477</analysis_detail_uri>
+    <analysis_submission_uri>https://cghub.ucsc.edu/cghub/metadata/analysisSubmission/e1725be8-7afb-4e8e-a0d0-b7acac602477</analysis_submission_uri>
+    <analysis_data_uri>https://cghub.ucsc.edu/cghub/data/analysis/download/e1725be8-7afb-4e8e-a0d0-b7acac602477</analysis_data_uri>
+  </Result>
+  <Result id="12">
+    <analysis_id>f4fc09d5-a9b4-4ec2-9bb0-6f0f02ad40f4</analysis_id>
+    <state>live</state>
+    <reason/>
+    <last_modified>2014-01-15T18:07:01Z</last_modified>
+    <upload_date>2014-01-15T17:20:02Z</upload_date>
+    <published_date>2014-01-15T18:07:02Z</published_date>
+    <center_name>UNC-LCCC</center_name>
+    <study>phs000178</study>
+    <aliquot_id>9d5cd723-da40-47ce-a413-20057593905d</aliquot_id>
+    <files>
+      <file>
+        <filename>UNCID_2319287.9d5cd723-da40-47ce-a413-20057593905d.131015_UNC11-SN627_0328_BC2NN6ACXX_4_ATTCCT.tar.gz</filename>
+        <filesize>8055213592</filesize>
+        <checksum type="MD5">f658782bf283c7f4c42ba5c25e833782</checksum>
+      </file>
+    </files>
+    <refassem_short_name></refassem_short_name>
+    <analysis_detail_uri>https://cghub.ucsc.edu/cghub/metadata/analysisDetail/f4fc09d5-a9b4-4ec2-9bb0-6f0f02ad40f4</analysis_detail_uri>
+    <analysis_submission_uri>https://cghub.ucsc.edu/cghub/metadata/analysisSubmission/f4fc09d5-a9b4-4ec2-9bb0-6f0f02ad40f4</analysis_submission_uri>
+    <analysis_data_uri>https://cghub.ucsc.edu/cghub/data/analysis/download/f4fc09d5-a9b4-4ec2-9bb0-6f0f02ad40f4</analysis_data_uri>
+  </Result>
+  <Result id="13">
+    <analysis_id>dd20b1ce-9a07-4f5f-8881-8d26869717ab</analysis_id>
+    <state>live</state>
+    <reason/>
+    <last_modified>2013-09-22T16:29:02Z</last_modified>
+    <upload_date>2013-09-22T16:07:04Z</upload_date>
+    <published_date>2013-09-22T16:29:02Z</published_date>
+    <center_name>UNC-LCCC</center_name>
+    <study>phs000178</study>
+    <aliquot_id>ded1efed-b3b9-4d1a-b4c9-b595543fc461</aliquot_id>
+    <files>
+      <file>
+        <filename>UNCID_2193525.ded1efed-b3b9-4d1a-b4c9-b595543fc461.120419_UNC12-SN629_0204_BD0VCGACXX_2_CGATGT.tar.gz</filename>
+        <filesize>8398704657</filesize>
+        <checksum type="MD5">daae731c4571efe9d7708e567ea88cde</checksum>
+      </file>
+    </files>
+    <refassem_short_name></refassem_short_name>
+    <analysis_detail_uri>https://cghub.ucsc.edu/cghub/metadata/analysisDetail/dd20b1ce-9a07-4f5f-8881-8d26869717ab</analysis_detail_uri>
+    <analysis_submission_uri>https://cghub.ucsc.edu/cghub/metadata/analysisSubmission/dd20b1ce-9a07-4f5f-8881-8d26869717ab</analysis_submission_uri>
+    <analysis_data_uri>https://cghub.ucsc.edu/cghub/data/analysis/download/dd20b1ce-9a07-4f5f-8881-8d26869717ab</analysis_data_uri>
+  </Result>
+  <Result id="14">
+    <analysis_id>b2314da3-36e3-4346-950e-b438c4d9904c</analysis_id>
+    <state>live</state>
+    <reason/>
+    <last_modified>2013-09-29T12:58:02Z</last_modified>
+    <upload_date>2013-09-29T12:37:05Z</upload_date>
+    <published_date>2013-09-29T12:58:02Z</published_date>
+    <center_name>UNC-LCCC</center_name>
+    <study>phs000178</study>
+    <aliquot_id>e55bc0c9-ee0f-4efb-8024-3baed3c24080</aliquot_id>
+    <files>
+      <file>
+        <filename>UNCID_2207134.e55bc0c9-ee0f-4efb-8024-3baed3c24080.110718_UNC12-SN629_0110_AB0AR8ABXX_5.tar.gz</filename>
+        <filesize>6720337444</filesize>
+        <checksum type="MD5">e464aa91ff54767c046d39a6c1019e83</checksum>
+      </file>
+    </files>
+    <refassem_short_name></refassem_short_name>
+    <analysis_detail_uri>https://cghub.ucsc.edu/cghub/metadata/analysisDetail/b2314da3-36e3-4346-950e-b438c4d9904c</analysis_detail_uri>
+    <analysis_submission_uri>https://cghub.ucsc.edu/cghub/metadata/analysisSubmission/b2314da3-36e3-4346-950e-b438c4d9904c</analysis_submission_uri>
+    <analysis_data_uri>https://cghub.ucsc.edu/cghub/data/analysis/download/b2314da3-36e3-4346-950e-b438c4d9904c</analysis_data_uri>
+  </Result>
+  <Result id="15">
+    <analysis_id>810090c1-e8dd-4ab6-8b50-7a554d4159ce</analysis_id>
+    <state>live</state>
+    <reason/>
+    <last_modified>2013-09-15T07:53:01Z</last_modified>
+    <upload_date>2013-09-15T07:26:06Z</upload_date>
+    <published_date>2013-09-15T07:53:01Z</published_date>
+    <center_name>UNC-LCCC</center_name>
+    <study>phs000178</study>
+    <aliquot_id>fc895598-73b9-4269-a250-52e4475c6be7</aliquot_id>
+    <files>
+      <file>
+        <filename>UNCID_2185695.fc895598-73b9-4269-a250-52e4475c6be7.121205_UNC14-SN744_0277_BC131TACXX_5_TGACCA.tar.gz</filename>
+        <filesize>7194928890</filesize>
+        <checksum type="MD5">11eb28994dd59f1e54cf75f5936f7dc2</checksum>
+      </file>
+    </files>
+    <refassem_short_name></refassem_short_name>
+    <analysis_detail_uri>https://cghub.ucsc.edu/cghub/metadata/analysisDetail/810090c1-e8dd-4ab6-8b50-7a554d4159ce</analysis_detail_uri>
+    <analysis_submission_uri>https://cghub.ucsc.edu/cghub/metadata/analysisSubmission/810090c1-e8dd-4ab6-8b50-7a554d4159ce</analysis_submission_uri>
+    <analysis_data_uri>https://cghub.ucsc.edu/cghub/data/analysis/download/810090c1-e8dd-4ab6-8b50-7a554d4159ce</analysis_data_uri>
+  </Result>
+  <ResultSummary>
+    <downloadable_file_count>15</downloadable_file_count>
+    <downloadable_file_size units="GB">92.34</downloadable_file_size>
+    <state_count>
+      <live>15</live>
+    </state_count>
+  </ResultSummary>
+</ResultSet>

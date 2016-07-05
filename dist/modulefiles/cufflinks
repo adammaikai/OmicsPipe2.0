@@ -1,0 +1,5 @@
+#%Module
+
+set root /root/.local/easybuild/software/cufflinks/2.2.1/cufflinks-2.2.1.Linux_x86_64
+
+prepend-path	PATH	$root

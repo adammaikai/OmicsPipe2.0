@@ -1,0 +1,210 @@
+Differential expresion using DESeq2
+========================================================
+
+<!-- dataTables -->
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.js"></script>
+<link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css"/>
+<script src="http://next.datatables.net/release-datatables/examples/resources/bootstrap/3/dataTables.bootstrap.js"></script>
+<link rel="stylesheet" href="http://next.datatables.net/release-datatables/examples/resources/bootstrap/3/dataTables.bootstrap.css"/>
+
+<!-- TableTools -->
+<script src="http://cdn.aldu.net/jquery.datatables/extras/tabletools/2.0.3/js/TableTools.js"></script>
+<link rel="stylesheet" href="http://cdn.aldu.net/jquery.datatables/extras/tabletools/2.0.3/css/TableTools.css"/>
+
+<!-- ZeroClipboard -->
+<script src="http://cdn.aldu.net/jquery.datatables/extras/tabletools/2.0.3/js/ZeroClipboard.js"></script>
+
+<!-- ColViz -->
+<script src="http://cdn.eventcore.com/js/plugins/dataTables.ColVis-1.07.js"></script>
+
+## Load packages
+
+```{r start}
+library(DESeq2)
+library(gplots)
+library(RColorBrewer)
+
+opts_chunk$set(warning = FALSE)
+opts_chunk$set(message = FALSE)
+opts_chunk$set(dev = 'pdf')
+```
+
+## Count matrix input
+
+```{r htseq_count, results='asis'}
+countFiles <- paste(config$HTSEQ_RESULTS, "/", dir(config$HTSEQ_RESULTS), sep='')
+countNames <- gsub('_counts.txt', '', dir(config$HTSEQ_RESULTS))
+
+countsDf <- NULL
+for (i in countFiles) {
+  dat <- read.csv(i, header=F, sep="\t", na.strings="", as.is=T)
+  countsDf <- cbind(countsDf, dat[,2])
+}
+x1 <- dim(countsDf)[1]-4
+x2 <- dim(countsDf)[1]
+countsDf <- countsDf[-c(x1:x2),] # remove the last 5 lines, they hold no genes
+
+rownames(countsDf) <- read.csv(i, header=F, sep="\t", na.strings="", as.is=T)$V1[-c(x1:x2)]
+colnames(countsDf) <- countNames
+write.csv(countsDf, sprintf("%s/counts_ALL.csv", config$DESEQ_RESULTS))
+
+kable(head(countsDf), format='html', table.attr = 'id=\"count_table\"')
+```
+
+<script type="text/javascript" charset="utf-8">
+    $(document).ready( function () {
+    $('#count_table').dataTable({
+          "scrollX": true,
+          "sDom": 'T<"clear">lfrtip',
+          "oTableTools": {
+          "sSwfPath": "../media/swf/copy_csv_xls_pdf.swf",
+          "aButtons": [
+                "copy",
+                "csv"
+                ]
+          }
+    });
+    });
+</script>
+
+*******
+
+## Read in meta data
+
+```{r meta_data, results='asis'}
+meta <- read.csv2(config$DESEQ_META, header=T, stringsAsFactor=FALSE, sep=',')
+meta <- meta[match(colnames(countsDf), meta$Sample), ] # sorte meta data by colnames of count matrix
+rownames(meta) <- meta$Sample
+meta$condition<-as.factor(meta$condition)
+if (exists("config$DESEQ_REF")) { meta$condition<-relevel(meta$condition, ref=config$DESEQ_REF) }
+
+kable(meta, format='html', table.attr = 'id=\"meta_table\"', row.names=FALSE)
+```
+
+<script type="text/javascript" charset="utf-8">
+    $(document).ready( function () {
+    $('#meta_table').dataTable({
+          "sDom": 'T<"clear">lfrtip',
+          "oTableTools": {
+          "sSwfPath": "../media/swf/copy_csv_xls_pdf.swf",
+          "aButtons": [
+                "copy",
+                "csv"
+                ]
+          }
+    });
+    });
+</script>
+
+*******
+
+## dds object
+
+```{r dds_object}
+dds <- DESeqDataSetFromMatrix(countData = countsDf, 
+                              colData = meta,
+                              design = eval(parse(text=paste(config$DESIGN))))
+
+print(dds)
+```
+
+
+## Differential Expression
+
+```{r diff_expression}
+dds <- DESeq(dds)
+```
+
+
+## Dispersion
+
+```{r dispersion}
+plotDispEsts(dds)
+```
+
+
+## MA Plot
+
+```{r MAplot}
+plotMA(dds,main="DESeq2",alpha=config$PVAL)
+```
+
+## Dealing with count outliers
+
+```{r outliers}
+ddsClean <- replaceOutliersWithTrimmedMean(dds)
+ddsClean <- DESeq(ddsClean)
+tab <- table(initial = results(dds)$padj < config$PVAL, cleaned = results(ddsClean)$padj < config$PVAL)
+addmargins(tab)
+```
+
+## Differential expressed genes
+
+```{r diffTable, results='asis'}
+res <- results(ddsClean)
+res <- res[order(res$padj),]
+write.csv(res, sprintf("%s/DE_genes.csv", config$DESEQ_RESULTS))
+
+kable(head(res, 100), format='html', table.attr = 'id=\"diff_table\"')
+
+```
+
+<script type="text/javascript" charset="utf-8">
+    $(document).ready( function () {
+    $('#diff_table').dataTable({
+          "sDom": 'T<"clear">lfrtip',
+          "oTableTools": {
+          "sSwfPath": "../media/swf/copy_csv_xls_pdf.swf",
+          "aButtons": [
+                "copy",
+                "csv"
+                ]
+          }
+    });
+    });
+</script>
+
+*******
+
+## rlog Transformation for visualization
+
+```{r transformation}
+rld <- rlogTransformation(ddsClean, blind=TRUE)
+```
+
+## Heatmap of the count table
+
+```{r heatmap_count_table}
+select <- order(rowMeans(counts(dds,normalized=TRUE)),decreasing=TRUE)[1:30]
+hmcol <- colorRampPalette(brewer.pal(9, "GnBu"))(100)
+
+heatmap.2(assay(rld)[select,], 
+          col = hmcol,
+          Rowv = FALSE, 
+          Colv = FALSE, 
+          scale="none",
+          dendrogram="none", 
+          trace="none", 
+          margin=c(10, 6))
+```
+
+## Sample to sample Distance
+
+```{r heat_sample_to_sample_dist}
+distsRL <- dist(t(assay(rld)))
+mat <- as.matrix(distsRL)
+rownames(mat) <- colnames(mat) <- with(colData(dds), paste(condition, libType, sep=" : "))
+heatmap.2(mat, trace="none", col = rev(hmcol), margin=c(13, 13))
+```
+
+## PCA
+
+```{r PCA}
+print(plotPCA(rld, intgroup=c("condition", "libType")))
+```
+
+
+
+
+
+

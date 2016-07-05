@@ -1,0 +1,31 @@
+SAMPLE_LIST: [test1, test2]
+STEP: last_function
+STEPS: [fastqc, bwa_mem, picard_mark_duplicates, GATK_preprocessing, GATK_variant_discovery, GATK_variant_filtering, last_function]
+RAW_DATA_DIR: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests
+FLAG_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+LOG_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+QC_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+RESULTS_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+WORKING_DIR: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts
+BWA_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/bwa
+ENDS: SE
+FASTQC_VERSION: '0.10.1'
+GENOME: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/WholeGenomeFasta/genome.fa
+PIPE_MULTIPROCESS: 1000
+PIPE_REBUILD: 'True'
+PIPE_VERBOSE: 5
+RESULTS_EMAIL: kfisch@scripps.edu
+TEMP_DIR: /scratch/kfisch
+QUEUE: workq
+USERNAME: kfisch 
+SAMTOOLS_VERSION: '0.1.19'
+BEDTOOLS_VERSION: '2.17.0'
+DRMAA_PATH: /opt/applications/pbs-drmaa/current/gnu/lib/libdrmaa.so
+BWA_OPTIONS: -t 8 -M
+BWA_INDEX: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/BWAIndex/genome.fa
+GATK_VERSION: '2.8-1'
+OMNI:
+HAPMAP:
+DBSNP: /gpfs/group/databases/GATK/hg19/dbsnp_137.hg19.vcf
+MILLS: /gpfs/group/databases/GATK/hg19/Mills_and_1000G_gold_standard.indels.hg19.vcf
+G1000: /gpfs/group/databases/GATK/hg19/1000G_phase1.indels.hg19.vcf

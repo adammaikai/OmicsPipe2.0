@@ -1,0 +1,557 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Omics Pipe Tutorial – Configuring the Parameter File &mdash; Omics Pipe v1.1.3 Documentation</title>
+    
+    <link rel="stylesheet" href="_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noticia+Text|Open+Sans|Droid+Sans+Mono" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/cloud.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Omics Pipe v1.1.3 Documentation" href="contents.html" />
+    <link rel="next" title="Omics Pipe Tutorial – Creating a Custom Pipeline Script" href="custom_pipelines.html" />
+    <link rel="prev" title="Omics Pipe Tutorial" href="tutorial.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body role="document">
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="contents.html" title="Table Of Contents"
+             accesskey="C">toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="custom_pipelines.html" title="Omics Pipe Tutorial – Creating a Custom Pipeline Script"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Omics Pipe Tutorial"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="contents.html">Omics Pipe 1.1.3 Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="omics-pipe-tutorial-configuring-the-parameter-file">
+<span id="index-0"></span><h1>Omics Pipe Tutorial &#8211; Configuring the Parameter File<a class="headerlink" href="#omics-pipe-tutorial-configuring-the-parameter-file" title="Permalink to this headline">¶</a></h1>
+<p>Before running Omics Pipe, you must configure the parameters file,
+which is a <a class="reference external" href="http://www.yaml.org/">YAML</a> document.  Example parameters files are located within
+the omics_pipe/test folder for each pipeline.  Copy one of these
+parameters files into your working directory, and edit the parameters to
+work with your sample names, directory structure, software options and software versions.
+Make sure to keep the formatting and parameter names exactly the same
+as in the example parameters files.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Make sure to follow the YAML format exactly. Ensure that there is only one space after each colon.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For parameters in quotes in the test parameters file, please make sure to keep them in quotes in your custom parameter file.</p>
+</div>
+<p>The STEP parameter should be the function name of the last step in the pipeline
+that you want to run (e.g. run_tophat). To run the pre-installed pipelines all the
+way through, this should be “last_function.”</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Do not change the STEPS or STEPS_DE parameters for a pre-installed pipeline.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Fastq files: paired end: 2 files, “Name_1.fastq” and “Name_2.fastq” representing read 1 and read 2.
+Have all fastq files in same raw data folder</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Default parameters have been included for each third party software tool included in each of the pipelines. Before running, please view the documentation for each software tool to determine if these parameters are appropriate for your analysis. We do not advise using the default parameters included in Omics Pipe without a full understanding of the tools/parameters.</p>
+</div>
+<div class="section" id="example-omics-pipe-parameter-file">
+<h2>Example Omics Pipe Parameter File<a class="headerlink" href="#example-omics-pipe-parameter-file" title="Permalink to this headline">¶</a></h2>
+<p>test_params.yaml in omics_pipe/tests:</p>
+<div class="highlight-python"><div class="highlight"><pre>SAMPLE_LIST: [test1, test2, test3]
+
+STEP: last_function
+
+STEPS: [fastqc, star, htseq, last_function]
+
+RAW_DATA_DIR: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests
+
+FLAG_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/flags
+
+HTSEQ_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/counts
+
+LOG_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/logs
+
+QC_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+
+RESULTS_PATH: /gpfs/home/kfisch/test
+
+STAR_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/star
+
+WORKING_DIR: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts
+
+REPORT_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+
+ENDS: SE
+
+FASTQC_VERSION: &#39;0.10.1&#39;
+
+GENOME: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/WholeGenomeFasta/genome.fa
+
+HTSEQ_OPTIONS: -m intersection-nonempty -s no -t exon
+
+PIPE_MULTIPROCESS: 100
+
+PIPE_REBUILD: &#39;True&#39;
+
+PIPE_VERBOSE: 5
+
+REF_GENES: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Annotation/Genes/genes.gtf
+
+RESULTS_EMAIL: kfisch@scripps.edu
+
+STAR_INDEX: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/star_genome
+
+STAR_OPTIONS: --readFilesCommand cat --runThreadN 8 --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical
+
+STAR_VERSION: &#39;2.3.0&#39;
+
+TEMP_DIR: /scratch/kfisch
+
+QUEUE: workq
+
+USERNAME: kfisch
+
+DRMAA_PATH: /opt/applications/pbs-drmaa/current/gnu/lib/libdrmaa.so
+
+DPS_VERSION: &#39;1.3.1111&#39;
+
+BAM_FILE_NAME: Aligned.out.bam
+
+PARAMS_FILE: &#39;/gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_params_RNAseq_counts.yaml&#39;
+
+DESEQ_META: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/counts_meta.csv
+
+DESIGN: &#39;~ condition&#39;
+
+PVAL: &#39;0.05&#39;
+
+DESEQ_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/DESEQ
+
+SUMATRA_DB_PATH: /gpfs/home/kfisch/sumatra
+
+SUMATRA_RUN_NAME: test_counts_sumatra_project
+
+REPOSITORY: https://kfisch@bitbucket.org/sulab/omics_pipe
+
+HG_USERNAME: Kathleen Fisch &lt;kfisch@scripps.edu&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="explanation-of-variables-in-omics-pipe-parameter-file">
+<h2>Explanation of Variables in Omics Pipe Parameter File<a class="headerlink" href="#explanation-of-variables-in-omics-pipe-parameter-file" title="Permalink to this headline">¶</a></h2>
+<p>Parameters vary by pipeline and the correct parameter file for each pipeline must be used. See examples in the /tests/ folder.</p>
+<div class="section" id="rnaseq-count-based-pipeline">
+<h3>RNAseq Count Based Pipeline<a class="headerlink" href="#rnaseq-count-based-pipeline" title="Permalink to this headline">¶</a></h3>
+<p>test_params_RNAseq_counts.yaml in omics_pipe/tests:</p>
+<div class="highlight-python"><div class="highlight"><pre>#sample names ie “Name” for paired and single end reads. So, “Name” for paired-end would expect two fastq files named “Name_1.fastq” and Name_2.fastq”
+SAMPLE_LIST: [test1, test2, test3]
+
+#Function to be run within pipeline. If you want to run the whole pipeline, leave this as last_function
+STEP: last_function
+
+#All steps within the pipeline. DO NOT CHANGE this parameter for pre-installed pipelines. If you create your own pipeline, you will need to modify this by listing all of the steps in your pipeline.
+STEPS: [fastqc, star, htseq, last_function]
+
+#Directory where your raw .fastq files are located.
+RAW_DATA_DIR: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests
+
+#Directory where you would like to have the flag files created. Flag files are empty files that indicate if a step in the pipeline has completed successfully.
+FLAG_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/flags
+
+#Directory for HTSEQ results
+HTSEQ_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/counts
+
+#Directory where log files will be written
+LOG_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/logs
+
+#Directory for QC results
+QC_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+
+#Upper level results directory. Sumatra will check all subfolders of this directory for new files to add to the run tracking database.
+RESULTS_PATH: /gpfs/home/kfisch/test
+
+#Directory where STAR results will be written
+STAR_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/star
+
+#Where omics_pipe is installed, this path will be pointing to ~/omics_pipe/scripts.
+WORKING_DIR: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts
+
+#Directory for the summary report
+REPORT_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+
+#SE is single end, PE is paired-end sequencing reads
+ENDS: SE
+
+#Version number of FASTQC
+FASTQC_VERSION: &#39;0.10.1&#39;
+
+#Full path to Genome fasta file
+GENOME: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/WholeGenomeFasta/genome.fa
+
+#Options for HTSEQ. Please see HTSEQ-count documentation for parameter options. http://www-huber.embl.de/users/anders/HTSeq/doc/count.html#options
+HTSEQ_OPTIONS: -m intersection-nonempty -s no -t exon
+
+#Number of multiple processes you want Ruffus to spawn at once
+PIPE_MULTIPROCESS: 100
+
+#Ruffus parameter. No need to change.
+PIPE_REBUILD: &#39;True&#39;
+
+#Ruffus parameter. No need to change.
+PIPE_VERBOSE: 5
+
+#Full path to reference gene annotations
+REF_GENES: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Annotation/Genes/genes.gtf
+
+#Your email.
+RESULTS_EMAIL: kfisch@scripps.edu
+
+#Directory pointing to STAR_INDEX (you may have to create this)
+STAR_INDEX: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/star_genome
+
+#Options for STAR. Please read parameter options https://code.google.com/p/rna-star/
+STAR_OPTIONS: --readFilesCommand cat --runThreadN 8 --outSAMstrandField intronMotif --outFilterIntronMotifs RemoveNoncanonical
+
+#Version number of STAR
+STAR_VERSION: &#39;2.3.0&#39;
+
+#Path to temporary directory
+TEMP_DIR: /scratch/kfisch
+
+#Name of the queue on your local cluster you wish to use
+QUEUE: workq
+
+#Username for local cluster
+USERNAME: kfisch
+
+#Path to your local cluster installation of DRMAA (ask your sys admin for this)
+DRMAA_PATH: /opt/applications/pbs-drmaa/current/gnu/lib/libdrmaa.so
+
+#Name of created Bam file. Will be Aligned.out.bam if you are using STAR and accepted_hits.bam if you are using TopHat
+BAM_FILE_NAME: Aligned.out.bam
+
+#Full path to your parameter file. Make sure to include the single quotes.
+PARAMS_FILE: &#39;/gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_params_RNAseq_counts.yaml&#39;
+
+#Location of the meta data csv file for DESEQ. See tests/counts_meta.csv for an example. This file contains the Design file for your study. http://www.bioconductor.org/packages/release/bioc/html/DESeq2.html
+DESEQ_META: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/counts_meta.csv
+
+#Design for DESEQ differential expression. Leave as is if you use the exact design as in the counts_meta.csv file.
+DESIGN: &#39;~ condition&#39;
+
+#P-value threshold
+PVAL: &#39;0.05&#39;
+
+#Directory for DESEQ results
+DESEQ_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/DESEQ
+
+#Directory where you want to store your Sumatra database. Once you run this once, you do not have to change this.
+SUMATRA_DB_PATH: /gpfs/home/kfisch/sumatra
+
+#Name of your project. You do not need to change this for subsequent runs of the pipeline, but you can if you wish.
+SUMATRA_RUN_NAME: test_counts_sumatra_project
+
+#Location of omics pipe repository (you can leave this)
+REPOSITORY: https://kfisch@bitbucket.org/sulab/omics_pipe
+
+#Your Mercurial username
+HG_USERNAME: Kathleen Fisch &lt;kfisch@scripps.edu&gt;
+
+#Version of Python installed on system
+PYTHON_VERSION: 2.6.5
+
+#Type of cluster scheduler (options: PBS, SGE)
+SCHEDULER: PBS
+
+#Full path to WORKING_DIR/reporting on your system
+R_SOURCE_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts/reporting
+
+#Are your raw fastq files compressed? If not, leave this parameter as none. If so, please type &#39;GZIP&#39; and it will automatically process your gzip files.
+COMPRESSION: none
+</pre></div>
+</div>
+</div>
+<div class="section" id="rnaseq-tuxedo-pipeline">
+<h3>RNAseq Tuxedo Pipeline<a class="headerlink" href="#rnaseq-tuxedo-pipeline" title="Permalink to this headline">¶</a></h3>
+<p>test_params_RNAseq_Tuxedo.yaml in omics_pipe/tests:</p>
+<div class="highlight-python"><div class="highlight"><pre>#sample names ie “Name” for paired and single end reads. So, “Name” for paired-end would expect two fastq files named “Name_1.fastq” and Name_2.fastq”
+SAMPLE_LIST: [test1, test2]
+
+#Function to be run within pipeline. If you want to run the whole pipeline, leave this as last_function
+STEP: last_function
+
+#All steps within the pipeline. DO NOT CHANGE this parameter for pre-installed pipelines. If you create your own pipeline, you will need to modify this by listing all of the steps in your pipeline.
+STEPS: [fastqc, tophat, rseqc, cufflinks]
+
+#All steps within the pipeline. DO NOT CHANGE this parameter for pre-installed pipelines. If you create your own pipeline, you will need to modify this by listing all of the steps in your pipeline.
+STEPS_DE: [cuffmerge, cuffmergetocompare, cuffdiff, RNAseq_report_tuxedo, last_function]
+
+#SE is single end, PE is paired-end sequencing reads
+ENDS: SE
+
+#Your email address
+RESULTS_EMAIL: kfisch@scripps.edu
+
+#Path to temporary directory (make sure this is a large, writable directory)
+TEMP_DIR: /scratch/kfisch
+
+#Name of the queue on your cluster
+QUEUE: workq
+
+#Your username on the cluster
+USERNAME: kfisch
+
+#Full path to your raw data files
+RAW_DATA_DIR: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests
+
+#Full path to where you want the Flag files written
+FLAG_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+
+#Full path to where you want the log files for each step written
+LOG_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+
+#Full path to where you want QC results written
+QC_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+
+#Full path to upper level results path
+RESULTS_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run
+
+#Where omics_pipe is installed, this path will be pointing to ~/omics_pipe/scripts
+WORKING_DIR: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts
+
+#Full path to where you want Tophat results written
+TOPHAT_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/alignments
+
+#Full path to where you want Cufflinks results written
+CUFFLINKS_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/assemblies
+
+#Full path to where you want Cuffmerge results written
+CUFFMERGE_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/cuffmerge
+
+#Full path to where you want Cuffdiff results written
+CUFFDIFF_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/cuffdiff
+
+#List of full paths to alignment files divided by condition. Each sample will have the path TOPHAT_RESULTS/SAMPLE_NAME/accepted_hits.bam. Divide these up into your two conditions for differential expression analysis. See http://cole-trapnell-lab.github.io/cufflinks/cuffdiff/#cuffdiff-arguments for more details.
+CUFFDIFF_INPUT_LIST_COND1: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/alignments/test1/accepted_hits.bam
+
+CUFFDIFF_INPUT_LIST_COND2: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_run/alignments/test2/accepted_hits.bam
+
+#Options for Tophat. Please read the TopHat documentation to set these options for your analysis. http://ccb.jhu.edu/software/tophat/manual.shtml#toph
+TOPHAT_OPTIONS: -p 8 -a 5 --microexon-search --library-type fr-secondstrand
+
+CUFFLINKS_OPTIONS: -u -N
+
+CUFFMERGE_OPTIONS: -p 8
+
+CUFFMERGETOCOMPARE_OPTIONS: -CG
+
+CUFFDIFF_OPTIONS: -p 8 -FDR 0.01 -L Group1,Group2 -N --compatible-hits-norm
+
+#Software versions installed on your system
+FASTQC_VERSION: &#39;0.10.1&#39;
+TOPHAT_VERSION: &#39;2.0.9&#39;
+CUFFLINKS_VERSION: &#39;2.1.1&#39;
+R_VERSION: &#39;3.0.1&#39;
+BOWTIE_VERSION: 2.2.3
+SAMTOOLS_VERSION: 0.1.19
+PYTHON_VERSION: 2.6.5
+BOWTIE_VERSION: 2.2.3
+SAMTOOLS_VERSION: 0.1.19
+
+#Ruffus specific parameters. See above or documentation for details. http://www.ruffus.org.uk/pipeline_functions.html#pipeline-functions-pipeline-run
+PIPE_MULTIPROCESS: 100
+PIPE_REBUILD: &#39;True&#39;
+PIPE_VERBOSE: 5
+
+#Full path to gene annotation gtf file
+REF_GENES: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Annotation/Genes/genes.gtf
+
+#Full path to genome file
+GENOME: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/WholeGenomeFasta/genome.fa
+
+#Full path to BOWTIE index
+BOWTIE_INDEX: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/Bowtie2Index/genome
+
+#Location of chromosomes folder
+CHROM: /gpfs/group/databases/Homo_sapiens/UCSC/hg19/Sequence/Chromosomes
+
+#Path to your local cluster installation of DRMAA (ask your sys admin for this)
+DRMAA_PATH: /opt/applications/pbs-drmaa/current/gnu/lib/libdrmaa.so
+
+#Full path to directory where you want report results written
+REPORT_RESULTS: /gpfs/home/kfisch/scripts/omics_pipeline-devel/tests
+
+#Full path to your parameter file. Make sure to include the single quotes.
+PARAMS_FILE: &#39;/gpfs/home/kfisch/scripts/omics_pipeline-devel/tests/test_params_RNAseq_Tuxedo.yaml&#39;
+
+#Gene IDs of interest for visualization with CummeRbund
+GENEIDS: [GAPDH, COL2A1, BRCA2]
+
+#Name of samples in Condition 1
+COND1: Group1
+
+#Name of samples in Condition 2
+COND2: Group2
+
+#Name of your project. You do not need to change this for subsequent runs of the pipeline, but you can if you wish.
+NAME: Test_run_date
+
+#Directory where you want to store your Sumatra database. Once you run this once, you do not have to change this.
+SUMATRA_DB_PATH: /gpfs/home/kfisch/sumatra
+
+#Name of your project. You do not need to change this for subsequent runs of the pipeline, but you can if you wish.
+SUMATRA_RUN_NAME: default_sumatra_project
+
+#Location of omics pipe repository (you can leave this)
+REPOSITORY: https://kfisch@bitbucket.org/sulab/omics_pipe
+
+#Your Mercurial username
+HG_USERNAME: Kathleen Fisch &lt;kfisch@scripps.edu&gt;
+
+#Type of cluster scheduler (options: PBS, SGE)
+SCHEDULER: PBS
+
+#Full path to WORKING_DIR/reporting on your system
+R_SOURCE_PATH: /gpfs/home/kfisch/scripts/omics_pipeline-devel/omics_pipe/scripts/reporting
+
+#Are your raw fastq files compressed? If not, leave this parameter as none. If so, please type &#39;GZIP&#39; and it will automatically process your gzip files.
+COMPRESSION: none
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+        <p class="logo"><a href="contents.html" title="contents">
+          <img class="logo" src="_static/logo.jpg" alt="Logo"/>
+        </a></p><div class="sphinxlocaltoc">
+    <h3><a href="contents.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Omics Pipe Tutorial &#8211; Configuring the Parameter File</a><ul>
+<li><a class="reference internal" href="#example-omics-pipe-parameter-file">Example Omics Pipe Parameter File</a></li>
+<li><a class="reference internal" href="#explanation-of-variables-in-omics-pipe-parameter-file">Explanation of Variables in Omics Pipe Parameter File</a><ul>
+<li><a class="reference internal" href="#rnaseq-count-based-pipeline">RNAseq Count Based Pipeline</a></li>
+<li><a class="reference internal" href="#rnaseq-tuxedo-pipeline">RNAseq Tuxedo Pipeline</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="tutorial.html"
+                          title="Previous page">&larr; Omics Pipe Tutorial</a></p>
+  </div>
+  <div class="sphinxnext">
+    <h4>Next page</h4>
+    <p class="topless"><a href="custom_pipelines.html"
+                          title="Next page">&rarr; Omics Pipe Tutorial &#8211; Creating a Custom Pipeline Script</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/parameter_file.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="contents.html" title="Table Of Contents"
+             >toc</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="custom_pipelines.html" title="Omics Pipe Tutorial – Creating a Custom Pipeline Script"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Omics Pipe Tutorial"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="contents.html">Omics Pipe 1.1.3 Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &copy; <a href="copyright.html">Copyright</a> 2014-2015 Kathleen Fisch, Ph.D..
+      Last updated on Sep 21, 2015.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

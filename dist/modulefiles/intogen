@@ -1,0 +1,5 @@
+#%Module
+
+set root /root/.local/easybuild/software/intogen/2.4.1/intogen-mutations-analysis-e76a814dc868
+
+prepend-path	PATH	$root
