@@ -32,21 +32,18 @@ opts_chunk$set(dev = 'pdf')
 ## Count matrix input
 
 ```{r htseq_count, results='asis'}
-countFiles <- paste(config$HTSEQ_RESULTS, "/", dir(config$HTSEQ_RESULTS), sep='')
-countNames <- gsub('_counts.txt', '', dir(config$HTSEQ_RESULTS))
+countFiles <- paste(config$START$RESULTS, "/", dir(config$START$RESULTS, pattern = '_ReadsPerGene.out.tab', recursive = T), sep='')
+countNames <- gsub('_ReadsPerGene.out.tab', '', dir(config$START$RESULTS, pattern = '_ReadsPerGene.out.tab', recursive = T))
 
 countsDf <- NULL
 for (i in countFiles) {
-  dat <- read.csv(i, header=F, sep="\t", na.strings="", as.is=T)
-  countsDf <- cbind(countsDf, dat[,2])
+  dat <- read.csv2(countFiles, sep='\t', skip=4, header=F)
+  countsDf <- cbind(countsDf, dat$V4)
 }
-x1 <- dim(countsDf)[1]-4
-x2 <- dim(countsDf)[1]
-countsDf <- countsDf[-c(x1:x2),] # remove the last 5 lines, they hold no genes
-
-rownames(countsDf) <- read.csv(i, header=F, sep="\t", na.strings="", as.is=T)$V1[-c(x1:x2)]
+rownames(countsDf) <- read.csv2(countFiles, skip=4, sep='\t', header=F)$V1
 colnames(countsDf) <- countNames
-write.csv(countsDf, sprintf("%s/counts_ALL.csv", config$DESEQ_RESULTS))
+
+write.csv(countsDf, sprintf("%s/counts_ALL.csv", config$DIFF_DESEQ$RESULTS))
 
 kable(head(countsDf), format='html', table.attr = 'id=\"count_table\"')
 ```
@@ -72,11 +69,11 @@ kable(head(countsDf), format='html', table.attr = 'id=\"count_table\"')
 ## Read in meta data
 
 ```{r meta_data, results='asis'}
-meta <- read.csv2(config$DESEQ_META, header=T, stringsAsFactor=FALSE, sep=',')
+meta <- read.csv2(config$DIFF_DESEQ$META, header=T, stringsAsFactor=FALSE, sep=',')
 meta <- meta[match(colnames(countsDf), meta$Sample), ] # sorte meta data by colnames of count matrix
 rownames(meta) <- meta$Sample
 meta$condition<-as.factor(meta$condition)
-if (exists("config$DESEQ_REF")) { meta$condition<-relevel(meta$condition, ref=config$DESEQ_REF) }
+#if (exists("config$DESEQ_REF")) { meta$condition<-relevel(meta$condition, ref=config$DESEQ_REF) }
 
 kable(meta, format='html', table.attr = 'id=\"meta_table\"', row.names=FALSE)
 ```
@@ -103,7 +100,7 @@ kable(meta, format='html', table.attr = 'id=\"meta_table\"', row.names=FALSE)
 ```{r dds_object}
 dds <- DESeqDataSetFromMatrix(countData = countsDf, 
                               colData = meta,
-                              design = eval(parse(text=paste(config$DESIGN))))
+                              design = eval(parse(text=paste(config$DIFF_DESEQ$DESIGN))))
 
 print(dds)
 ```
@@ -126,7 +123,7 @@ plotDispEsts(dds)
 ## MA Plot
 
 ```{r MAplot}
-plotMA(dds,main="DESeq2",alpha=config$PVAL)
+plotMA(dds,main="DESeq2",alpha=config$DESEQ_DIFF$PVAL)
 ```
 
 ## Dealing with count outliers
@@ -134,7 +131,7 @@ plotMA(dds,main="DESeq2",alpha=config$PVAL)
 ```{r outliers}
 ddsClean <- replaceOutliersWithTrimmedMean(dds)
 ddsClean <- DESeq(ddsClean)
-tab <- table(initial = results(dds)$padj < config$PVAL, cleaned = results(ddsClean)$padj < config$PVAL)
+tab <- table(initial = results(dds)$padj < config$DESEQ_DIFF$PVAL, cleaned = results(ddsClean)$padj < config$DESEQ_DIFF$PVAL)
 addmargins(tab)
 ```
 
@@ -143,7 +140,7 @@ addmargins(tab)
 ```{r diffTable, results='asis'}
 res <- results(ddsClean)
 res <- res[order(res$padj),]
-write.csv(res, sprintf("%s/DE_genes.csv", config$DESEQ_RESULTS))
+write.csv(res, sprintf("%s/DE_genes.csv", config$DESEQ_DIFF$RESULTS))
 
 kable(head(res, 100), format='html', table.attr = 'id=\"diff_table\"')
 
