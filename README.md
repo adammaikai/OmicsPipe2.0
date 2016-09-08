@@ -96,6 +96,9 @@ Contact
 --------
 Feedback welcome at: omics_pipe@googlegroups.com
 
-Twitter: @kathleenfisch
+Twitter:
+Kathlessn Fisch: @kathleenfisch
+Adam Mark: @AdamMaikai
+
 
 Google Group: https://groups.google.com/forum/#!forum/omics_pipe
