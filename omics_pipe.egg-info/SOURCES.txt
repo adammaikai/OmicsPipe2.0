@@ -309,6 +309,7 @@ omics_pipe/modules/oncofuse.py
 omics_pipe/modules/peak_track.py
 omics_pipe/modules/picard_mark_duplicates.py
 omics_pipe/modules/read_density.py
+omics_pipe/modules/rnaseqc.py
 omics_pipe/modules/rseqc.py
 omics_pipe/modules/snpeff.py
 omics_pipe/modules/snpir_variants.py
@@ -415,6 +416,7 @@ omics_pipe/scripts/peak_track.sh
 omics_pipe/scripts/picard_mark_duplicates.sh
 omics_pipe/scripts/read_density.sh
 omics_pipe/scripts/removeLines.R
+omics_pipe/scripts/rnaseqc.sh
 omics_pipe/scripts/rseqc_drmaa.sh
 omics_pipe/scripts/run_py.sh
 omics_pipe/scripts/run_py_script.sh

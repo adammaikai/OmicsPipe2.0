@@ -12,7 +12,8 @@ import re
 from sumatra.projects import Project
 from sumatra.projects import load_project
 from sumatra.parameters import build_parameters
-     
+
+
 def check_file_exists(input_file, output_file):
     '''Checks if file exists'''
     if not os.path.exists(output_file):
@@ -91,6 +92,23 @@ def job_status(jobname, resultspath, SAMPLE, outputfilename, FLAG_PATH):
     else:
         print("%s failed to produce any output files" % stage)   
     return
+
+def job_status_nfsc(jobname, resultspath, SAMPLE, outputfilename, FLAG_PATH):
+    '''Checks to see if a job as succesfully finished by checking if the specified output file exits.'''
+    stage = jobname
+    try:
+        size = os.path.getsize(resultspath + "/" + outputfilename)
+    except OSError:
+        print("Looking for file: " + resultspath + "/" + outputfilename)
+        print("%s failed to produce any output files" % stage)
+    if 'size' in locals():
+        print("%s Finished and Successfully produced an output file of size %s" % (stage,size))
+        flag_file = "%s/%s_%s_completed.flag" % (FLAG_PATH, stage, SAMPLE)
+        open(flag_file, 'w').close()
+    else:
+        print("%s failed to produce any output files" % stage)
+    return
+    
 
 
 def decompress(file_directory, compression_type):
