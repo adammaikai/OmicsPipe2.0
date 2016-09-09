@@ -336,6 +336,7 @@ omics_pipe/parameters/miRNA_params.yaml
 omics_pipe/parameters/miRNAseq_count_based_params.yaml
 omics_pipe/parameters/miRNAseq_tuxedo_params.yaml
 omics_pipe/parameters/noveltranscripts_params.py
+omics_pipe/scripts/.ruffus_history.sqlite
 omics_pipe/scripts/BreastCancer_RNA_report.sh
 omics_pipe/scripts/ChIP_trim_PE.sh
 omics_pipe/scripts/ChIP_trim_SE.sh
