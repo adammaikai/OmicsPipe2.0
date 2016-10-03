@@ -26,7 +26,7 @@ def Varscan_somatic(sample, tumor, normal, Varscan_somatic_flag):
         CAPTURE_KIT_BED:
         '''
     
-    spawn_job(jobname = 'Varscan_somatic', SAMPLE = sample + tumor  + normal, LOG_PATH = p.OMICSPIPE["LOG_PATH"], RESULTS_EMAIL = p.OMICSPIPE["EMAIL"], SCHEDULER = p.OMICSPIPE["SCHEDULER"], walltime = p.VARSCAN["WALLTIME"], queue = p.OMICSPIPE["QUEUE"], nodes = p.VARSCAN["NODES"], ppn = p.VARSCAN["CPU"], memory = p.VARSCAN["MEMORY"], script = "/Varscan_somatic.sh", args_list = [sample, p.VARSCAN["VERSION"], p.VARSCAN["R_VERSION"], p.VARSCAN["VCFTOOLS_VERSION"], p.VARSCAN["SOMATIC_RESULTS"], p.VARSCAN["ALIGNMENT_DIR"], normal, tumor, p.VARSCAN["VCFLIB_VERSION"]])
+    spawn_job(jobname = 'Varscan_somatic', SAMPLE = sample + tumor  + normal, LOG_PATH = p.OMICSPIPE["LOG_PATH"], RESULTS_EMAIL = p.OMICSPIPE["EMAIL"], SCHEDULER = p.OMICSPIPE["SCHEDULER"], walltime = p.VARSCAN["WALLTIME"], queue = p.OMICSPIPE["QUEUE"], nodes = p.VARSCAN["NODES"], ppn = p.VARSCAN["CPU"], memory = p.VARSCAN["MEMORY"], script = "/Varscan_somatic.sh", args_list = [sample, p.VARSCAN["VERSION"], p.VARSCAN["R_VERSION"], p.VARSCAN["VCFTOOLS_VERSION"], p.VARSCAN["SOMATIC_RESULTS"], p.VARSCAN["ALIGNMENT_DIR"], normal, tumor, p.VARSCAN["VCFLIB_VERSION"], p.VARSCAN["SOMATIC_OPTIONS"]])
     job_status(jobname = 'Varscan_somatic', resultspath = p.VARSCAN["RESULTS"] + "/" + sample, SAMPLE = sample,  outputfilename = sample + tumor + normal + "_varscan_somatic.vcf.gz", FLAG_PATH = p.OMICSPIPE["FLAG_PATH"])
     return
 

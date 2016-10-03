@@ -12,7 +12,7 @@ mkdir -p $4/$1
 
 #Runs bbduk with $1=PATIENT, $2=RAW_DATA_DIR, $3=BBDUK_VERSION, $4=RESULTS, $5=REF_ADAPTOR, $6=BBDUK_PARAMETERS, $7=MEMORY, $8=CPU
 
-mem=$(expr $(echo $7 | sed 's/gb//') - 4)
+mem=$(expr $(echo $7 | sed 's/gb//'))
 
 bbduk.sh \
 	in=$2/$1_1.fastq.gz \
@@ -28,8 +28,8 @@ bbduk.sh \
 	gchist=$4/$1/stats/$1.gchist \
 	gcbins=auto \
 	threads=${8} \
-	$6 \
-	-Xmx${mem}g
+	$6 
+#	-Xmx${mem}g
 
 
 exit 0

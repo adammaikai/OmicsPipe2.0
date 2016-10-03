@@ -335,7 +335,9 @@ omics_pipe/parameters/miRNA_params.yaml
 omics_pipe/parameters/miRNAseq_count_based_params.yaml
 omics_pipe/parameters/miRNAseq_tuxedo_params.yaml
 omics_pipe/parameters/noveltranscripts_params.py
+omics_pipe/scripts/.ruffus_history.sqlite
 omics_pipe/scripts/BreastCancer_RNA_report.sh
+omics_pipe/scripts/CAPPSeqSomaticAnnotation.R
 omics_pipe/scripts/ChIP_trim_PE.sh
 omics_pipe/scripts/ChIP_trim_SE.sh
 omics_pipe/scripts/DNAseq_report.sh
@@ -372,6 +374,7 @@ omics_pipe/scripts/__init__.py
 omics_pipe/scripts/annotateCNV.R
 omics_pipe/scripts/annotateFusions.R
 omics_pipe/scripts/annotateIndels.R
+omics_pipe/scripts/annotateTSTVcf.R
 omics_pipe/scripts/annotateVariantsFromVcf.R
 omics_pipe/scripts/annotateVarscanCNV.R
 omics_pipe/scripts/annotateVcf.R
@@ -397,6 +400,7 @@ omics_pipe/scripts/cutadapt_drmaa.sh
 omics_pipe/scripts/extractvcf.R
 omics_pipe/scripts/fastq_length_filter.py
 omics_pipe/scripts/fastqc_drmaa.sh
+omics_pipe/scripts/filterAnnovar.R
 omics_pipe/scripts/filter_snpir_drmaa.sh
 omics_pipe/scripts/filter_variants.sh
 omics_pipe/scripts/find_motifs.sh

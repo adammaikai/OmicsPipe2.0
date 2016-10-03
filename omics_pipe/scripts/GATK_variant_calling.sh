@@ -25,10 +25,7 @@ if [ -z "${14}" ]; then
 	-R $3 \
 	--dbsnp ${10} \
 	-I $6/$1/$1_gatk_recal.bam \
-	-rf BadCigar \
-	--genotyping_mode DISCOVERY \
-	-stand_emit_conf 10 \
-	-stand_call_conf 30 \
+	${15} \
 	-o $2/$1\_gatk.vcf
 
 	## recalibrate variant quality scores
@@ -137,10 +134,7 @@ else
 	-I $6/$1/$1_gatk_recal.bam \
 	-L ${14} \
 	-ip 1 \
-	-rf BadCigar \
-	--genotyping_mode DISCOVERY \
-	-stand_emit_conf 10 \
-	-stand_call_conf 30 \
+	${15} \
 	-o $2/$1\_gatk.vcf
 
 	java -Xmx8g -jar `which GenomeAnalysisTK.jar` \

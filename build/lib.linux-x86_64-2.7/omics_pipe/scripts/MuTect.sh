@@ -15,7 +15,7 @@ normal=$(echo $9 | sed -e 's/-DNA//' | cut -c 2-)
 tumor=$(echo ${10} | sed -e 's/-DNA//' | cut -c 2-)
 
 if [ -z "$5" ]; then
-    java -Xmx8g -jar `which mutect-1.1.7.jar` \
+    /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java -Xmx8g -jar `which mutect-1.1.7.jar` \
     --analysis_type MuTect \
     --reference_sequence $7 \
     --cosmic $3 \
@@ -23,11 +23,11 @@ if [ -z "$5" ]; then
     --input_file:normal $6/$1$9/$1$9_gatk_recal.bam \
     --input_file:tumor $6/$1${10}/$1${10}_gatk_recal.bam \
     --vcf $2/$1/$1\_$tumor\_$normal\_mutect.raw.vcf \
-    -rf BadCigar \
+    ${11} \
     --out $2/$1/$1\_call_stats.txt \
     --coverage_file $2/$1/$1\_coverage.wig.txt
 else
-    java -Xmx8g -jar `which mutect-1.1.7.jar` \
+    /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java -Xmx8g -jar `which mutect-1.1.7.jar` \
     --analysis_type MuTect \
     --reference_sequence $7 \
     --cosmic $3 \
@@ -36,7 +36,7 @@ else
     --input_file:normal $6/$1$9/$1$9_gatk_recal.bam \
     --input_file:tumor $6/$1${10}/$1${10}_gatk_recal.bam \
     --vcf $2/$1/$1\_$tumor\_$normal\_mutect.raw.vcf \
-    -rf BadCigar \
+    ${11} \
     --out $2/$1/$1\_call_stats.txt \
     --coverage_file $2/$1/$1\_coverage.wig.txt
 fi
@@ -52,3 +52,12 @@ tabix -f -p vcf $2/$1/$1\_$tumor\_$normal\_mutect.filt.vcf.gz
 rm $2/$1/$1\_call_stats.txt
 
 exit 0
+
+
+@follows(run_Star)
+@parallel([["report", "%s/RNAseq_report_report_completed.flag" % (p.OMICSPIPE["FLAG_PATH"])]])
+@check_if_uptodate(check_file_exists)
+def run_RNAseq_report_counts(sample, RNAseq_report_counts_flag):
+    for ext in ext_list:
+        RNAseq_report_counts(sample, ext, RNAseq_report_counts_flag)
+    return

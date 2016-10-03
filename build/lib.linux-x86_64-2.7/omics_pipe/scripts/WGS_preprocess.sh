@@ -125,7 +125,7 @@ else
 	-o ${10}/$1/$1\_gatk_recal.bam
 fi
 
-## sort and index again
+## clean up
 if [ -f ${10}/$1/$1\_gatk_recal.bam ]; then
     rm ${10}/$1/$1\_realigned.ba*
     rm $2/$1\_recal_data.table

@@ -1,4 +1,5 @@
 library(myvariant)
+library(mygene)
 library(magrittr)
 library(IRanges)
 library(plyr)
@@ -9,31 +10,38 @@ library(VariantAnnotation)
 library(data.table)
 
 args <- commandArgs(TRUE)
-annotateIndelsScript <- args[1]
-source(annotateIndelsScript)
-vcfPath <- args[2]
-filter <- args[3]
+vcfPath <- args[1]
+filter <- args[2]
 
 
 .collapse <- function (...) {
      paste(unlist(list(...)), sep = ",", collapse = ",")
  }
 
+annotateIndels <- function(vcf.path){
+
+  cancer_genes <- read.csv("/data/database/druggability/cancer_genes.txt", stringsAsFactors = FALSE, sep="\t")
+
+  vcf.object <- readVcf(vcf.path, genome="hg19")
+  indel <- vcf.object[isIndel(vcf.object)]
+  if (dim(indel)[1] == 0){
+    return(data.frame())
+  }
+  loc <- paste("hg19.", seqnames(indel), ":", start(indel), "-", end(indel), sep="")
+  Variant <- formatHgvs(indel, variant_type=c("insertion", "deletion"))
+  hits <- lapply(loc, function(i) query(i, species="human")$hits$symbol)
+  annotations <- DataFrame(Position=paste0(seqnames(indel), ":", start(indel)), Variant=Variant, Gene=sapply(hits, .collapse))
+  annotations <- data.frame(merge(annotations, cancer_genes, by.x="Gene", by.y="symbol", all.x=TRUE))
+  annotations
+}
+
 annotateVariantsFromVcf <- function(vcf.path, do_filter=FALSE){
     ## Avera in-house gene panel
     cancer_genes <- read.csv("/data/database/druggability/cancer_genes.txt", stringsAsFactors = FALSE, sep="\t")
     
-    ## Read in VCF
+    ## MyVariant.info annotations
     vcf <- readVcf(vcf.path, genome="hg19")
     snp <- vcf[isSNV(vcf)]
-
-    ## Filter out variants with strand bias
-#    fs <- read.csv(gsub("vcf.gz", "snp.strand.dp.csv", vcf.path), stringsAsFactors = FALSE)
-#    names(fs) <- c("ref_fwd", "ref_rev", "var_fwd", "var_rev")
-#    fs$p_value <- sapply(seq(1, nrow(fs)), function(i) fisher.test(matrix(c(fs$ref_fwd[i], fs$ref_rev[i], fs$var_fwd[i], fs$var_rev[i]), nrow = 2), workspace = 2000000000)[[1]])
-#    fs$p_adjust <- p.adjust(fs$p_value, method = "BH")
-
-    ## MyVariant.info annotations
     hgvs <- formatHgvs(snp, "snp")
     annos <- getVariants(hgvs, fields=c("cadd.gene.prot.protpos", "cadd.oaa", "cadd.naa", "dbsnp.rsid", "cadd.consequence", 
                                         "cadd.gene.genename",
@@ -41,15 +49,8 @@ annotateVariantsFromVcf <- function(vcf.path, do_filter=FALSE){
                                         "dbnsfp.mutationtaster.pred"
     ))
     annos$Position <- paste0(seqnames(snp), ":", start(snp))
-      dp <- geno(snp)$DP
-      row.names(dp) <- NULL
-      ad <- geno(snp)$AD
-      row.names(ad) <- NULL
-      coverage <- cbind(data.frame(ad), dp)
-      names(coverage) <- c("AD", "DP")
     ## filter consequence
-#   annos$FS_bias_adj_p_value <- fs$p_adjust
-   if(do_filter){
+    if(do_filter){
       annos <- subset(annos, cadd.consequence %in% c("STOP_GAINED","STOP_LOST", 
                                                    "NON_SYNONYMOUS", "SPLICE_SITE", 
                                                    "CANONICAL_SPLICE", "REGULATORY"))
@@ -78,9 +79,7 @@ annotateVariantsFromVcf <- function(vcf.path, do_filter=FALSE){
     annos$in_cancer <- ifelse(annos$Gene %in% cancer_genes$symbol, yes="yes", no="no")
     annotations <- merge(annos, cancer_genes, by.x="Gene", by.y="symbol", all.x=TRUE)
     annotations <- rbind.fill(annos, annotateIndels(vcf.path))
-    #annotations[is.na(annotations)] <- ""
-    write.table(annotations, gsub(".vcf.gz", ".annotated.tsv", vcf.path), sep="\t", row.names=FALSE, quote=FALSE)
-    #annotations
+    write.table(annotations, gsub(".vcf.gz", ".annotated.txt", vcf.path), sep="\t", row.names=FALSE, quote=FALSE)
 }
 
 annotateVariantsFromVcf(vcfPath, do_filter=filter)

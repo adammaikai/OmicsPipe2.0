@@ -25,7 +25,14 @@ annotateIndels <- function(vcf.path){
   # Allelic Depth
   ad <- data.frame(geno(indel)$AD)
   row.names(ad) <- NULL
+  p_adjust <- c()
   if (grepl("varscan", vcf.path)){
+  ## Flag Strand Bias Variants
+    fs <- read.csv(gsub("vcf.gz", "indel.strand.dp.csv", vcf.path), stringsAsFactors = FALSE, header = FALSE)
+    names(fs) <- c("ref_fwd", "ref_rev", "var_fwd", "var_rev")
+    fs$p_value <- sapply(seq(1, nrow(fs)), function(i) fisher.test(matrix(c(fs$ref_fwd[i], fs$ref_rev[i], fs$var_fwd[i], fs$var_rev[i]), nrow = 2), workspace = 2000000000)[[1]])
+    p_adjust <- p.adjust(fs$p_value, method = "BH")
+  ## Read Depth
     setnames(dp, old=c(names(dp)[grepl("TUMOR", names(dp))], names(dp)[grepl("NORMAL", names(dp))]), 
              new=c("TUMOR.DP", "NORMAL.DP"))
     setnames(ad, old=c(names(ad)[grepl("TUMOR", names(ad))], names(ad)[grepl("NORMAL", names(ad))]), 
@@ -52,9 +59,13 @@ annotateIndels <- function(vcf.path){
     coverage <- cbind(ad, dp)
     names(coverage) <- c("AD", "DP")
   }
-  annotations <- DataFrame(Position=paste0(seqnames(indel), ":", start(indel)), Variant=Variant, Gene=sapply(hits, .collapse))
+  if (length(p_adjust) == 0){
+  p_adjust <- rep(0, nrow(length(hits)))
+  }
+  annotations <- DataFrame(Position=paste0(seqnames(indel), ":", start(indel)), Variant=Variant, Gene=sapply(hits, .collapse), FS_bias_p_adjust=p_adjust)
   annotations <- cbind(annotations, coverage)
-  annotations <- data.frame(merge(annotations, cancer_genes, by.x="Gene", by.y="symbol"))
+ # annotations$FS_bias_adj_p_value <- fs$p_adjust
+  annotations <- data.frame(merge(annotations, cancer_genes, by.x="Gene", by.y="symbol", all.x=TRUE))
 #  annotations <- sapply(annotations, as.character)
   annotations
 }

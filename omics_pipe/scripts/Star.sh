@@ -6,8 +6,9 @@ source $MODULESHOME/init/bash
 
 module load star/$5
 module load star-fusion/$9
+module load sambamba/$10
 
-####INPUTS $1=sample $2=TEMP_DIR $3=RAW_DATA_DIR $4=ALIGNMENT_DIR $5=STAR_VERSION $6=GENOME $7=REF_GTF $8=STARFUSION_LIB $9=STARFUSION_VERSION
+####INPUTS $1=sample $2=TEMP_DIR $3=RAW_DATA_DIR $4=ALIGNMENT_DIR $5=STAR_VERSION $6=GENOME $7=REF_GTF $8=STARFUSION_LIB $9=STARFUSION_VERSION $10=SAMBAMBA_VERSION
 
 mkdir -p "$4/$1"
 
@@ -53,6 +54,20 @@ STAR \
 --outFileNamePrefix $1_
 
 cp $2/$1/* $4/$1/
+
+## index bam file
+sambamba index $4/$1/$1\_Aligned.sortedByCoord.out.bam 
+
+## mark duplicates
+sambamba markdup \
+	-t $cpu \
+	--overflow-list-size 1000000 \
+	--hash-table-size 1000000 \
+	$4/$1/$1\_Aligned.sortedByCoord.out.bam \
+	$4/$1/$1\_dedup.bam
+
+## index dedup bam file
+sambamba index $4/$1/$1\_dedup.bam
 
 #clean up
 rm -rf $2/$1

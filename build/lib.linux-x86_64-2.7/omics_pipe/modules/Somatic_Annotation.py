@@ -23,7 +23,7 @@ def Somatic_Annotation(sample, tumor, normal, Somatic_Annotation_flag):
         VARIANT_DIR:
         '''
     
-    spawn_job(jobname = 'Somatic_Annotation', SAMPLE = sample, LOG_PATH = p.OMICSPIPE["LOG_PATH"], RESULTS_EMAIL = p.OMICSPIPE["EMAIL"], SCHEDULER = p.OMICSPIPE["SCHEDULER"], walltime = p.ANNOTATION["WALLTIME"], queue = p.OMICSPIPE["QUEUE"], nodes = p.ANNOTATION["NODES"], ppn = p.ANNOTATION["CPU"], memory = p.ANNOTATION["MEMORY"], script = "/Somatic_Annotation.sh", args_list = [sample, p.ANNOTATION["VARIANT_DIR"], p.VARSCAN["R_VERSION"], tumor, normal])
+    spawn_job(jobname = 'Somatic_Annotation', SAMPLE = sample, LOG_PATH = p.OMICSPIPE["LOG_PATH"], RESULTS_EMAIL = p.OMICSPIPE["EMAIL"], SCHEDULER = p.OMICSPIPE["SCHEDULER"], walltime = p.ANNOTATION["WALLTIME"], queue = p.OMICSPIPE["QUEUE"], nodes = p.ANNOTATION["NODES"], ppn = p.ANNOTATION["CPU"], memory = p.ANNOTATION["MEMORY"], script = "/Somatic_Annotation.sh", args_list = [sample, p.ANNOTATION["VARIANT_DIR"], p.VARSCAN["R_VERSION"], tumor, normal, p.ANNOTATION["GENOME"], p.VARSCAN["VCFLIB_VERSION"]])
     job_status(jobname = 'Somatic_Annotation', resultspath = p.ANNOTATION["VARIANT_DIR"] + "/" + sample, SAMPLE = sample,  outputfilename = sample + "_somatic_annotations.txt", FLAG_PATH = p.OMICSPIPE["FLAG_PATH"])
     return
 

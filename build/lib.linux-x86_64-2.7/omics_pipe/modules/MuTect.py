@@ -31,7 +31,7 @@ def MuTect(sample, tumor, normal, MuTect_flag):
         CAPTURE_KIT_BED:
         '''
     
-    spawn_job(jobname = 'MuTect', SAMPLE = sample + tumor + normal, LOG_PATH = p.OMICSPIPE["LOG_PATH"], RESULTS_EMAIL = p.OMICSPIPE["EMAIL"], SCHEDULER = p.OMICSPIPE["SCHEDULER"],  walltime = p.MUTECT["WALLTIME"], queue = p.OMICSPIPE["QUEUE"], nodes = p.MUTECT["NODES"], ppn = p.MUTECT["CPU"], memory = p.MUTECT["MEMORY"], script = "/MuTect.sh", args_list = [sample, p.MUTECT["RESULTS"], p.MUTECT["COSMIC"], p.BQSR["DBSNP"], p.CAPTURE_KIT_BED, p.BQSR["ALIGNMENT_DIR"], p.SAMTOOLS["GENOME"], p.MUTECT["VERSION"], normal, tumor])
+    spawn_job(jobname = 'MuTect', SAMPLE = sample + tumor + normal, LOG_PATH = p.OMICSPIPE["LOG_PATH"], RESULTS_EMAIL = p.OMICSPIPE["EMAIL"], SCHEDULER = p.OMICSPIPE["SCHEDULER"],  walltime = p.MUTECT["WALLTIME"], queue = p.OMICSPIPE["QUEUE"], nodes = p.MUTECT["NODES"], ppn = p.MUTECT["CPU"], memory = p.MUTECT["MEMORY"], script = "/MuTect.sh", args_list = [sample, p.MUTECT["RESULTS"], p.MUTECT["COSMIC"], p.BQSR["DBSNP"], p.CAPTURE_KIT_BED, p.BQSR["ALIGNMENT_DIR"], p.SAMTOOLS["GENOME"], p.MUTECT["VERSION"], normal, tumor, p.MUTECT["OPTIONS"]])
     job_status(jobname = 'MuTect', resultspath = p.MUTECT["RESULTS"] + "/" + sample, SAMPLE = sample,  outputfilename = sample + tumor + normal + "mutect.filt.vcf.gz", FLAG_PATH = p.OMICSPIPE["FLAG_PATH"])
     return
 

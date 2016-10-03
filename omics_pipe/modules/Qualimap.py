@@ -26,9 +26,12 @@ def Qualimap(sample, extension, Qualimap_flag):
     if "DNA" in extension:
         options = p.QUALIMAP["DNA_OPTIONS"]
         sample_type = "DNA"
-    else:
+    elif "RNA" in extension:
         options = p.QUALIMAP["RNA_OPTIONS"]
         sample_type = "RNA"
+    else:
+        options = p.QUALIMAP["DNA_OPTIONS"]
+        sample_type = "DNA"
 
     sample = sample + extension
     spawn_job(jobname = 'Qualimap', SAMPLE =  sample, LOG_PATH = p.OMICSPIPE["LOG_PATH"], RESULTS_EMAIL = p.OMICSPIPE["EMAIL"], SCHEDULER = p.OMICSPIPE["SCHEDULER"], walltime = p.QUALIMAP["WALLTIME"], queue = p.OMICSPIPE["QUEUE"], nodes = p.QUALIMAP["NODES"], ppn = p.QUALIMAP["CPU"], memory = p.QUALIMAP["MEMORY"], script = "/Qualimap.sh", args_list = [sample, p.QUALIMAP["ALIGNMENT_DIR"], p.QUALIMAP["RESULTS"], p.QUALIMAP["VERSION"], sample_type, options, p.CAPTURE_KIT_BED])

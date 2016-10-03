@@ -28,6 +28,8 @@ def bbduk(sample, extension, bbduk_flag):
         sample_full = sample + extension
         if os.path.isfile(p.BBDUK["RAW_DATA"] + "/" + sample +  "/" + sample_type + "/" + sample_full + "_1.fastq.gz"):
             RAW_DATA_DIR = p.BBDUK["RAW_DATA"] + "/" + sample +  "/" + sample_type
+        elif os.path.isfile(p.BBDUK["RAW_DATA"] + "/" + sample +  "/" + sample + "_1.fastq.gz"):
+            RAW_DATA_DIR = p.BBDUK["RAW_DATA"] + "/" + sample 
         else:
             RAW_DATA_DIR = p.BBDUK["RAW_DATA"]
     else:
